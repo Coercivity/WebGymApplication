@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WebGymApplication\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj": {}
+    "C:\\New folder\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj": {}
   },
   "projects": {
-    "C:\\WebGymApplication\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj": {
+    "C:\\New folder\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WebGymApplication\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj",
+        "projectUniqueName": "C:\\New folder\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj",
         "projectName": "WebGym",
-        "projectPath": "C:\\WebGymApplication\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj",
+        "projectPath": "C:\\New folder\\WebGymApplication\\WebGym\\WebGym\\WebGym.csproj",
         "packagesPath": "C:\\Users\\Evgeny\\.nuget\\packages\\",
-        "outputPath": "C:\\WebGymApplication\\WebGymApplication\\WebGym\\WebGym\\obj\\",
+        "outputPath": "C:\\New folder\\WebGymApplication\\WebGym\\WebGym\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -43,6 +43,16 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.16, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.16, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
