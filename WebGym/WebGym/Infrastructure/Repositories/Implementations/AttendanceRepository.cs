@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using WebGym.Infrastructure.efModels;
 using WebGym.Infrastructure.Repositories.Interfaces;
 
-namespace WebGym.Infrastructure.Repositories
+namespace WebGym.Infrastructure.Repositories.Implementations
 {
-    public class StatisticsRepository : IStatisticsRepository
+    public class AttendanceRepository : IAttendanceRepository
     {
-        public async Task<Statistics> GetStatisticsByIdAsync()
+        public async Task<IEnumerable<Service>> GetAllServicesByClientIdAsync()
         {
             throw new NotImplementedException();
         }

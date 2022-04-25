@@ -8,6 +8,13 @@ namespace WebGym.Infrastructure.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
+        public enum Role
+        {
+            Admin = 1,
+            Coach = 2,
+            Client = 3
+        };
+
         public async Task<Account> GetAccountAsync(string Login, string Password)
         {
             throw new NotImplementedException();

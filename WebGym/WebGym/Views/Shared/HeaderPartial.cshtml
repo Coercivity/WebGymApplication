@@ -1,4 +1,4 @@
-﻿	<header role="banner" id="fh5co-header">
+﻿	<header  id="fh5co-header">
 			<div class="container">
 			    <nav class="navbar navbar-default">
 		        <div class="navbar-header">
@@ -7,15 +7,23 @@
 		          	<a class="navbar-brand" href="index.html">Фитнес</a> 
 		        </div>
 		        <div id="navbar" class="navbar-collapse collapse">
-		          <ul class="nav navbar-nav navbar-right">
-		            <li class="active"><a href="#" data-nav-section="home"><span>Главная</span></a></li>
-		            <li><a href="#" data-nav-section="about"><span>О нас</span></a></li>
-		            <li><a href="#" data-nav-section="services"><span>Услуги</span></a></li>
-		            <li><a href="#" data-nav-section="features"><span>Возможности</span></a></li>
-		            <li><a href="#" data-nav-section="testimonials"><span>Отзывы</span></a></li>
-		            <li><a href="#" data-nav-section="pricing"><span>Прейскурант</span></a></li>
-		            <li><a href="#" data-nav-section="press"><span>Новости</span></a></li>
-		          </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#" data-nav-section="home"><span>Главная</span></a></li>
+                        <li><a href="#" data-nav-section="about"><span>О нас</span></a></li>
+                        <li><a href="#" data-nav-section="services"><span>Услуги</span></a></li>
+                        <li><a href="#" data-nav-section="features"><span>Возможности</span></a></li>
+                        <li><a href="#" data-nav-section="testimonials"><span>Отзывы</span></a></li>
+                        <li><a href="#" data-nav-section="pricing"><span>Прейскурант</span></a></li>
+                        <li><a href="#" data-nav-section="press"><span>Новости</span></a></li>
+						@if (!User.Identity.IsAuthenticated)
+                        {
+                        <li><a class="nav-link" asp-controller="Home" asp-action="Login" data-nav-section="press"><span>Login</span></a></li>
+                        }
+						else
+                        {
+                        <li><a class="nav-link" asp-controller="Home" asp-action="Logout" data-nav-section="press"><span>Logout</span></a></li>
+                        }
+                    </ul>
 		        </div>
 			    </nav>
 		  </div>

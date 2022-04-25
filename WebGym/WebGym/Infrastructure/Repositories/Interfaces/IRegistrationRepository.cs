@@ -7,10 +7,11 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IRegistrationRepository
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        
+
+        public Task TryRegisterClientAsync(string Login, string Password, string Email, string FirstName, 
+            string Surname, string Patronymic, string MobileNumber);
+        public Task TryRegisterCoachAsync(string Login, string Password, string Email, string FirstName,
+            string Surname, string Patronymic, string MobileNumber, string Rank, int Experience);
 
     }
 }

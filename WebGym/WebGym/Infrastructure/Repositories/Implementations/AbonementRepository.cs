@@ -9,12 +9,12 @@ namespace WebGym.Infrastructure.Repositories
 {
     public class AbonementRepository : IAbonementRepository
     {
-        public Task<Abonement> GetAllAbonementsByClientIdAsync(int Id)
+        public async Task<Abonement> GetAllAbonementsByClientIdAsync(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Abonement> GetValidAbonementByClientIdAsync(int Id)
+        public async Task<Abonement> GetValidAbonementByClientIdAsync(int Id)
         {
             throw new NotImplementedException();
         }

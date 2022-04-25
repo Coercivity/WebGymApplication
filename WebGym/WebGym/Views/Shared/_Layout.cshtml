@@ -8,31 +8,18 @@
 	<title>Gym flip-flops</title>
 	</head>
 
-	<body>
-		@await Html.PartialAsync("HeaderPartial")
-		@await Html.PartialAsync("HomePartial")
-		@await Html.PartialAsync("AboutPartial")
-		@await Html.PartialAsync("ServicesPartial")
-		@*@await Html.PartialAsync("FeaturesPartial")*@
-		@await Html.PartialAsync("FeedbackPartial")
-		@*@await Html.PartialAsync("PricesPartial")
-		@await Html.PartialAsync("NewsPartial")*@
-		@RenderBody() 
+    <body>
 
-
-	
+        @RenderBody()
+        @await Html.PartialAsync("HeaderPartial")
+        @await Html.PartialAsync("FooterPartial")
 
 
 
-		
-	@await Html.PartialAsync("FooterPartial")
-
-	
-	
 
 
-	
 
 
-	</body>
+
+    </body>
 </html>

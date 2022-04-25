@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using WebGym.Infrastructure.efModels;
 using WebGym.Infrastructure.Repositories.Interfaces;
 
-namespace WebGym.Infrastructure.Repositories
+namespace WebGym.Infrastructure.Repositories.Implementations
 {
-    public class StatisticsRepository : IStatisticsRepository
+    public class AuthorizationRepository : IAuthrorizationRepository
     {
-        public async Task<Statistics> GetStatisticsByIdAsync()
+        public async Task<Account> TryAuthorizeAsync(string Login, string Password)
         {
             throw new NotImplementedException();
         }
