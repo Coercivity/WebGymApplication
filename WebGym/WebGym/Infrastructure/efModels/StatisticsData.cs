@@ -5,20 +5,19 @@ using System.Collections.Generic;
 
 namespace WebGym
 {
-    public partial class Abonement
+    public partial class StatisticsData
     {
-        public Abonement()
+        public StatisticsData()
         {
-            ServiceData = new HashSet<ServiceData>();
+            Attendances = new HashSet<Attendance>();
         }
 
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public int VisitsAmount { get; set; }
-        public int? ClientId { get; set; }
 
         public virtual Client Client { get; set; }
-        public virtual ICollection<ServiceData> ServiceData { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace WebGym
                         }
                     };
                 });
-            //services.AddDbContext<GymContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<GymDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         }
 
@@ -80,3 +80,4 @@ namespace WebGym
         }
     }
 }
+

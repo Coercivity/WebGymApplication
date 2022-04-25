@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.efModels;
 using WebGym.Infrastructure.Repositories.Interfaces;
 
 namespace WebGym.Infrastructure.Repositories
 {
     public class StatisticsRepository : IStatisticsRepository
     {
-        public async Task<Statistics> GetStatisticsByIdAsync()
+        public async Task<StatisticsData> GetStatisticsByIdAsync()
         {
             throw new NotImplementedException();
         }

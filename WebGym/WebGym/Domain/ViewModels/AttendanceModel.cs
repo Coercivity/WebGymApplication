@@ -12,7 +12,7 @@ namespace WebGym.Domain.ViewModels
         public int CoachId { get; set; }
         public int TrainTime { get; set; } 
         public int Pulse { get; set; }
-        public decimal Weight { get; set; }
+        public float Weight { get; set; }
         public int HeadPressure { get; set; }
         public int HeartPressure { get; set; }
     }
