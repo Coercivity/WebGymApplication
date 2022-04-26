@@ -2,7 +2,7 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class=" d-flex justify-content-center card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
 
                         <h3 class="mb-5">Sign in</h3>
@@ -18,7 +18,7 @@
                         </div>
 
                         <!-- Checkbox -->
-                        <div class="form-check d-flex justify-content-start mb-4">
+                        <div class="form-check d-flex justify-content-center mb-4">
                             <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
                             <label class="form-check-label" for="form1Example3"> Remember password </label>
                         </div>
@@ -52,9 +52,9 @@
             {
 <h2 class="danger"style="padding:20px" >@error</h2>
             }
-                                <form action="/login?ReturnURL=@System.Net.WebUtility.UrlEncode(returnURL)" method="post">
-                                    <input type="text" name="username" placeholder="Username" />
-                                    <input type="text" name="password" placeholder="Password" />
+                                <form action="/login?ReturnURL=@System.Net.WebUtility.UrlEncode(returnURL)" method="post" >
+                                    <input type="text" name="username" placeholder="Username" minlength="3" required/>
+                                    <input type="password" name="password" placeholder="Password" minlength="3" required/>
                                     <input type="submit" value="login" />
 
                                 </form>

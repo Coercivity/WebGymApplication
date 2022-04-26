@@ -6,18 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebGym.Domain.Services;
 
 namespace WebGym.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AuthorizationService _authorizationService;
+        public HomeController(AuthorizationService authorizationService)
+        {
+            _authorizationService = authorizationService;
+        }
 
         public IActionResult Index()
         {
-
             return View();
         }
-
 
         [Authorize]
         public IActionResult Secured()
@@ -37,15 +41,18 @@ namespace WebGym.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Validate(string username, string password, string returnUrl)
         {
-
             ViewData["ReturnUrl"] = returnUrl;
-            if (username == "o")
+
+            var hashed = password;
+
+            var account = await _authorizationService.AuthorizeAsync(username, hashed);
+
+            if (account is not null)
             {
-                var claims = new List<Claim>();
-                claims.Add(new Claim("username", username));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                var claims = new List<Claim>() { new Claim("username", username), new Claim(ClaimTypes.NameIdentifier, account.Id.ToString())};
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect(returnUrl);
             }

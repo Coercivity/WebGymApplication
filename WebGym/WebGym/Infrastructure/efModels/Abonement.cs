@@ -17,6 +17,7 @@ namespace WebGym
         public DateTime FinishDate { get; set; }
         public int VisitsAmount { get; set; }
         public int? ClientId { get; set; }
+        public bool IsValid { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual ICollection<ServiceData> ServiceData { get; set; }

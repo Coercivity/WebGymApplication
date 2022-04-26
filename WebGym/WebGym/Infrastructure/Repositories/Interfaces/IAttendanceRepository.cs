@@ -7,7 +7,7 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IAttendanceRepository
     {
-        public Task<IEnumerable<Attendance>> GetAllAttendanciesByClientIdAsync();
+        public Task<List<Attendance>> GetAllAttendanciesByClientIdAsync();
         public Task<Attendance> GetLastAttendanceByClientIdAsync();
     }
 }

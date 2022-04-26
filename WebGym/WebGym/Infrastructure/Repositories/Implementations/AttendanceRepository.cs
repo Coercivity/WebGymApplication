@@ -8,7 +8,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 {
     public class AttendanceRepository : IAttendanceRepository
     {
-        public async Task<IEnumerable<Attendance>> GetAllAttendanciesByClientIdAsync()
+        public async Task<List<Attendance>> GetAllAttendanciesByClientIdAsync()
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.Services;
 using WebGym.Infrastructure;
+using WebGym.Infrastructure.Repositories;
+using WebGym.Infrastructure.Repositories.Implementations;
+using WebGym.Infrastructure.Repositories.Interfaces;
 
 namespace WebGym
 {
@@ -49,6 +53,12 @@ namespace WebGym
                     };
                 });
             services.AddDbContext<GymDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<AuthorizationService>();
+
 
         }
 

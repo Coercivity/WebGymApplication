@@ -1,12 +1,23 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebGym.Infrastructure.Repositories
 {
+
+
     public class AccountRepository : IAccountRepository
     {
+
+        private readonly GymDbContext _gymDbContext;
+
+        public AccountRepository(GymDbContext gymDbContext)
+        {
+            _gymDbContext = gymDbContext;
+        }
+
         public enum Role
         {
             Admin = 1,
@@ -14,29 +25,29 @@ namespace WebGym.Infrastructure.Repositories
             Client = 3
         };
 
-        public async Task<Account> GetAccountAsync(string Login, string Password)
+
+        public async Task<List<Client>> GetAllClientsAsync()
         {
-            throw new NotImplementedException();
+            var clients = await _gymDbContext.Clients.ToListAsync();
+            return clients;
         }
 
-        public async Task<IEnumerable<Client>> GetAllClientsAsync()
+        public async Task<List<Coach>> GetAllCoachesAsync()
         {
-            throw new NotImplementedException();
+            var coaches = await _gymDbContext.Coaches.ToListAsync();
+            return coaches;
         }
 
-        public async Task<IEnumerable<Coach>> GetAllCoachesAsync()
+        public async Task<Client> GetClientByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var client = await _gymDbContext.Clients.Where(op => op.AccountId.Equals(id)).FirstAsync();
+            return client;
         }
 
-        public async Task<Client> GetClientByIdAsync(int Id)
+        public async Task<Coach> GetCoachByIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Coach> GetCoachByIdAsync(int Id)
-        {
-            throw new NotImplementedException();
+            var coaches = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstAsync();
+            return coaches;
         }
     }
 }

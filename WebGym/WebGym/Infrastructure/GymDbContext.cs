@@ -103,10 +103,10 @@ namespace WebGym
             {
                 entity.ToTable("Client");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A72EF3CB89")
+                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A707F50258")
                     .IsUnique();
 
-                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C082825E7A2")
+                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C083D8E388B")
                     .IsUnique();
 
                 entity.Property(e => e.FirstName)
@@ -141,7 +141,7 @@ namespace WebGym
             {
                 entity.ToTable("Coach");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7A5A6BC4B")
+                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A73650C261")
                     .IsUnique();
 
                 entity.Property(e => e.Degree)
@@ -194,7 +194,7 @@ namespace WebGym
             modelBuilder.Entity<ServiceData>(entity =>
             {
                 entity.HasKey(e => new { e.AbonementId, e.AttendanceId })
-                    .HasName("PK__ServiceD__D9476643DDFCA722");
+                    .HasName("PK__ServiceD__D9476643F5EB21E8");
 
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.ServiceData)

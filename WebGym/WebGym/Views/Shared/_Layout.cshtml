@@ -10,8 +10,9 @@
 
     <body>
 
-        @RenderBody()
+
         @await Html.PartialAsync("HeaderPartial")
+        @RenderBody()
         @await Html.PartialAsync("FooterPartial")
 
 
