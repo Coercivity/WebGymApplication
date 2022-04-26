@@ -23,13 +23,6 @@ namespace WebGym.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult Secured()
-        {
-
-            return View();
-        }
-
         [HttpGet("login")]
         public IActionResult Login(string returnUrl = "/")
         {
@@ -43,20 +36,14 @@ namespace WebGym.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            var hashed = password;
-
-            var account = await _authorizationService.AuthorizeAsync(username, hashed);
-
-            if (account is not null)
+            var claimsPrincipal = await _authorizationService.AuthorizeAsync(username, password);
+            if (claimsPrincipal is not null)
             {
-                var claims = new List<Claim>() { new Claim("username", username), new Claim(ClaimTypes.NameIdentifier, account.Id.ToString())};
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect(returnUrl);
             }
-            TempData["Error"] = "Error. Wrong password or username";
+
+            TempData["Error"] = "Ошибка. Проверьте правильность введенных данных";
             return View("login");
         }
 

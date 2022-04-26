@@ -18,10 +18,17 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
         public async Task<Account> TryAuthorizeAsync(string login, string password)
         {
+            var account = await _gymDbContext.Accounts.Where(op => op.LoginData.Equals(login)).FirstOrDefaultAsync();
 
-            var account = await _gymDbContext.Accounts.Where(op => op.LoginData.Equals(login) 
-                                                        && op.PasswordData.Equals(password)).FirstOrDefaultAsync();
-            return account;
+            if (account is null)
+                return null;
+
+            bool ver = BCrypt.Net.BCrypt.Verify(password, account.PasswordData);
+            if (ver)
+                return account;
+            return null;
         }
+
+
     }
 }

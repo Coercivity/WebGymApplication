@@ -31,7 +31,7 @@ namespace WebGym
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;Trusted_Connection=True;");
             }
         }
 
@@ -67,7 +67,7 @@ namespace WebGym
 
                 entity.Property(e => e.PasswordData)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.Accounts)
@@ -103,10 +103,10 @@ namespace WebGym
             {
                 entity.ToTable("Client");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A707F50258")
+                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A7B6030407")
                     .IsUnique();
 
-                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C083D8E388B")
+                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C08C170ABC9")
                     .IsUnique();
 
                 entity.Property(e => e.FirstName)
@@ -141,7 +141,7 @@ namespace WebGym
             {
                 entity.ToTable("Coach");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A73650C261")
+                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7676FDA97")
                     .IsUnique();
 
                 entity.Property(e => e.Degree)
@@ -194,7 +194,7 @@ namespace WebGym
             modelBuilder.Entity<ServiceData>(entity =>
             {
                 entity.HasKey(e => new { e.AbonementId, e.AttendanceId })
-                    .HasName("PK__ServiceD__D9476643F5EB21E8");
+                    .HasName("PK__ServiceD__D9476643B1A46847");
 
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.ServiceData)

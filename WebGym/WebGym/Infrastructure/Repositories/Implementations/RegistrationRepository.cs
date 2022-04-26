@@ -8,10 +8,21 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 {
     public class RegistrationRepository : IRegistrationRepository
     {
-        public async Task TryRegisterClientAsync(string Login, string Password, string Email, string FirstName, 
-            string Surname, string Patronymic, string MobileNumber)
+        private readonly GymDbContext _gymDbContext;
+
+        public RegistrationRepository(GymDbContext gymDbContext)
         {
-            throw new NotImplementedException();
+            _gymDbContext = gymDbContext;
+        }
+
+        public async Task TryRegisterClientAsync(string login, string password, string email, string firstName, 
+            string surname, string Ppatronymic, string mobileNumber)
+        {
+            _gymDbContext.Accounts.Add( new Account { 
+                LoginData = login,
+                PasswordData = password,
+                Email = email
+            });
         }
 
         public async Task TryRegisterCoachAsync(string Login, string Password, string Email, string FirstName, 

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebGym.Infrastructure.Repositories.Interfaces;
 
@@ -14,12 +16,24 @@ namespace WebGym.Domain.Services
             _authorizationRepository = authorizationRepository;
         }
 
-       public async Task<Account> AuthorizeAsync(string login, string password)
+       public async Task<ClaimsPrincipal> AuthorizeAsync(string login, string password)
         {
             var account = await _authorizationRepository.TryAuthorizeAsync(login, password);
-            return account;
+
+            if(account is null)
+                return null;
+
+            var claims = new List<Claim>() { new Claim("username", account.LoginData), new Claim(ClaimTypes.NameIdentifier, account.Id.ToString())};
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+            return new ClaimsPrincipal(claimsIdentity);
         }
 
 
+
+
+
+        
     }
 }

@@ -8,7 +8,11 @@ CREATE TABLE StatisticsData(
 	Id INT IDENTITY PRIMARY KEY,
 	StartDate DATE NOT NULL,
 	FinishDate DATE NOT NULL,
-	VisitsAmount INT NOT NULL,
+	MedianPulse INT NOT NULL,
+	MedianHeadPressure INT NOT NULL,
+	MedianHeartPressure INT NOT NULL,
+	WeightData FLOAT NOT NULL,
+	VisitsAmount INT NOT NULL
 );
 
 
@@ -19,7 +23,6 @@ CREATE TABLE Account(
 	PasswordData NVARCHAR(50) NOT NULL,
 	Email NVARCHAR(50) NOT NULL,
 	GroupId INT NOT NULL FOREIGN KEY REFERENCES RoleGroup(Id),
-
 
 );
 
@@ -51,7 +54,8 @@ CREATE TABLE Abonement(
 	StartDate DATE NOT NULL,
 	FinishDate DATE NOT NULL,
 	VisitsAmount INT NOT NULL,
-	ClientId INT FOREIGN KEY REFERENCES Client(Id)
+	ClientId INT FOREIGN KEY REFERENCES Client(Id),
+	IsValid BIT NOT NULL
 );
 
 
