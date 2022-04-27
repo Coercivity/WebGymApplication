@@ -45,10 +45,14 @@
 
 @{
     var returnURL = ViewData["ReturnURL"] as string;
+    var error = TempData["authError"] as string;
 
 }
 
-<h2 class="danger" style="padding:20px">Ошибка. Проверьте правильность введенных данных</h2>
+@if(!string.IsNullOrEmpty(error))
+{
+    <h2 class="danger" style="padding:20px">@error</h2>
+}
 
 
 <form action="/login?ReturnURL=@System.Net.WebUtility.UrlEncode(returnURL)" method="post">

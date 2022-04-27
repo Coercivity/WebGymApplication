@@ -1,8 +1,25 @@
 ﻿
+@{
+    var errorAccountExists = TempData["registartionErrorAccountExists"] as string;
+    var error = TempData["registartionError"] as string;
+}
 
-<h2 class="success" style="padding:20px">Введите данные</h2>
+@if(!string.IsNullOrEmpty(error))
+{
+    <h2 class="danger" style="padding:20px">@error</h2>
+}
+else if(!string.IsNullOrEmpty(errorAccountExists))
+{
+    <h2 class="danger" style="padding:20px">@errorAccountExists</h2>
+}
+else
+{
+    <h2 class="success" style="padding:20px">Введите данные</h2>
+}
 
-<form  asp-controller="Authorization" asp-action="TryRegister" >
+
+
+<form asp-controller="Authorization" asp-action="TryRegister">
     <input type="text" name="login" placeholder="Login" minlength="3" required />
     <input type="password" name="password" placeholder="Password" minlength="3" required />
     <input type="email" name="email" placeholder="Email" minlength="3" required />

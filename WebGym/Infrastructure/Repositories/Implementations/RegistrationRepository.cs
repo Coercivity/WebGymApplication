@@ -27,11 +27,26 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             if (account is not null)
                 return RegistrationStatus.AccountExists;
 
+            var id = Guid.NewGuid();
+
             _gymDbContext.Accounts.Add( new Account { 
+                Id = id,
                 LoginData = login,
                 PasswordData = BCrypt.Net.BCrypt.HashPassword(password),
                 Email = email,
                 GroupId = (int)Role.Client
+            });
+
+            _gymDbContext.StatisticsData.Add(new StatisticsData
+            {
+                Id = id
+            });
+
+            _gymDbContext.Clients.Add(new Client
+            {
+                Id = id,
+                StatisticsDataId = id,
+                AccountId = id
             });
 
             try

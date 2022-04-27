@@ -8,7 +8,7 @@ namespace WebGym.Infrastructure.Repositories
 {
     public class StatisticsRepository : IStatisticsRepository
     {
-        public async Task<StatisticsData> GetStatisticsByIdAsync()
+        public async Task<StatisticsData> GetStatisticsByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

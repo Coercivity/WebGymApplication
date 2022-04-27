@@ -17,9 +17,9 @@ namespace WebGym.Domain.Services
 
         public async Task<RegistrationStatus> Registrate(string login, string password, string email)
         {
-            var success = await _registrationRepository.TryRegisterClientAsync(login, password, email);
+            var code = await _registrationRepository.TryRegisterClientAsync(login, password, email);
 
-            return success;
+            return code;
         }
     }
 }

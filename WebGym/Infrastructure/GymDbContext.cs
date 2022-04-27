@@ -8,7 +8,6 @@ namespace WebGym
 {
     public partial class GymDbContext : DbContext
     {
-
         public GymDbContext()
         {
         }
@@ -32,7 +31,8 @@ namespace WebGym
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;");
             }
         }
 
@@ -43,6 +43,8 @@ namespace WebGym
             modelBuilder.Entity<Abonement>(entity =>
             {
                 entity.ToTable("Abonement");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.FinishDate).HasColumnType("date");
 
@@ -57,6 +59,8 @@ namespace WebGym
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.ToTable("Account");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -104,28 +108,23 @@ namespace WebGym
             {
                 entity.ToTable("Client");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A7B6030407")
+                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A7DF33481D")
                     .IsUnique();
 
-                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C08C170ABC9")
+                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C083E9602F1")
                     .IsUnique();
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Patronymic)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.Patronymic).HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(16)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Surname).HasMaxLength(50);
 
                 entity.HasOne(d => d.Account)
                     .WithOne(p => p.Client)
@@ -142,29 +141,22 @@ namespace WebGym
             {
                 entity.ToTable("Coach");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7676FDA97")
+                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7450D3160")
                     .IsUnique();
 
-                entity.Property(e => e.Degree)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Degree).HasMaxLength(50);
 
-                entity.Property(e => e.Patronymic)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.Patronymic).HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(16)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Surname).HasMaxLength(50);
 
                 entity.HasOne(d => d.Account)
                     .WithOne(p => p.Coach)
@@ -187,6 +179,8 @@ namespace WebGym
             {
                 entity.ToTable("ServiceDataType");
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.NameData).HasMaxLength(50);
 
                 entity.Property(e => e.Price).HasColumnType("money");
@@ -195,7 +189,7 @@ namespace WebGym
             modelBuilder.Entity<ServiceData>(entity =>
             {
                 entity.HasKey(e => new { e.AbonementId, e.AttendanceId })
-                    .HasName("PK__ServiceD__D9476643B1A46847");
+                    .HasName("PK__ServiceD__D9476643F5394230");
 
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.ServiceData)
@@ -217,6 +211,8 @@ namespace WebGym
 
             modelBuilder.Entity<StatisticsData>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.FinishDate).HasColumnType("date");
 
                 entity.Property(e => e.StartDate).HasColumnType("date");

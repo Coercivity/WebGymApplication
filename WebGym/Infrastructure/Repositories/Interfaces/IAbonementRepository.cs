@@ -7,7 +7,7 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IAbonementRepository
     {
-        public Task<Abonement> GetValidAbonementByClientIdAsync(int Id);
-        public Task<Abonement> GetAllAbonementsByClientIdAsync(int Id);
+        public Task<Abonement> GetValidAbonementByClientIdAsync(Guid id);
+        public Task<Abonement> GetAllAbonementsByClientIdAsync(Guid id);
     }
 }

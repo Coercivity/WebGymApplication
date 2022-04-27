@@ -27,7 +27,6 @@ namespace WebGym.Controllers
         }
 
 
-
         [HttpGet("login")]
         public IActionResult Login(string returnUrl = "/")
         {
@@ -47,7 +46,7 @@ namespace WebGym.Controllers
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect(returnUrl);
             }
-
+            TempData["authError"] = "Ошибка.Проверьте правильность введенных данных";
             return View("login");
         }
 
@@ -69,8 +68,17 @@ namespace WebGym.Controllers
         {
             var code = await _registrationService.Registrate(login, password, email);
             if (code == RegistrationStatus.Successuful)
+            {
+                TempData["registartionSuccess"] = "Успешная регистрация";
                 return Redirect("/login");
-            return View();
+            }
+
+            if(code == RegistrationStatus.AccountExists)
+                TempData["registartionErrorAccountExists"] = "Аккаунт с таким именем уже существует";
+            else if(code == RegistrationStatus.Error)
+                TempData["registartionError"] = "Ошибка регистрации, попробуйте еще раз";
+
+            return View("Register");
         }
     }
 }

@@ -12,13 +12,13 @@ namespace WebGym
             Abonements = new HashSet<Abonement>();
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
         public string PhoneNumber { get; set; }
-        public int? AccountId { get; set; }
-        public int? StatisticsDataId { get; set; }
+        public Guid? AccountId { get; set; }
+        public Guid? StatisticsDataId { get; set; }
 
         public virtual Account Account { get; set; }
         public virtual StatisticsData StatisticsData { get; set; }

@@ -7,7 +7,7 @@ namespace WebGym
 {
     public partial class Account
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string LoginData { get; set; }
         public string PasswordData { get; set; }
         public string Email { get; set; }

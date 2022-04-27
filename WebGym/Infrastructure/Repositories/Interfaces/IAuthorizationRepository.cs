@@ -7,6 +7,6 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IAuthorizationRepository
     {
-        public Task<Account> TryAuthorizeAsync(string Login, string Password);
+        public Task<Account> TryAuthorizeAsync(string login, string password);
     }
 }

@@ -16,12 +16,12 @@ namespace WebGym.Infrastructure.Repositories
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<Abonement> GetAllAbonementsByClientIdAsync(int id)
+        public async Task<Abonement> GetAllAbonementsByClientIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Abonement> GetValidAbonementByClientIdAsync(int id)
+        public async Task<Abonement> GetValidAbonementByClientIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

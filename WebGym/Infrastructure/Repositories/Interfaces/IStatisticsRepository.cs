@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IStatisticsRepository
     {
-        public Task<StatisticsData> GetStatisticsByIdAsync();
+        public Task<StatisticsData> GetStatisticsByIdAsync(Guid id);
     }
 }

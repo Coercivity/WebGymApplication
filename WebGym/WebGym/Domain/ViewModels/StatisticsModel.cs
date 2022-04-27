@@ -7,7 +7,7 @@ namespace WebGym.Domain.ViewModels
 {
     public class StatisticsModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int ClientId { get; set; }
         public int MedianPulse { get; set; }
         public int VisitsAmount { get; set; }

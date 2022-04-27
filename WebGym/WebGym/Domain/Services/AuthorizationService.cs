@@ -31,7 +31,10 @@ namespace WebGym.Domain.Services
         }
 
 
-
+        public enum ClaimType 
+        {
+            Id = 1
+        }
 
 
         

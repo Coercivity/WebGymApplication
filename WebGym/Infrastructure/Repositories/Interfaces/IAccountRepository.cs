@@ -7,9 +7,10 @@ namespace WebGym.Infrastructure
 {
     public interface IAccountRepository
     { 
-        public Task<Client> GetClientByIdAsync(int id); 
+        public Task<Client> GetClientByIdAsync(Guid id); 
+        public Task<Account> GetAccountByIdAsync(Guid id); 
         public Task<Account> GetAccountByLoginAsync(string login); 
-        public Task<Coach> GetCoachByIdAsync(int id);
+        public Task<Coach> GetCoachByIdAsync(Guid id);
         public Task<List<Coach>> GetAllCoachesAsync();
         public Task<List<Client>> GetAllClientsAsync();
 

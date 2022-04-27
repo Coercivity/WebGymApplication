@@ -12,7 +12,7 @@ namespace WebGym
             ServiceData = new HashSet<ServiceData>();
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string NameData { get; set; }
         public decimal? Price { get; set; }
 

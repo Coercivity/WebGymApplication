@@ -36,18 +36,22 @@ namespace WebGym.Infrastructure.Repositories
             return coaches;
         }
 
-        public async Task<Client> GetClientByIdAsync(int id)
+        public async Task<Client> GetClientByIdAsync(Guid id)
         {
             var client = await _gymDbContext.Clients.Where(op => op.AccountId.Equals(id)).FirstAsync();
             return client;
         }
 
-        public async Task<Coach> GetCoachByIdAsync(int id)
+        public async Task<Coach> GetCoachByIdAsync(Guid id)
         {
             var coaches = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstAsync();
             return coaches;
         }
 
-
+        public async Task<Account> GetAccountByIdAsync(Guid id)
+        {
+            var accounts = await _gymDbContext.Accounts.Where(op => op.Id.Equals(id)).FirstAsync();
+            return accounts;
+        }
     }
 }

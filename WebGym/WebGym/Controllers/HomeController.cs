@@ -17,6 +17,7 @@ namespace WebGym.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

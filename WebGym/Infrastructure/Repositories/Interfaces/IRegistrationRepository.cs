@@ -7,6 +7,6 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public interface IRegistrationRepository
     {
-        public Task<RegistrationStatus> TryRegisterClientAsync(string Login, string Password, string Email);
+        public Task<RegistrationStatus> TryRegisterClientAsync(string login, string password, string email);
     }
 }
