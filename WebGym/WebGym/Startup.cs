@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebGym.Domain.Services;
 using WebGym.Infrastructure;
@@ -57,7 +52,9 @@ namespace WebGym
 
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<AuthorizationService>();
+            services.AddTransient<RegistrationService>();
 
 
         }

@@ -45,16 +45,19 @@
 
 @{
     var returnURL = ViewData["ReturnURL"] as string;
-    var error = TempData["Error"] as string;
 
 }
-@if(!string.IsNullOrEmpty(error))
-            {
-<h2 class="danger"style="padding:20px" >@error</h2>
-            }
-                                <form action="/login?ReturnURL=@System.Net.WebUtility.UrlEncode(returnURL)" method="post" >
-                                    <input type="text" name="username" placeholder="Username" minlength="3" required/>
-                                    <input type="password" name="password" placeholder="Password" minlength="3" required/>
-                                    <input type="submit" value="login" />
 
-                                </form>
+<h2 class="danger" style="padding:20px">Ошибка. Проверьте правильность введенных данных</h2>
+
+
+<form action="/login?ReturnURL=@System.Net.WebUtility.UrlEncode(returnURL)" method="post">
+    <input type="text" name="login" placeholder="Username" minlength="3" required />
+    <input type="password" name="password" placeholder="Password" minlength="3" required />
+    <input type="submit" value="Войти" />
+
+</form>
+
+<form asp-controller="Authorization" asp-action="Register">
+    <input type="submit" value="Зарегистрироваться" />
+</form>
