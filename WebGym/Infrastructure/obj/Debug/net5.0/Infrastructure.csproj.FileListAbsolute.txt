@@ -1,0 +1,15 @@
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\Infrastructure.deps.json
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\Infrastructure.runtimeconfig.json
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\Infrastructure.runtimeconfig.dev.json
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\Infrastructure.dll
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\ref\Infrastructure.dll
+C:\New folder\WebGymApplication\WebGym\Infrastructure\bin\Debug\net5.0\Infrastructure.pdb
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.csproj.AssemblyReference.cache
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.AssemblyInfoInputs.cache
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.AssemblyInfo.cs
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.dll
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\ref\Infrastructure.dll
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.pdb
+C:\New folder\WebGymApplication\WebGym\Infrastructure\obj\Debug\net5.0\Infrastructure.genruntimeconfig.cache
