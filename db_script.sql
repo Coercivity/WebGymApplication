@@ -1,0 +1,90 @@
+CREATE TABLE RoleGroup(
+	Id INT PRIMARY KEY,
+	RoleName NVARCHAR(12) NOT NULL
+);
+
+
+CREATE TABLE StatisticsData(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	StartDate DATE,
+	FinishDate DATE,
+	MedianPulse INT,
+	MedianHeadPressure INT,
+	MedianHeartPressure INT,
+	WeightData FLOAT,
+	VisitsAmount INT
+);
+
+
+CREATE TABLE Account(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	
+	LoginData NVARCHAR(50) NOT NULL,
+	PasswordData NVARCHAR(100) NOT NULL,
+	Email NVARCHAR(50) NOT NULL,
+	GroupId INT NOT NULL FOREIGN KEY REFERENCES RoleGroup(Id),
+
+);
+
+CREATE TABLE Client(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	FirstName NVARCHAR(50),
+	Surname NVARCHAR(50),
+	Patronymic NVARCHAR(50),
+	PhoneNumber VARCHAR(16),
+	AccountId UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES Account(Id),
+	StatisticsDataId UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES StatisticsData(Id)
+);
+
+
+CREATE TABLE Coach(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	FirstName NVARCHAR(50),
+	Surname NVARCHAR(50),
+	Patronymic NVARCHAR(50),
+	PhoneNumber VARCHAR(16),
+	Experience INT,
+	Degree NVARCHAR(50),
+	AccountId UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES Account(Id)
+
+);
+
+CREATE TABLE Abonement(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	StartDate DATE,
+	FinishDate DATE,
+	VisitsAmount INT,
+	ClientId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Client(Id),
+	IsValid BIT
+);
+
+
+
+CREATE TABLE Attendance(
+	ID UNIQUEIDENTIFIER PRIMARY KEY,
+	CoachId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Coach(Id),
+	StatisticsDataId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES StatisticsData(Id),
+	StartTime DATE,
+	FinishTime DATE,
+	Pulse INT,
+	HeadPressure INT,
+	HeartPressure INT,
+	WeightData FLOAT,
+);
+
+
+CREATE TABLE ServiceDataType(
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	NameData NVARCHAR(50),
+	Price MONEY
+);
+
+CREATE TABLE ServiceData(
+	AbonementId UNIQUEIDENTIFIER,
+	AttendanceId UNIQUEIDENTIFIER,
+	ServiceDataTypeId UNIQUEIDENTIFIER,
+	FOREIGN KEY(AbonementId) REFERENCES Abonement(Id),
+	FOREIGN KEY(AttendanceId) REFERENCES Attendance(Id),
+	FOREIGN KEY(ServiceDataTypeId) REFERENCES ServiceDataType(Id),
+	PRIMARY KEY(AbonementId, AttendanceId)
+);
