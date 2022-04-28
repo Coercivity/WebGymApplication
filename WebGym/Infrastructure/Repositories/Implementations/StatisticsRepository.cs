@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +9,17 @@ namespace WebGym.Infrastructure.Repositories
 {
     public class StatisticsRepository : IStatisticsRepository
     {
+        private readonly GymDbContext _gymDbContext;
+
+        public StatisticsRepository(GymDbContext gymDbContext)
+        {
+            _gymDbContext = gymDbContext;
+        }
+
         public async Task<StatisticsData> GetStatisticsByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var statistics = await _gymDbContext.StatisticsData.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+            return statistics;
         }
     }
 }

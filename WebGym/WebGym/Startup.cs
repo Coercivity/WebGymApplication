@@ -53,6 +53,9 @@ namespace WebGym
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
+            services.AddTransient<IStatisticsRepository, StatisticsRepository>();
+            services.AddTransient<IAbonementRepository, AbonementRepository>();
+            services.AddTransient<IAttendanceRepository, AttendanceRepository>();
             services.AddTransient<AuthorizationService>();
             services.AddTransient<RegistrationService>();
             services.AddTransient<AccountService>();

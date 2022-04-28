@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,12 +9,20 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 {
     public class AttendanceRepository : IAttendanceRepository
     {
-        public async Task<List<Attendance>> GetAllAttendanciesByClientIdAsync(Guid id)
+        private readonly GymDbContext _gymDbContext;
+
+        public AttendanceRepository(GymDbContext gymDbContext)
         {
-            throw new NotImplementedException();
+            _gymDbContext = gymDbContext;
         }
 
-        public async Task<Attendance> GetLastAttendanceByClientIdAsync(Guid id)
+        public async Task<List<Attendance>> GetAllAttendanciesByStatisticsIdAsync(Guid id)
+        {
+            var attendances = await _gymDbContext.Attendances.Where(x => x.StatisticsDataId.Equals(id)).ToListAsync();
+            return attendances;
+        }
+
+        public Task<Attendance> GetLastAttendanceByStatisticsIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
