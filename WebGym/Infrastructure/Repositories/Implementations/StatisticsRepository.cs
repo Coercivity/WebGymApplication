@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Infrastructure.Repositories
 {
@@ -16,10 +15,10 @@ namespace WebGym.Infrastructure.Repositories
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<StatisticsData> GetStatisticsByIdAsync(Guid id)
+        public async Task<StatisticsDataDto> GetStatisticsByIdAsync(Guid id)
         {
             var statistics = await _gymDbContext.StatisticsData.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
-            return statistics;
+            return Mapper.MapStatisticsData(statistics);
         }
     }
 }

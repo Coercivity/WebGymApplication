@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Infrastructure.Repositories
 {
@@ -16,12 +14,13 @@ namespace WebGym.Infrastructure.Repositories
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<Abonement> GetAllAbonementsByClientIdAsync(Guid id)
+
+        public async Task<AbonementDto> GetAllAbonementsByClientIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Abonement> GetValidAbonementByClientIdAsync(Guid id)
+        public async Task<AbonementDto> GetValidAbonementByClientIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Domain.Services
 {

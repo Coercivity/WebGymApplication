@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Infrastructure.Repositories.Implementations
 {
@@ -16,7 +14,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<Account> TryAuthorizeAsync(string login, string password)
+        public async Task<AccountDto> TryAuthorizeAsync(string login, string password)
         {
             var account = await _gymDbContext.Accounts.Where(x => x.LoginData.Equals(login)).FirstOrDefaultAsync();
 
@@ -25,7 +23,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
             bool isValid = BCrypt.Net.BCrypt.Verify(password, account.PasswordData);
             if (isValid)
-                return account;
+                return Mapper.MapAccount(account);
 
             return null;
         }

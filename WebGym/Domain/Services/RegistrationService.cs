@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+﻿using System.Threading.Tasks;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Domain.Services
 {

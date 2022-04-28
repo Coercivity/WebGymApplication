@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebGym.Infrastructure.efModels;
 
 #nullable disable
 
-namespace WebGym
+namespace WebGym.Infrastructure
 {
     public partial class GymDbContext : DbContext
     {

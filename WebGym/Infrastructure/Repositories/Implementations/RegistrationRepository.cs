@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
-
+using WebGym.Domain.InterfacesToDb;
+using WebGym.Infrastructure.efModels;
 
 namespace WebGym.Infrastructure.Repositories.Implementations
 {

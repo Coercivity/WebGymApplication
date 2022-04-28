@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym
+namespace WebGym.Infrastructure.efModels
 {
     public partial class RoleGroup
     {

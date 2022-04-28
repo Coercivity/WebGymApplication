@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.ViewModels;
-using WebGym.Infrastructure;
-using WebGym.Infrastructure.Repositories.Interfaces;
+
 
 namespace WebGym.Domain.Services
 {
@@ -37,11 +37,6 @@ namespace WebGym.Domain.Services
                 MedianPulse = statistics.MedianPulse,
                 Weight = statistics.WeightData,
                 VisitsAmount = statistics.VisitsAmount
-            
-                
-                
-                
-               
 
                 
             };

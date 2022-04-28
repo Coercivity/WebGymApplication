@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Infrastructure.Repositories.Interfaces;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Infrastructure.Repositories.Implementations
 {
@@ -16,13 +16,14 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<List<Attendance>> GetAllAttendanciesByStatisticsIdAsync(Guid id)
+        public async Task<List<AttendanceDto>> GetAllAttendanciesByStatisticsIdAsync(Guid id)
         {
+            
             var attendances = await _gymDbContext.Attendances.Where(x => x.StatisticsDataId.Equals(id)).ToListAsync();
-            return attendances;
+            return Mapper.MapAttendancesDto(attendances);
         }
 
-        public Task<Attendance> GetLastAttendanceByStatisticsIdAsync(Guid id)
+        public Task<AttendanceDto> GetLastAttendanceByStatisticsIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

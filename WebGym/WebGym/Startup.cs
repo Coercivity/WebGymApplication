@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
+using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.Services;
 using WebGym.Infrastructure;
 using WebGym.Infrastructure.Repositories;
 using WebGym.Infrastructure.Repositories.Implementations;
-using WebGym.Infrastructure.Repositories.Interfaces;
 
 namespace WebGym
 {

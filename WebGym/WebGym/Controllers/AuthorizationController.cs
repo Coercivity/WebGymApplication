@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.Services;
-using WebGym.Infrastructure.Repositories.Interfaces;
 
 namespace WebGym.Controllers
 {

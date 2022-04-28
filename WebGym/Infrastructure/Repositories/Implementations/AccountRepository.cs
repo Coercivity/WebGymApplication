@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Infrastructure.Repositories
 {
-
 
     public class AccountRepository : IAccountRepository
     {
@@ -18,40 +18,41 @@ namespace WebGym.Infrastructure.Repositories
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<List<Client>> GetAllClientsAsync()
+        public async Task<List<ClientDto>> GetAllClientsAsync()
         {
             var clients = await _gymDbContext.Clients.ToListAsync();
-            return clients;
+            return Mapper.MapClientsDto(clients);
         }
 
-        public async Task<Account> GetAccountByLoginAsync(string login)
+        public async Task<AccountDto> GetAccountByLoginAsync(string login)
         {
             var account = await _gymDbContext.Accounts.Where(x => x.LoginData.Equals(login)).FirstOrDefaultAsync();
-            return account;
+            return Mapper.MapAccount(account);
         }
 
-        public async Task<List<Coach>> GetAllCoachesAsync()
+        public async Task<List<CoachDto>> GetAllCoachesAsync()
         {
+
             var coaches = await _gymDbContext.Coaches.ToListAsync();
-            return coaches;
+            return Mapper.MapCoachesDto(coaches);
         }
 
-        public async Task<Client> GetClientByIdAsync(Guid id)
+        public async Task<ClientDto> GetClientByIdAsync(Guid id)
         {
             var client = await _gymDbContext.Clients.Where(op => op.AccountId.Equals(id)).FirstOrDefaultAsync();
-            return client;
+            return Mapper.MapClient(client);
         }
 
-        public async Task<Coach> GetCoachByIdAsync(Guid id)
+        public async Task<CoachDto> GetCoachByIdAsync(Guid id)
         {
-            var coaches = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstOrDefaultAsync();
-            return coaches;
+            var coach = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstOrDefaultAsync();
+            return Mapper.MapCoach(coach);
         }
 
-        public async Task<Account> GetAccountByIdAsync(Guid id)
+        public async Task<AccountDto> GetAccountByIdAsync(Guid id)
         {
             var accounts = await _gymDbContext.Accounts.Where(op => op.Id.Equals(id)).FirstOrDefaultAsync();
-            return accounts;
+            return Mapper.MapAccount(accounts);
         }
 
         public async Task<bool> CheckIfAccountExists(string login, string email)
@@ -62,5 +63,7 @@ namespace WebGym.Infrastructure.Repositories
 
             return false;
         }
+
+
     }
 }

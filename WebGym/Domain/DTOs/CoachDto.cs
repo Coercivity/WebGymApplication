@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebGym
 {
-    public partial class CoachDto
+    public class CoachDto
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

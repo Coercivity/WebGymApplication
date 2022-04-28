@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebGym
 {
-    public partial class ServiceDataDto
+    public class ServiceDataDto
     {
         public Guid AbonementId { get; set; }
         public Guid AttendanceId { get; set; }
