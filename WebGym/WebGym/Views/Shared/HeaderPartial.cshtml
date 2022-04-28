@@ -15,6 +15,7 @@
                         <li><a href="/" data-nav-section="testimonials"><span>Отзывы</span></a></li>
                         <li><a href="/" data-nav-section="pricing"><span>Прейскурант</span></a></li>
                         <li><a href="/" data-nav-section="press"><span>Новости</span></a></li>
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Index"><span>Личный кабинет</span></a></li>
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li><a class="nav-link" asp-controller="Authorization" asp-action="Login"><span>Войти</span></a></li>
@@ -23,8 +24,7 @@
                         {
                             <li><a class="nav-link" asp-controller="Authorization" asp-action="Logout"><span>Выйти</span></a></li>
                         }
-                        <li><a class="nav-link" asp-controller="Account" asp-action="Index"><span>Личный кабинет</span></a></li>
-                        
+
                     </ul>
 		        </div>
 			    </nav>

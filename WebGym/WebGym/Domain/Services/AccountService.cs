@@ -26,6 +26,7 @@ namespace WebGym.Domain.Services
             var accountModel = new ClientAccountModel()
             {
                 Id = client.Id,
+                FullName = client.FirstName + " " + client.Surname + " " + client.Patronymic,
                 FirstName = client.FirstName,
                 Surname = client.Surname,
                 Patronymic = client.Patronymic,
@@ -37,9 +38,6 @@ namespace WebGym.Domain.Services
             return accountModel;
         }
 
-        internal Task GetClientAccountModel(object p)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

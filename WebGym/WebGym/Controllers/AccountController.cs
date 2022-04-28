@@ -29,5 +29,14 @@ namespace WebGym.Controllers
 
             return View(accountModel);
         }
+
+
+        [Authorize]
+        public async Task<IActionResult> EditCredentials()
+        {
+
+
+            return View();
+        }
     }
 }

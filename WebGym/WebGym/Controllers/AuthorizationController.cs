@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebGym.Domain.Services;
 using WebGym.Infrastructure.Repositories.Interfaces;
@@ -41,11 +38,13 @@ namespace WebGym.Controllers
             ViewData["ReturnUrl"] = returnUrl;
 
             var claimsPrincipal = await _authorizationService.AuthorizeAsync(login, password);
+
             if (claimsPrincipal is not null)
             {
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect(returnUrl);
             }
+
             TempData["authError"] = "Ошибка.Проверьте правильность введенных данных";
             return View("login");
         }
@@ -67,7 +66,7 @@ namespace WebGym.Controllers
         public async Task<IActionResult> TryRegister(string login, string password, string email)
         {
             var code = await _registrationService.Registrate(login, password, email);
-            if (code == RegistrationStatus.Successuful)
+            if (code == RegistrationStatus.Successful)
             {
                 TempData["registartionSuccess"] = "Успешная регистрация";
                 return Redirect("/login");

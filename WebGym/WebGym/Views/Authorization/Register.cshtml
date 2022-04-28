@@ -1,16 +1,22 @@
 ﻿
+
 @{
     var errorAccountExists = TempData["registartionErrorAccountExists"] as string;
     var error = TempData["registartionError"] as string;
+    var success = TempData["registartionSuccess"] as string;
 }
 
-@if(!string.IsNullOrEmpty(error))
+@if (!string.IsNullOrEmpty(error))
 {
     <h2 class="danger" style="padding:20px">@error</h2>
 }
-else if(!string.IsNullOrEmpty(errorAccountExists))
+else if (!string.IsNullOrEmpty(errorAccountExists))
 {
     <h2 class="danger" style="padding:20px">@errorAccountExists</h2>
+}
+else if (!string.IsNullOrEmpty(success))
+{
+    <h2 class="danger" style="padding:20px">@success</h2>
 }
 else
 {

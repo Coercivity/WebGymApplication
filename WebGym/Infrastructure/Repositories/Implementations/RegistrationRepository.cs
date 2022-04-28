@@ -10,8 +10,6 @@ namespace WebGym.Infrastructure.Repositories.Implementations
     public class RegistrationRepository : IRegistrationRepository
     {
 
-
-
         private readonly GymDbContext _gymDbContext;
         private readonly IAccountRepository _accountRepository ;
 
@@ -23,8 +21,8 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
         public async Task<RegistrationStatus> TryRegisterClientAsync(string login, string password, string email)
         {
-            var account = await _accountRepository.GetAccountByLoginAsync(login);
-            if (account is not null)
+            var accountExists = await _accountRepository.CheckIfAccountExists(login, email);
+            if (accountExists)
                 return RegistrationStatus.AccountExists;
 
             var id = Guid.NewGuid();
@@ -55,10 +53,9 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             }
             catch (Exception e)
             {
-                
                 return RegistrationStatus.Error;
             }
-            return RegistrationStatus.Successuful;
+            return RegistrationStatus.Successful;
             
         }
 

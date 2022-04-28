@@ -38,20 +38,29 @@ namespace WebGym.Infrastructure.Repositories
 
         public async Task<Client> GetClientByIdAsync(Guid id)
         {
-            var client = await _gymDbContext.Clients.Where(op => op.AccountId.Equals(id)).FirstAsync();
+            var client = await _gymDbContext.Clients.Where(op => op.AccountId.Equals(id)).FirstOrDefaultAsync();
             return client;
         }
 
         public async Task<Coach> GetCoachByIdAsync(Guid id)
         {
-            var coaches = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstAsync();
+            var coaches = await _gymDbContext.Coaches.Where(op => op.AccountId.Equals(id)).FirstOrDefaultAsync();
             return coaches;
         }
 
         public async Task<Account> GetAccountByIdAsync(Guid id)
         {
-            var accounts = await _gymDbContext.Accounts.Where(op => op.Id.Equals(id)).FirstAsync();
+            var accounts = await _gymDbContext.Accounts.Where(op => op.Id.Equals(id)).FirstOrDefaultAsync();
             return accounts;
+        }
+
+        public async Task<bool> CheckIfAccountExists(string login, string email)
+        {
+           var account = await _gymDbContext.Accounts.Where(x => x.Email.Equals(email) || x.LoginData.Equals(login)).FirstOrDefaultAsync();
+           if (account is not null)
+                return true;
+
+            return false;
         }
     }
 }

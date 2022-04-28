@@ -13,6 +13,6 @@ namespace WebGym.Infrastructure
         public Task<Coach> GetCoachByIdAsync(Guid id);
         public Task<List<Coach>> GetAllCoachesAsync();
         public Task<List<Client>> GetAllClientsAsync();
-
+        public Task<bool> CheckIfAccountExists(string login, string email);
     }
 }

@@ -7,7 +7,7 @@ namespace WebGym.Infrastructure.Repositories.Interfaces
 {
     public enum RegistrationStatus
     {
-        Successuful = 1,
+        Successful = 1,
         AccountExists,
         Error
     }
