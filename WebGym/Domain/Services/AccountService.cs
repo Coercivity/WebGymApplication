@@ -28,7 +28,7 @@ namespace WebGym.Domain.Services
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
             var statistics = await _statisticsRepository.GetStatisticsByIdAsync(claimId);
             var attendancies = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(claimId);
-           
+
 
             var accountStatistics = new StatisticsModel()
             {
@@ -37,6 +37,7 @@ namespace WebGym.Domain.Services
                 MedianPulse = statistics.MedianPulse,
                 Weight = statistics.WeightData,
                 VisitsAmount = statistics.VisitsAmount
+                //ClientAttendances = attendancies
 
                 
             };

@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebGym.Infrastructure.efModels;
 
 #nullable disable
@@ -9,9 +8,6 @@ namespace WebGym.Infrastructure
 {
     public partial class GymDbContext : DbContext
     {
-        public GymDbContext()
-        {
-        }
 
         public GymDbContext(DbContextOptions<GymDbContext> options)
             : base(options)
@@ -30,10 +26,7 @@ namespace WebGym.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;");
-            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
