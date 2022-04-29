@@ -2,7 +2,7 @@
 
 
 <body style="color: #1a202c; text-align: left; background-color: #e2e8f0;">
-<h2 class="success text-center">Личный кабинет</h2>
+<h2 class="success text-center">Личный кабинет клиента</h2>
 
 <div class="container">
     <div class="main-body">
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0" style="font-size:16px" >Логин</h6>
+                                <h6 class="mb-0" style="font-size:16px">Логин</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 @Model.Login
@@ -88,9 +88,27 @@
                                     @Model.MobileNumber
                                 </div>
                             }
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0 " style="font-size:16px">Телефон</h6>
+                            </div>
+                            @if (@Model.MobileNumber is null)
+                            {
+                                <div class="col-sm-9 text-secondary">
+                                    ---
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.MobileNumber
+                                </div>
+                            }
 
                         </div>
-                       
+                        <hr>
                         <div class="row">
                             <div class="col-sm-12" style="text-align:center; margin-top:6px">
                                 <a class="btn btn-info" asp-controller="Account" asp-action="EditCredentials">Редактировать</a>

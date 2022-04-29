@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebGym.Infrastructure.efModels;
 
 #nullable disable

@@ -28,6 +28,7 @@ namespace WebGym
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
                 AddCookie(op => {
                     op.LoginPath = "/login";
+                    op.AccessDeniedPath = "/denied";
                     //For claims checking purpose
                     op.Events = new CookieAuthenticationEvents()
                     {

@@ -22,7 +22,6 @@ namespace Infrastructure
             services.AddTransient<IAbonementRepository, AbonementRepository>();
             services.AddTransient<IAttendanceRepository, AttendanceRepository>();
 
-            services.AddDbContext<GymDbContext>(x => x.UseSqlServer(connectionString));
 
             return services;
         }

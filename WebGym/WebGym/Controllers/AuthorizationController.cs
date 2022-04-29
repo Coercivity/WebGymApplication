@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WebGym.Domain.InterfacesToDb;
+using WebGym.Domain.Enums;
 using WebGym.Domain.Services;
 
 namespace WebGym.Controllers

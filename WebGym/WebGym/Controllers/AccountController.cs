@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebGym.Domain.Enums;
 using WebGym.Domain.Services;
-using WebGym.Domain.ViewModels;
-using WebGym.Infrastructure;
+
 
 namespace WebGym.Controllers
 {
@@ -24,11 +22,22 @@ namespace WebGym.Controllers
         public async Task<IActionResult> Index()
         {
             var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userRole = User.FindFirst(ClaimTypes.Role).Value;
 
-            var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+            if (userRole == Role.Coach.ToString())
+            {
+                var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
 
-            return View(accountModel);
+                return View("CoachAccountView", accountModel);
+            }
+            else
+            {
+                var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+
+                return View("ClientAccountView", accountModel);
+            }
         }
+
 
 
         [Authorize]

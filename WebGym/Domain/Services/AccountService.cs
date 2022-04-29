@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.ViewModels;
@@ -56,6 +54,39 @@ namespace WebGym.Domain.Services
             };
             return accountModel;
         }
+
+
+
+
+
+        public async Task<CoachAccountModel> GetCoachAccountModel(Guid claimId)
+        {
+            var coach = await _accountRepository.GetCoachByIdAsync(claimId);
+            var account = await _accountRepository.GetAccountByIdAsync(claimId);
+            
+
+
+            var accountModel = new CoachAccountModel()
+            {
+                Id = coach.Id,
+                FullName = coach.FirstName + " " + coach.Surname + " " + coach.Patronymic,
+                FirstName = coach.FirstName,
+                Surname = coach.Surname,
+                Patronymic = coach.Patronymic,
+                MobileNumber = coach.PhoneNumber,
+                Email = account.Email,
+                Login = account.LoginData,
+                Experience = coach.Experience,
+                Rank = coach.Degree
+
+
+            };
+            return accountModel;
+        }
+
+
+
+
 
 
     }

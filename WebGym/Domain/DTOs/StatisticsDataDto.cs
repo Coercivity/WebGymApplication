@@ -7,7 +7,6 @@ namespace WebGym
 {
     public class StatisticsDataDto
     {
-        
 
         public Guid Id { get; set; }
         public DateTime? StartDate { get; set; }
