@@ -54,7 +54,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static CoachDto MapCoach(Coach coach)
         {
             return new CoachDto()
@@ -69,7 +68,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static ServiceDataDto MapServiceData(ServiceData serviceData)
         {
             return new ServiceDataDto()
@@ -80,7 +78,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static ServiceDataTypeDto MapServiceDataType(ServiceDataType serviceDataType)
         {
             return new ServiceDataTypeDto()
@@ -90,7 +87,6 @@ namespace WebGym.Infrastructure
                 Price = serviceDataType.Price
             };
         }
-
 
         public static StatisticsDataDto MapStatisticsData(StatisticsData serviceDataType)
         {
@@ -107,7 +103,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static List<AccountDto> MapAccountsDto(List<Account> accounts)
         {
             var accountsDto = new List<AccountDto>();
@@ -122,8 +117,6 @@ namespace WebGym.Infrastructure
             }
             return accountsDto;
         }
-
-
 
         public static List<CoachDto> MapCoachesDto(List<Coach> coaches)
         {
@@ -144,8 +137,6 @@ namespace WebGym.Infrastructure
             return coachesDto;
         }
 
-
-
         public static List<ClientDto> MapClientsDto(List<Client> clients)
         {
             var clientsDto = new List<ClientDto>();
@@ -162,7 +153,6 @@ namespace WebGym.Infrastructure
             }
             return clientsDto;
         }
-
 
         public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
         {

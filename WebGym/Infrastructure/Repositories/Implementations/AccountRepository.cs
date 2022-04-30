@@ -64,6 +64,58 @@ namespace WebGym.Infrastructure.Repositories
             return false;
         }
 
+        public async Task<bool> UpdateClientAccount(AccountDto accountDto, ClientDto clientDto)
+        {
+
+            var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
+            var client = await _gymDbContext.Clients.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
+
+            account.Email = accountDto.Email;
+            client.FirstName = clientDto.FirstName;
+            client.Surname = clientDto.Surname;
+            client.Patronymic = clientDto.Patronymic;
+            client.PhoneNumber = clientDto.PhoneNumber;
+
+            try
+            {
+                await _gymDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> UpdateCoachAccount(AccountDto accountDto, CoachDto coachDto)
+        {
+
+            var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
+            var coach = await _gymDbContext.Coaches.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
+
+            account.Email = accountDto.Email;
+            coach.FirstName = coachDto.FirstName;
+            coach.Surname = coachDto.Surname;
+            coach.Patronymic = coachDto.Patronymic;
+            coach.PhoneNumber = coachDto.PhoneNumber;
+            coach.Experience = coachDto.Experience;
+            coach.Degree = coachDto.Degree;
+
+            try
+            {
+                await _gymDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+
+            return true;
+        }
+
 
     }
 }

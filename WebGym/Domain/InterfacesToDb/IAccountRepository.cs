@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebGym.Domain.InterfacesToDb
@@ -14,5 +13,7 @@ namespace WebGym.Domain.InterfacesToDb
         public Task<List<CoachDto>> GetAllCoachesAsync();
         public Task<List<ClientDto>> GetAllClientsAsync();
         public Task<bool> CheckIfAccountExists(string login, string email);
+        public Task<bool> UpdateClientAccount(AccountDto accountDto, ClientDto clientDto);
+        public Task<bool> UpdateCoachAccount(AccountDto accountDto, CoachDto clientDto);
     }
 }

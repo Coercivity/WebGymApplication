@@ -9,5 +9,11 @@ namespace WebGym.Controllers
         {
             return View();
         }
+
+        public IActionResult BuyAbonement()
+        {
+            return View();
+        }
+
     }
 }

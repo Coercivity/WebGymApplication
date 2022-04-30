@@ -10,17 +10,9 @@
 
     <body>
 
-
         @await Html.PartialAsync("HeaderPartial")
         @RenderBody()
         @await Html.PartialAsync("FooterPartial")
-
-
-
-
-
-
-
-
+		@RenderSection("Scripts", required: false)
     </body>
 </html>
