@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WebGym.Domain.Enums;
 using WebGym.Domain.Services;
 
 namespace WebGym.Controllers
@@ -11,11 +10,10 @@ namespace WebGym.Controllers
     {
 
         private readonly AuthorizationService _authorizationService;
-        private readonly RegistrationService _registrationService;
-        public AuthorizationController(AuthorizationService authorizationService, RegistrationService registrationService)
+        
+        public AuthorizationController(AuthorizationService authorizationService)
         {
             _authorizationService = authorizationService;
-            _registrationService = registrationService;
         }
 
         public IActionResult Index()
@@ -58,26 +56,6 @@ namespace WebGym.Controllers
         }
 
 
-        public IActionResult Register()
-        {
-            return View();
-        }
 
-        public async Task<IActionResult> TryRegister(string login, string password, string email)
-        {
-            var code = await _registrationService.Registrate(login, password, email);
-            if (code == RegistrationStatus.Successful)
-            {
-                TempData["registartionSuccess"] = "Успешная регистрация";
-                return Redirect("/login");
-            }
-
-            if(code == RegistrationStatus.AccountExists)
-                TempData["registartionErrorAccountExists"] = "Аккаунт с таким именем уже существует";
-            else if(code == RegistrationStatus.Error)
-                TempData["registartionError"] = "Ошибка регистрации, попробуйте еще раз";
-
-            return View("Register");
-        }
     }
 }

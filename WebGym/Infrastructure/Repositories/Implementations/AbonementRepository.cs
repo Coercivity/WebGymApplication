@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories
+namespace WebGym.Infrastructure.Repositories.Implementations
 {
     public class AbonementRepository : IAbonementRepository
     {

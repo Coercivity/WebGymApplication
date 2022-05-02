@@ -20,6 +20,7 @@ namespace WebGym.Infrastructure.efModels
         public int? MedianHeartPressure { get; set; }
         public double? WeightData { get; set; }
         public int? VisitsAmount { get; set; }
+        public double? MedianCaloriesSpent { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual ICollection<Attendance> Attendances { get; set; }

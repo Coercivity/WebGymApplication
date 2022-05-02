@@ -21,6 +21,7 @@ namespace Infrastructure
             services.AddTransient<IStatisticsRepository, StatisticsRepository>();
             services.AddTransient<IAbonementRepository, AbonementRepository>();
             services.AddTransient<IAttendanceRepository, AttendanceRepository>();
+            services.AddTransient<IScheduleRepository, ScheduleRepository>();
 
 
             return services;

@@ -1,10 +1,43 @@
 ﻿using System.Collections.Generic;
+using WebGym.Domain.DTOs;
 using WebGym.Infrastructure.efModels;
 
 namespace WebGym.Infrastructure
 {
-    public static class Mapper
+    internal static class Mapper
     {
+
+        public static List<PositionDto> MapSchedulePositions(List<Position> positions)
+        {
+            var positionDtos = new List<PositionDto>();
+            foreach (var position in positions)
+            {
+                positionDtos.Add(new PositionDto() { 
+                    CoachId = position.CoachId,
+                    ScheduleId = position.ScheduleId,
+                    TrainTypeId = position.TrainTypeId
+                });
+            }
+            return positionDtos;
+        }
+
+        public static TrainTypeDto MapTrainType(TrainType trainType)
+        {
+            return new TrainTypeDto()
+            {
+                Description = trainType.Description,
+                Id = trainType.Id
+            };
+        }
+
+        public static ScheduleDto MapSchedule(Schedule schedule)
+        {
+            return new ScheduleDto()
+            {
+               Description = schedule.Description,
+               Id = schedule.Id
+            };
+        }
         public static AbonementDto MapAbonement(Abonement abonement)
         {
             return new AbonementDto()
@@ -39,7 +72,9 @@ namespace WebGym.Infrastructure
                 Pulse = attendance.Pulse,
                 WeightData = attendance.WeightData,
                 HeartPressure = attendance.HeartPressure,
-                HeadPressure = attendance.HeadPressure
+                HeadPressure = attendance.HeadPressure,
+                CaloriesSpent = attendance.CaloriesSpent
+               
             };
         }
 
@@ -51,7 +86,8 @@ namespace WebGym.Infrastructure
                 FirstName = client.FirstName,
                 Patronymic = client.Patronymic,
                 PhoneNumber = client.PhoneNumber,
-                Id = client.Id
+                Id = client.Id,
+                Sex = client.Sex
             };
         }
 
@@ -66,6 +102,7 @@ namespace WebGym.Infrastructure
                 Id = coach.Id,
                 PhoneNumber = coach.PhoneNumber,
                 Experience = coach.Experience
+
             };
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.ViewModels;
 
@@ -24,7 +25,7 @@ namespace WebGym.Domain.Services
         {
             var client = await _accountRepository.GetClientByIdAsync(claimId);
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
-            var statistics = await _statisticsRepository.GetStatisticsByIdAsync(claimId);
+            var statistics = await _statisticsRepository.GetStatisticsByClientIdAsync(claimId);
             var attendancies = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(claimId);
 
 

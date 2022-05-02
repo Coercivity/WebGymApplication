@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories
+namespace WebGym.Infrastructure.Repositories.Implementations
 {
 
     public class AccountRepository : IAccountRepository

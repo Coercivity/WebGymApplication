@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace WebGym.Domain.DTOs
 {
-    public class ServiceDataTypeDto
+    public class TrainTypeDto
     {
+
         public Guid Id { get; set; }
-        public string NameData { get; set; }
-        public decimal? Price { get; set; }
+        public string Description { get; set; }
 
     }
 }

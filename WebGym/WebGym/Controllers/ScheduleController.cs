@@ -1,16 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebGym.Controllers
 {
     public class ScheduleController : Controller
     {
-        public IActionResult Index()
+        private readonly ScheduleService _scheduleService;
+
+        public ScheduleController(ScheduleService scheduleService)
         {
-            return View();
+            _scheduleService = scheduleService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+           var schedule = await _scheduleService.GetCurrentSchedule(Guid.NewGuid());
+            return View(schedule);
         }
     }
 }

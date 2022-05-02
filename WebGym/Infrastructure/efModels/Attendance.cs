@@ -21,6 +21,7 @@ namespace WebGym.Infrastructure.efModels
         public int? HeadPressure { get; set; }
         public int? HeartPressure { get; set; }
         public double? WeightData { get; set; }
+        public double? CaloriesSpent { get; set; }
 
         public virtual Coach Coach { get; set; }
         public virtual StatisticsData StatisticsData { get; set; }
