@@ -1,0 +1,88 @@
+﻿<style>
+    .schedule-date {
+        height: 36px;
+        text-align: center;
+        box-sizing: border-box;
+        border: 2px solid white;
+        background-color: white;
+        border-radius: 3px;
+        line-height: normal;
+        margin-top: 4px;
+        color: black;
+    }
+
+
+    .icon {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5px;
+    }
+
+    .train-type {
+        margin-top: 10px;
+    }
+
+    .card {
+        height: 160px;
+        text-align: center;
+        box-sizing: border-box;
+        border: 2px solid #e8e8e8;
+        border-radius: 3px;
+        line-height: normal;
+        margin-top: 10px;
+        color: black;
+    }
+</style>
+<body style="background-color: #e2e8f0;">
+    <h2 style="text-align:center;">Расписание клуба</h2>
+    <div class="container-fluid ">
+        <div class="row">
+            @for (int j = 0; j < 6; j++)
+            {
+                <div class="col-sm-2">
+                    <div class="schedule-date">
+                        <strong style="margin-top:15px;">Понедельник</strong>
+                    </div>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="card ">
+                            <div class="card-body">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="ms-2 c-details">
+                                        <h6 class="mb-0">Тренер</h6> <span>Время:</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1 icon"><img src="/images/abdominals.png" /></div>
+
+                                        <div class="col-sm-3">
+                                            <div class="row train-type">Ягодицы</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+    </div>
+
+</body>
+
+<div class="col-sm-1 icon"><img src="/images/back.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/biceps.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/butt.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/triceps.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/swimming.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/quadricep.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/chest.png" /></div>
+<div class="col-sm-1 icon"><img src="/images/shoulder.png" /></div>
