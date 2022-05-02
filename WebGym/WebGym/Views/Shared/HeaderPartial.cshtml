@@ -13,7 +13,7 @@
                         <li><a href="/" data-nav-section="services"><span>Услуги</span></a></li>
                         <li><a href="/" data-nav-section="features"><span>Возможности</span></a></li>
                         <li><a href="/" data-nav-section="testimonials"><span>Отзывы</span></a></li>
-                        <li><a href="/" data-nav-section="pricing"><span>Прейскурант</span></a></li>
+                        <li><a class="nav-link" asp-controller="Schedule" asp-action="Index"><span>Расписание</span></a></li>
                         <li><a href="/" data-nav-section="press"><span>Новости</span></a></li>
                         <li><a class="nav-link" asp-controller="Account" asp-action="Index"><span>Личный кабинет</span></a></li>
                         @if (!User.Identity.IsAuthenticated)

@@ -5,6 +5,8 @@ namespace WebGym.Domain.ViewModels
     {
         public StatisticsModel AccountStatistics { get; set; }
         public bool IsAbonementValid { get; set; }
+        
+        public AbonementModel Abonement { get; set; }
 
     }
 }

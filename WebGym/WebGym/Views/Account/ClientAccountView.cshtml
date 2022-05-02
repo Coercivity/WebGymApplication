@@ -29,9 +29,8 @@
 
             // Set chart options
             var options = {
-                'title': 'How Much Pizza I Ate Last Night',
-                'width': 600,
-                'height': 500
+                'title': 'How Much Pizza I Ate Last Night'
+
             };
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart'));
@@ -54,7 +53,7 @@
           ['2007',  1030,      540]
         ]);
 
-        var options = {
+          var options = {
           title: 'Company Performance',
           curveType: 'function',
           legend: { position: 'bottom' }
@@ -170,7 +169,12 @@
                             {
                                 <div class="col-sm-9 text-secondary">
                                     <div class="text-danger">Недействителен
-                                        <a class="btn btn-success btn-sm" asp-controller="Abonement" asp-action="BuyAbonement">Приобрести</a>
+                                        <form asp-controller="Abonement" asp-action="Index">
+                                            <input type="hidden" 
+                                                   value="@Model.Abonement" name="abonement" />
+                                            <input class="btn btn-success btn-sm" type="submit" value="Приобрести" />
+                                        </form>
+
                                      </div>
 
                                 </div>
@@ -193,7 +197,7 @@
                 </div>
 
                 <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-12 mb-2">
                          <div id="curve_chart"></div>
                          <div id="chart"></div>
                     </div>

@@ -36,7 +36,6 @@ namespace WebGym.Domain.Services
                 Weight = statistics.WeightData,
                 VisitsAmount = statistics.VisitsAmount
                 //ClientAttendances = attendancies
-
                 
             };
             var accountModel = new ClientAccountModel()
@@ -60,8 +59,6 @@ namespace WebGym.Domain.Services
             var coach = await _accountRepository.GetCoachByIdAsync(claimId);
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
             
-
-
             var accountModel = new CoachAccountModel()
             {
                 Id = coach.Id,
@@ -74,7 +71,6 @@ namespace WebGym.Domain.Services
                 Login = account.LoginData,
                 Experience = coach.Experience,
                 Rank = coach.Degree
-
 
             };
             return accountModel;
@@ -95,12 +91,10 @@ namespace WebGym.Domain.Services
                 PhoneNumber = accountModel.MobileNumber
             };
 
-
             var response = await _accountRepository.UpdateClientAccount(accountDto, clientDto);
 
             return response;   
         }
-
 
         public async Task<bool> UpdateCoachAccount(CoachAccountModel coachModel)
         {
@@ -118,7 +112,6 @@ namespace WebGym.Domain.Services
                 Degree = coachModel.Rank,
                 Experience = coachModel.Experience
             };
-
 
             var response = await _accountRepository.UpdateCoachAccount(accountDto, coachDto);
 

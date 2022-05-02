@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebGym.Domain.Enums;
@@ -42,10 +41,12 @@ namespace WebGym.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Coach")]
-        public IActionResult GetCoachEditView(Guid id)
+        public async Task<IActionResult> EditCoachCredentials()
         {
 
-            return View("EditCoachCredentials");
+            var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
+            return View("EditCoachCredentials", accountModel);
         }
 
         [HttpPost]

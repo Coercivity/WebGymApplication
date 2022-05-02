@@ -24,7 +24,8 @@ namespace WebGym.Infrastructure
                 Email = account.Email,
                 Id = account.Id,
                 LoginData = account.LoginData,
-                PasswordData = account.PasswordData
+                PasswordData = account.PasswordData,
+                GroupId = account.GroupId
             };
         }
 
