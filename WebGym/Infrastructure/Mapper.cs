@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.ExtractedModels;
+using System.Collections.Generic;
 using WebGym.Domain.DTOs;
 using WebGym.Infrastructure.efModels;
 
@@ -7,35 +8,30 @@ namespace WebGym.Infrastructure
     internal static class Mapper
     {
 
-        public static List<PositionDto> MapSchedulePositions(List<Position> positions)
+
+        public static ScheduleDto MapSchedule(List<ExtractedSchedule> schedulePositions)
         {
+
             var positionDtos = new List<PositionDto>();
-            foreach (var position in positions)
+
+            foreach(var position in schedulePositions)
             {
-                positionDtos.Add(new PositionDto() { 
+                positionDtos.Add(new PositionDto()
+                {
                     CoachId = position.CoachId,
-                    ScheduleId = position.ScheduleId,
+                    StartTime = position.StartTime,
+                    Day = position.Day,
+                    Description = position.Description,
+                    FinishTime = position.FinishTime,
+                    CoachName = position.CoachName,
                     TrainTypeId = position.TrainTypeId
                 });
             }
-            return positionDtos;
-        }
 
-        public static TrainTypeDto MapTrainType(TrainType trainType)
-        {
-            return new TrainTypeDto()
-            {
-                Description = trainType.Description,
-                Id = trainType.Id
-            };
-        }
-
-        public static ScheduleDto MapSchedule(Schedule schedule)
-        {
             return new ScheduleDto()
             {
-               Description = schedule.Description,
-               Id = schedule.Id
+                Positions = positionDtos
+                
             };
         }
         public static AbonementDto MapAbonement(Abonement abonement)

@@ -1,7 +1,7 @@
-﻿using Domain.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WebGym.Domain.Services;
 
 namespace WebGym.Controllers
 {

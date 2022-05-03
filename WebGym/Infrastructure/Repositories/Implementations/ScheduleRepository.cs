@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.ExtractedModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +21,37 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
         public async Task<ScheduleDto> GetSchedule(Guid id)
         {
-            var schedule = await _gymDbContext.Schedules.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
-            return Mapper.MapSchedule(schedule);
+
+            var schedulePositions = await (from p in _gymDbContext.Positions
+                               join s in _gymDbContext.Schedules
+                               on p.ScheduleId equals s.Id
+                               join c in _gymDbContext.Coaches
+                               on p.CoachId equals c.Id
+                               join t in _gymDbContext.TrainTypes
+                               on p.TrainTypeId equals t.Id
+                               join d in _gymDbContext.DayNamings
+                               on p.DayNamingsId equals d.Id
+                               where p.ScheduleId == id
+                               orderby d.Id
+
+                               select new ExtractedSchedule
+                               {
+                                   StartTime = p.StartTime,
+                                   FinishTime = p.FinishTime,
+                                   Day = d.DayData,
+                                   CoachName = c.Surname + " " + c.FirstName + " " + c.Patronymic,
+                                   CoachId = c.Id,
+                                   Description = t.Description,
+                                   Id = s.Id,
+                                   PositionId = p.Id,
+                                   ScheduleDescription = s.Description,
+                                   TrainTypeId = t.Id
+                               }).ToListAsync();
+
+            return Mapper.MapSchedule(schedulePositions);
         }
 
-        public async Task<List<PositionDto>> GetSchedulePositions(Guid scheduleId, Guid trainTypeId)
-        {
-            var positions = await _gymDbContext.Positions.Where(x => x.ScheduleId.Equals(scheduleId) && x.TrainTypeId.Equals(trainTypeId)).ToListAsync();
 
-
-            return Mapper.MapSchedulePositions(positions);
-        }
-
-        public async Task<TrainTypeDto> GetTrainType(Guid id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
+

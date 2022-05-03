@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.ViewModels;
 
-namespace Domain.Services
+namespace WebGym.Domain.Services
+
 {
     public class ScheduleService
     {
@@ -18,12 +19,12 @@ namespace Domain.Services
         public async Task<ScheduleModel> GetCurrentSchedule(Guid id)
         {
            var schedule = await _scheduleRepository.GetSchedule(id);
-           //var trainTypes = await _scheduleRepository.
+           
 
             var scheduleModel = new ScheduleModel()
             {
-                Id = schedule.Id,
-                Description = schedule.Description
+                Description = schedule.Description,
+                Positions = schedule.Positions
             };
 
             return scheduleModel;

@@ -34,7 +34,7 @@ CREATE TABLE Client(
 	Patronymic NVARCHAR(50),
 	PhoneNumber VARCHAR(16),
 	Sex NVARCHAR(10),
-	BirthData DATE,
+	BirthDate DATE,
 	AccountId UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES Account(Id),
 	StatisticsDataId UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES StatisticsData(Id)
 );
@@ -67,8 +67,8 @@ CREATE TABLE Attendance(
 	ID UNIQUEIDENTIFIER PRIMARY KEY,
 	CoachId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Coach(Id),
 	StatisticsDataId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES StatisticsData(Id),
-	StartTime DATE,
-	FinishTime DATE,
+	StartTime DATETIME ,
+	FinishTime DATETIME ,
 	Pulse INT,
 	HeadPressure INT,
 	HeartPressure INT,
@@ -94,7 +94,6 @@ CREATE TABLE ServiceData(
 );
 
 
-
 CREATE TABLE Schedule(
 	ID UNIQUEIDENTIFIER PRIMARY KEY,
 	Description NVARCHAR(100)
@@ -114,20 +113,19 @@ CREATE TABLE DayNamings(
 
 
 CREATE TABLE Position(
-	CoachId UNIQUEIDENTIFIER,
+	Id UNIQUEIDENTIFIER PRIMARY KEY,
+	CoachId  UNIQUEIDENTIFIER,
 	ScheduleId UNIQUEIDENTIFIER,
-	StartTime DATE,
-	FinishTime DATE,
+	StartTime DATETIME ,
+	FinishTime DATETIME ,
 	DayNamingsId INT,
 	TrainTypeId UNIQUEIDENTIFIER,
 	FOREIGN KEY(DayNamingsId) REFERENCES DayNamings(Id),
 	FOREIGN KEY(TrainTypeId) REFERENCES TrainType(Id),
 	FOREIGN KEY(CoachId) REFERENCES Coach(Id),
-	FOREIGN KEY(ScheduleId) REFERENCES Schedule(Id),
-	PRIMARY KEY(ScheduleId, TrainTypeId)
-
+	FOREIGN KEY(ScheduleId) REFERENCES Schedule(Id)
+	
 );
-
 
 
 INSERT INTO RoleGroup VALUES
@@ -143,3 +141,4 @@ INSERT INTO DayNamings VALUES
 (4, N'Четверг'),
 (5, N'Пятница'),
 (6, N'Суббота');
+

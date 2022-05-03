@@ -10,7 +10,6 @@ namespace WebGym.Infrastructure
     public partial class GymDbContext : DbContext
     {
 
-
         public GymDbContext(DbContextOptions<GymDbContext> options)
             : base(options)
         {
@@ -32,7 +31,6 @@ namespace WebGym.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -88,9 +86,9 @@ namespace WebGym.Infrastructure
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.FinishTime).HasColumnType("date");
+                entity.Property(e => e.FinishTime).HasColumnType("datetime");
 
-                entity.Property(e => e.StartTime).HasColumnType("date");
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Coach)
                     .WithMany(p => p.Attendances)
@@ -107,15 +105,15 @@ namespace WebGym.Infrastructure
             {
                 entity.ToTable("Client");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A77A181E7C")
+                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A78A0AC398")
                     .IsUnique();
 
-                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C0810617A06")
+                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C08B0708B6B")
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.BirthData).HasColumnType("date");
+                entity.Property(e => e.BirthDate).HasColumnType("date");
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
@@ -144,7 +142,7 @@ namespace WebGym.Infrastructure
             {
                 entity.ToTable("Coach");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A78586B6C8")
+                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7A3903C61")
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -176,14 +174,13 @@ namespace WebGym.Infrastructure
 
             modelBuilder.Entity<Position>(entity =>
             {
-                entity.HasKey(e => new { e.ScheduleId, e.TrainTypeId })
-                    .HasName("PK__Position__C80D7A2EA0AB034B");
-
                 entity.ToTable("Position");
 
-                entity.Property(e => e.FinishTime).HasColumnType("date");
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.StartTime).HasColumnType("date");
+                entity.Property(e => e.FinishTime).HasColumnType("datetime");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Coach)
                     .WithMany(p => p.Positions)
@@ -198,13 +195,11 @@ namespace WebGym.Infrastructure
                 entity.HasOne(d => d.Schedule)
                     .WithMany(p => p.Positions)
                     .HasForeignKey(d => d.ScheduleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Position__Schedu__49C3F6B7");
 
                 entity.HasOne(d => d.TrainType)
                     .WithMany(p => p.Positions)
                     .HasForeignKey(d => d.TrainTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Position__TrainT__47DBAE45");
             });
 
@@ -244,7 +239,7 @@ namespace WebGym.Infrastructure
             modelBuilder.Entity<ServiceData>(entity =>
             {
                 entity.HasKey(e => new { e.AbonementId, e.AttendanceId })
-                    .HasName("PK__ServiceD__D947664314992361");
+                    .HasName("PK__ServiceD__D947664382B8DCBE");
 
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.ServiceData)
