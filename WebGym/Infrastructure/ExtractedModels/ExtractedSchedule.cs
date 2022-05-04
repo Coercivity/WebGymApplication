@@ -18,6 +18,7 @@ namespace Infrastructure.ExtractedModels
         public DateTime? FinishTime { get; set; }
         
         public string ScheduleDescription { get; set; }
+        public string TrainType { get; set; }
         public string Description { get; set; }
         public string Day { get; set; }
         public string CoachName { get; set; }

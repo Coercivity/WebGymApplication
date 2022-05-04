@@ -11,6 +11,6 @@ namespace WebGym.Domain.DTOs
         public Guid Id { get; set; }
         public string Description { get; set; }
 
-        public List<PositionDto> Positions { get; set; }
+        public Dictionary<string, List<PositionDto>> Positions { get; set; }
     }
 }

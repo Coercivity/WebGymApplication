@@ -9,9 +9,7 @@ namespace WebGym.Domain.ViewModels
 
         public Guid? Id { get; set; }
         public string Description { get; set; }
-        public List<PositionDto> Positions { get; set; }
+        public Dictionary<string , List<PositionDto>> Positions { get; set; }
 
-        public List<string> Days = new List<string>() 
-        { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" };
     }
 }

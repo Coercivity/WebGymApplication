@@ -8,26 +8,38 @@ namespace WebGym.Infrastructure
     internal static class Mapper
     {
 
-
         public static ScheduleDto MapSchedule(List<ExtractedSchedule> schedulePositions)
         {
 
-            var positionDtos = new List<PositionDto>();
+            var positionDtos = new Dictionary<string,List<PositionDto>>();
+            var dayPositionDtos = new List<PositionDto>();
+
+            var day = schedulePositions?[0].Day;
 
             foreach(var position in schedulePositions)
             {
-                positionDtos.Add(new PositionDto()
+                if (day != position.Day)
+                {
+
+                    positionDtos.Add(day, dayPositionDtos);
+                    dayPositionDtos = new List<PositionDto>();
+                    day = position.Day;
+                }
+                dayPositionDtos.Add(new PositionDto()
                 {
                     CoachId = position.CoachId,
                     StartTime = position.StartTime,
                     Day = position.Day,
-                    Description = position.Description,
+                    TrainType = position.TrainType,
                     FinishTime = position.FinishTime,
                     CoachName = position.CoachName,
                     TrainTypeId = position.TrainTypeId
+
+                    
+
                 });
             }
-
+            positionDtos.Add(schedulePositions?[^1].Day, dayPositionDtos);
             return new ScheduleDto()
             {
                 Positions = positionDtos

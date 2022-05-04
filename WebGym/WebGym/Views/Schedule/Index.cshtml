@@ -1,4 +1,6 @@
-﻿<style>
+﻿@model ScheduleModel
+
+<style>
     .schedule-date {
         height: 36px;
         text-align: center;
@@ -42,25 +44,25 @@
     <h2 style="text-align:center;">Расписание клуба</h2>
     <div class="container-fluid ">
         <div class="row">
-            @for (int j = 0; j < 6; j++)
+            @foreach(var dayPosition in Model.Positions)
             {
                 <div class="col-sm-2">
                     <div class="schedule-date">
-                        <strong style="margin-top:15px;">Понедельник</strong>
+                        <strong style="margin-top:15px;">@dayPosition.Key</strong>
                     </div>
-                    @for (int i = 0; i < 5; i++)
+                    @foreach(var position in dayPosition.Value)
                     {
                         <div class="card ">
                             <div class="card-body">
                                 <div class="d-flex flex-row align-items-center">
                                     <div class="ms-2 c-details">
-                                        <h6 class="mb-0">Тренер</h6> <span>Время:</span>
+                                        <h6 class="mb-0"></h6> <span>@position.StartTime : @position.FinishTime</span>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-1 icon"><img src="/images/abdominals.png" /></div>
-
+                                        @position.CoachName
                                         <div class="col-sm-3">
-                                            <div class="row train-type">Ягодицы</div>
+                                            <div class="row train-type">@position.TrainType</div>
                                         </div>
                                     </div>
 

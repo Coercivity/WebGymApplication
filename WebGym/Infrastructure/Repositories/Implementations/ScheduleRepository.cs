@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
-using WebGym.Infrastructure;
 
 namespace WebGym.Infrastructure.Repositories.Implementations
 {
@@ -32,7 +31,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
                                join d in _gymDbContext.DayNamings
                                on p.DayNamingsId equals d.Id
                                where p.ScheduleId == id
-                               orderby d.Id
+                               orderby d.Id, p.StartTime
 
                                select new ExtractedSchedule
                                {
@@ -41,7 +40,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
                                    Day = d.DayData,
                                    CoachName = c.Surname + " " + c.FirstName + " " + c.Patronymic,
                                    CoachId = c.Id,
-                                   Description = t.Description,
+                                   TrainType = t.Description,
                                    Id = s.Id,
                                    PositionId = p.Id,
                                    ScheduleDescription = s.Description,

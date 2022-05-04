@@ -30,5 +30,6 @@ namespace WebGym.Domain.Services
             return scheduleModel;
         }
 
+
     }
 }
