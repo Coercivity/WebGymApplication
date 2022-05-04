@@ -38,17 +38,18 @@ namespace WebGym.Infrastructure.Repositories.Implementations
                                    StartTime = p.StartTime,
                                    FinishTime = p.FinishTime,
                                    Day = d.DayData,
-                                   CoachName = c.Surname + " " + c.FirstName + " " + c.Patronymic,
+                                   CoachName = c.Surname + " " + c.FirstName[0] + ". " + c.Patronymic[0] + ".",
                                    CoachId = c.Id,
                                    TrainType = t.Description,
-                                   Id = s.Id,
                                    PositionId = p.Id,
                                    ScheduleDescription = s.Description,
-                                   TrainTypeId = t.Id
+                                   TrainTypeId = t.Id,
+                                   ImageName = t.ImagePath
                                }).ToListAsync();
 
             return Mapper.MapSchedule(schedulePositions);
         }
+
 
 
     }

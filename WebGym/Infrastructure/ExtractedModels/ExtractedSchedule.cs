@@ -14,9 +14,10 @@ namespace Infrastructure.ExtractedModels
         public Guid? CoachId { get; set; }
         public Guid TrainTypeId { get; set; }
         
-        public DateTime? StartTime { get; set; }
-        public DateTime? FinishTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime FinishTime { get; set; }
         
+        public string ImageName { get; set; }
         public string ScheduleDescription { get; set; }
         public string TrainType { get; set; }
         public string Description { get; set; }

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace WebGym.Infrastructure.efModels
 {
-    public partial class DayNaming
+    public partial class DayNamings
     {
-        public DayNaming()
+        public DayNamings()
         {
             Positions = new HashSet<Position>();
         }

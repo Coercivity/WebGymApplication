@@ -20,7 +20,7 @@ namespace WebGym.Infrastructure
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Coach> Coaches { get; set; }
-        public virtual DbSet<DayNaming> DayNamings { get; set; }
+        public virtual DbSet<DayNamings> DayNamings { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<RoleGroup> RoleGroups { get; set; }
         public virtual DbSet<Schedule> Schedules { get; set; }
@@ -165,7 +165,7 @@ namespace WebGym.Infrastructure
                     .HasConstraintName("FK__Coach__AccountId__30F848ED");
             });
 
-            modelBuilder.Entity<DayNaming>(entity =>
+            modelBuilder.Entity<DayNamings>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 

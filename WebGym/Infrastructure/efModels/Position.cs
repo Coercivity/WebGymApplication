@@ -10,13 +10,13 @@ namespace WebGym.Infrastructure.efModels
         public Guid Id { get; set; }
         public Guid? CoachId { get; set; }
         public Guid? ScheduleId { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? FinishTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime FinishTime { get; set; }
         public int? DayNamingsId { get; set; }
         public Guid? TrainTypeId { get; set; }
 
         public virtual Coach Coach { get; set; }
-        public virtual DayNaming DayNamings { get; set; }
+        public virtual DayNamings DayNamings { get; set; }
         public virtual Schedule Schedule { get; set; }
         public virtual TrainType TrainType { get; set; }
     }

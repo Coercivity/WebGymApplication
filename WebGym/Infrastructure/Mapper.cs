@@ -28,12 +28,13 @@ namespace WebGym.Infrastructure
                 dayPositionDtos.Add(new PositionDto()
                 {
                     CoachId = position.CoachId,
-                    StartTime = position.StartTime,
+                    StartTime = position.StartTime.ToString("HH:mm"),
                     Day = position.Day,
                     TrainType = position.TrainType,
-                    FinishTime = position.FinishTime,
+                    FinishTime = position.FinishTime.ToString("HH:mm"),
                     CoachName = position.CoachName,
-                    TrainTypeId = position.TrainTypeId
+                    TrainTypeId = position.TrainTypeId,
+                    ImageName = position.ImageName
 
                     
 
