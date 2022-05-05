@@ -103,7 +103,7 @@ CREATE TABLE Schedule(
 
 CREATE TABLE TrainType(
 	Id UNIQUEIDENTIFIER PRIMARY KEY,
-	ImageData VARBINARY(max),
+	ImagePath NVARCHAR(50),
 	Description NVARCHAR(50)
 );
 

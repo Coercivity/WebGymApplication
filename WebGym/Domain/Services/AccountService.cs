@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
@@ -117,6 +118,30 @@ namespace WebGym.Domain.Services
             var response = await _accountRepository.UpdateCoachAccount(accountDto, coachDto);
 
             return response;
+        }
+
+        public async Task<List<CoachAccountModel>> GetAllCoachAccountModel()
+        {
+            var coachesDto = await _accountRepository.GetAllCoachesAsync();
+            var coachAccountModels = new List<CoachAccountModel>();
+            foreach (var coachDto in coachesDto)
+            {
+
+                var coach = new CoachAccountModel()
+                {
+                    Id = coachDto.Id,
+                    FullName = coachDto.FirstName + " " + coachDto.Surname + " " + coachDto.Patronymic,
+                    FirstName = coachDto.FirstName,
+                    Surname = coachDto.Surname,
+                    Patronymic = coachDto.Patronymic,
+                    MobileNumber = coachDto.PhoneNumber,
+                    Experience = coachDto.Experience,
+                    Rank = coachDto.Degree
+
+                };
+                coachAccountModels.Add(coach);
+            }
+            return coachAccountModels;
         }
 
 
