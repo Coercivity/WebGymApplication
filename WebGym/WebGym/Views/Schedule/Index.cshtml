@@ -5,18 +5,19 @@
         height: 36px;
         text-align: center;
         box-sizing: border-box;
-        border: 2px solid white;
+        border: 2px solid #337ab7;
         background-color: white;
         border-radius: 3px;
         line-height: normal;
         margin-top: 4px;
-        color: black;
+        color: #337ab7;
+        
     }
 
 
     .icon {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         background-color: white;
         border-radius: 15px;
         display: flex;
@@ -29,11 +30,13 @@
         margin-top: 10px;
     }
 
+
+
     .card {
-        height: 160px;
+        height: 150px;
         text-align: center;
         box-sizing: border-box;
-        border: 2px solid #e8e8e8;
+        border: 3px solid #337ab7;
         border-radius: 3px;
         line-height: normal;
         margin-top: 10px;
@@ -46,31 +49,39 @@
         <div class="row">
             @foreach(var dayPosition in Model.Positions)
             {
-                <div class="col-sm-2">
+                <div class="col-sm-2 col-lg-2 col-xs-12 col-md-2"  >
                     <div class="schedule-date">
                         <strong style="margin-top:15px;">@dayPosition.Key</strong>
                     </div>
                     @foreach(var position in dayPosition.Value)
                     {
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="d-flex flex-row align-items-center">
-                                    <div class="ms-2 c-details">
-                                        <h6 class="mb-0"></h6> <span>@position.StartTime : @position.FinishTime</span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-1 icon"><img src="~/images/@position.ImageName" /></div>
-                                        @position.CoachName
-                                        <div class="col-sm-3">
-                                            <div class="row train-type">@position.TrainType</div>
-                                        </div>
-                                    </div>
-
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="row">
+                                <div class="ms-2 c-details">
+                                  
+                                        <span style="font-size:15px;" class="badge bg-success">@position.StartTime : @position.FinishTime</span>
+                                    
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <span style="font-size:15px;" class="badge bg-info" >@position.CoachName</span>
+                            </div>
+                            <div class="row">
+                                
+                                    <div><span></span></div>
+                                    <div>@position.TrainType</div>
+                                
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1"><img src="~/images/@position.ImageName" /></div>
+                            </div>
 
                         </div>
+                    </div>
+                </div>
                     }
                 </div>
             }
@@ -80,11 +91,3 @@
 
 </body>
 
-<div class="col-sm-1 icon"><img src="/images/back.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/biceps.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/butt.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/triceps.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/swimming.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/quadricep.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/chest.png" /></div>
-<div class="col-sm-1 icon"><img src="/images/shoulder.png" /></div>

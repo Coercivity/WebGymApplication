@@ -17,7 +17,7 @@ namespace WebGym.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var id = Guid.Parse("A0A00AD4-C568-4A51-B67D-9C3C0696396F");
+            var id = Guid.Parse("CA1B624B-3CD1-4ACF-8B20-9FB375F23E6D");
            var schedule = await _scheduleService.GetCurrentSchedule(id);
             return View(schedule);
         }
