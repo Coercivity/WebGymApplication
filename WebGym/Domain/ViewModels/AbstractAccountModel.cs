@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace WebGym.Domain.ViewModels
+namespace Domain.ViewModels
 {
     public class AbstractAccountModel
     {

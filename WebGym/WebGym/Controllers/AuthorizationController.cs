@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Domain.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WebGym.Domain.Services;
+
 
 namespace WebGym.Controllers
 {

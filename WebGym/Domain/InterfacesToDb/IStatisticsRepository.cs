@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Domain.DTOs;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
 
-namespace WebGym.Domain.InterfacesToDb
+namespace Domain.InterfacesToDb
 {
     public interface IStatisticsRepository
     {

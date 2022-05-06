@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Enums;
+using Domain.Services;
+using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using WebGym.Domain.Enums;
-using WebGym.Domain.Services;
-using WebGym.Domain.ViewModels;
+
 
 namespace WebGym.Controllers
 {
@@ -26,13 +27,13 @@ namespace WebGym.Controllers
 
             if (userRole == Role.Coach.ToString())
             {
-                var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
+                var accountModel = await _accountService.GetCoachAccountModelAsync(Guid.Parse(claimId));
 
                 return View("CoachAccountView", accountModel);
             }
             else
             {
-                var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+                var accountModel = await _accountService.GetClientAccountModelAsync(Guid.Parse(claimId));
 
                 return View("ClientAccountView", accountModel);
             }
@@ -45,7 +46,7 @@ namespace WebGym.Controllers
         {
 
             var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
+            var accountModel = await _accountService.GetCoachAccountModelAsync(Guid.Parse(claimId));
             return View("EditCoachCredentials", accountModel);
         }
 
@@ -54,7 +55,7 @@ namespace WebGym.Controllers
         public async Task<IActionResult> EditCoachCredentials(CoachAccountModel coachAccountModel)
         {
 
-            var isUpdated = await _accountService.UpdateCoachAccount(coachAccountModel);
+            var isUpdated = await _accountService.UpdateCoachAccountAsync(coachAccountModel);
             if (isUpdated)
             {
                 return Redirect("/Account");
@@ -68,7 +69,7 @@ namespace WebGym.Controllers
         public async Task<IActionResult> EditClientCredentials()
         {
             var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+            var accountModel = await _accountService.GetClientAccountModelAsync(Guid.Parse(claimId));
             return View("EditClientCredentials", accountModel);
         }
 
@@ -76,7 +77,7 @@ namespace WebGym.Controllers
         [Authorize(Roles = "Client")]
         public async Task<IActionResult> EditClientCredentials(ClientAccountModel clientAccountModel)
         {
-            var isUpdated = await _accountService.UpdateClientAccount(clientAccountModel);
+            var isUpdated = await _accountService.UpdateClientAccountAsync(clientAccountModel);
             if(isUpdated)
             {
                 return Redirect("/Account");

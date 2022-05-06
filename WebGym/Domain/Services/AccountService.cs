@@ -1,45 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Domain.ViewModels;
+using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Domain.ViewModels;
 
-
-namespace WebGym.Domain.Services
+namespace Domain.Services
 {
     public class AccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IClientRepository _clientRepository;
+        private readonly ICoachRepository _coachRepository;
         private readonly IStatisticsRepository _statisticsRepository;
         private readonly IAttendanceRepository _attendanceRepository;
+        private readonly IAbonementRepository _abonementRepository;
 
         public AccountService(IAccountRepository accountRepository, IStatisticsRepository statisticsRepository, 
-            IAttendanceRepository attendanceRepository)
+            IAttendanceRepository attendanceRepository, IAbonementRepository abonementRepository,
+            ICoachRepository coachRepository, IClientRepository clientRepository)
         {
             _accountRepository = accountRepository;
             _statisticsRepository = statisticsRepository;
             _attendanceRepository = attendanceRepository;
+            _abonementRepository = abonementRepository;
+            _clientRepository = clientRepository;
+            _coachRepository = coachRepository;
         }
 
-        public async Task<ClientAccountModel> GetClientAccountModel(Guid claimId)
+        public async Task<ClientAccountModel> GetClientAccountModelAsync(Guid claimId)
         {
-            var client = await _accountRepository.GetClientByIdAsync(claimId);
+            var client = await _clientRepository.GetClientByIdAsync(claimId);
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
             var statistics = await _statisticsRepository.GetStatisticsByClientIdAsync(claimId);
             var attendancies = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(claimId);
+            var abonemet = await _abonementRepository.GetValidAbonementByClientIdAsync(claimId);
 
+            var attendanciesModel = new List<AttendanceModel>();
+            foreach (var attendance in attendancies)
+            {
+                attendanciesModel.Add(new AttendanceModel() { 
+                    StatisticsId = attendance?.StatisticsDataId,
+                    CoachId = attendance?.CoachId,
+                    HeadPressure = attendance?.HeadPressure,
+                    HeartPressure = attendance?.HeartPressure,
+                    Id = attendance?.Id,
+                    Pulse = attendance?.Pulse,
+                    TrainTime = attendance?.StartTime,
+                    Weight = attendance?.WeightData
+                }); 
+            }
+            
 
-            var accountStatistics = new StatisticsModel()
+            var statisticsModel = new StatisticsModel()
             {
                 MedianHeadPressure = statistics.MedianHeadPressure,
                 MedianHeartPressure = statistics.MedianHeartPressure,
                 MedianPulse = statistics.MedianPulse,
                 Weight = statistics.WeightData,
-                VisitsAmount = statistics.VisitsAmount
-                //ClientAttendances = attendancies
-                
+                VisitsAmount = statistics.VisitsAmount,
+                ClientAttendances = attendanciesModel
+
             };
+
+            var abonementModel = new AbonementModel()
+            {
+                StartDate = abonemet?.StartDate,
+                FinishDate = abonemet?.FinishDate,
+                ClientId = abonemet?.ClientId,
+                IsValid = abonemet?.IsValid,
+                VisitsAmount = abonemet?.VisitsAmount
+            };
+
+
             var accountModel = new ClientAccountModel()
             {
                 Id = client.Id,
@@ -50,17 +83,36 @@ namespace WebGym.Domain.Services
                 MobileNumber = client.PhoneNumber,
                 Email = account.Email,
                 Login = account.LoginData,
-                AccountStatistics = accountStatistics
+                Abonement = abonementModel,
+                AccountStatistics = statisticsModel
 
             };
             return accountModel;
         }
-
-        public async Task<CoachAccountModel> GetCoachAccountModel(Guid claimId)
+        public async Task<bool> UpdateClientAccountAsync(ClientAccountModel accountModel)
         {
-            var coach = await _accountRepository.GetCoachByIdAsync(claimId);
+            var accountDto = new AccountDto()
+            {
+                Id = accountModel.Id,
+                Email = accountModel.Email
+            };
+            var clientDto = new ClientDto()
+            {
+                Surname = accountModel.Surname,
+                FirstName = accountModel.FirstName,
+                Patronymic = accountModel.Patronymic,
+                PhoneNumber = accountModel.MobileNumber
+            };
+
+            var response = await _clientRepository.UpdateClientAccountAsync(accountDto, clientDto);
+
+            return response;   
+        }
+        public async Task<CoachAccountModel> GetCoachAccountModelAsync(Guid claimId)
+        {
+            var coach = await _coachRepository.GetCoachByIdAsync(claimId);
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
-            
+
             var accountModel = new CoachAccountModel()
             {
                 Id = coach.Id,
@@ -77,28 +129,7 @@ namespace WebGym.Domain.Services
             };
             return accountModel;
         }
-
-        public async Task<bool> UpdateClientAccount(ClientAccountModel accountModel)
-        {
-            var accountDto = new AccountDto()
-            {
-                Id = accountModel.Id,
-                Email = accountModel.Email
-            };
-            var clientDto = new ClientDto()
-            {
-                Surname = accountModel.Surname,
-                FirstName = accountModel.FirstName,
-                Patronymic = accountModel.Patronymic,
-                PhoneNumber = accountModel.MobileNumber
-            };
-
-            var response = await _accountRepository.UpdateClientAccount(accountDto, clientDto);
-
-            return response;   
-        }
-
-        public async Task<bool> UpdateCoachAccount(CoachAccountModel coachModel)
+        public async Task<bool> UpdateCoachAccountAsync(CoachAccountModel coachModel)
         {
             var accountDto = new AccountDto()
             {
@@ -115,14 +146,13 @@ namespace WebGym.Domain.Services
                 Experience = coachModel.Experience
             };
 
-            var response = await _accountRepository.UpdateCoachAccount(accountDto, coachDto);
+            var response = await _coachRepository.UpdateCoachAccountAsync(accountDto, coachDto);
 
             return response;
         }
-
-        public async Task<List<CoachAccountModel>> GetAllCoachAccountModel()
+        public async Task<List<CoachAccountModel>> GetAllCoachAccountModelAsync()
         {
-            var coachesDto = await _accountRepository.GetAllCoachesAsync();
+            var coachesDto = await _coachRepository.GetAllCoachesAsync();
             var coachAccountModels = new List<CoachAccountModel>();
             foreach (var coachDto in coachesDto)
             {

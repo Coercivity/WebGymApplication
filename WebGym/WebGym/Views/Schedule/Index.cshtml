@@ -5,13 +5,12 @@
         height: 36px;
         text-align: center;
         box-sizing: border-box;
-        border: 2px solid #337ab7;
+        border: 1px solid #6173f4;
         background-color: white;
-        border-radius: 3px;
+        border-radius: 5px;
         line-height: normal;
-        margin-top: 4px;
-        color: #337ab7;
-        
+        color: #6173f4;
+        margin-top: 10px;
     }
 
 
@@ -36,8 +35,8 @@
         height: 150px;
         text-align: center;
         box-sizing: border-box;
-        border: 3px solid #337ab7;
-        border-radius: 3px;
+        border: 1px solid #6173f4;
+        border-radius: 5px;
         line-height: normal;
         margin-top: 10px;
         color: black;
@@ -51,7 +50,7 @@
             {
                 <div class="col-sm-2 col-lg-2 col-xs-12 col-md-2"  >
                     <div class="schedule-date">
-                        <strong style="margin-top:15px;">@dayPosition.Key</strong>
+                        <strong style="margin-top:15px; font-size:20px;">@dayPosition.Key</strong>
                     </div>
                     @foreach(var position in dayPosition.Value)
                     {
@@ -72,8 +71,6 @@
                                 
                                     <div><span></span></div>
                                     <div>@position.TrainType</div>
-                                
-                                
                             </div>
                             <div class="row">
                                 <div class="col-sm-1"><img src="~/images/@position.ImageName" /></div>

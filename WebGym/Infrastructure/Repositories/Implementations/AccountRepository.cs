@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+
+namespace Infrastructure.Repositories.Implementations
 {
 
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository, ICoachRepository, IClientRepository
     {
 
         private readonly GymDbContext _gymDbContext;
@@ -65,7 +67,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             return false;
         }
 
-        public async Task<bool> UpdateClientAccount(AccountDto accountDto, ClientDto clientDto)
+        public async Task<bool> UpdateClientAccountAsync(AccountDto accountDto, ClientDto clientDto)
         {
 
             var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
@@ -90,7 +92,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             return true;
         }
 
-        public async Task<bool> UpdateCoachAccount(AccountDto accountDto, CoachDto coachDto)
+        public async Task<bool> UpdateCoachAccountAsync(AccountDto accountDto, CoachDto coachDto)
         {
 
             var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();

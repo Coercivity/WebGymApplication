@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WebGym.Domain.DTOs
+namespace Domain.DTOs
 {
     public class PositionDto
     {

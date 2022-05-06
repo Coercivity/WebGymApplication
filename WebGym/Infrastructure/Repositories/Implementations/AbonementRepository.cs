@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Infrastructure.efModels;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+
+namespace Infrastructure.Repositories.Implementations
 {
     public class AbonementRepository : IAbonementRepository
     {
@@ -23,7 +27,35 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
         public async Task<AbonementDto> GetValidAbonementByClientIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var abonement = await _gymDbContext.Abonements.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+            if (abonement is null)
+                return null;
+            return Mapper.MapAbonement(abonement);
+        }
+
+        public async Task<bool> TryToBuyAbonementAsync(AbonementDto abonementDto)
+        {
+
+            var abonement = new Abonement()
+            {
+                Id = abonementDto.Id,
+                ClientId = abonementDto.ClientId,
+                IsValid = abonementDto.IsValid,
+                FinishDate = abonementDto.FinishDate,
+                StartDate = abonementDto.StartDate,
+                VisitsAmount = abonementDto.VisitsAmount
+                
+            };
+            try
+            {
+                await _gymDbContext.Abonements.AddAsync(abonement);
+            }
+            catch (Exception)
+            {
+                await _gymDbContext.SaveChangesAsync();
+                return false;
+            }
+            return true;
         }
     }
 }

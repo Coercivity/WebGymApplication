@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+namespace Infrastructure.Repositories.Implementations
 {
     public class StatisticsRepository : IStatisticsRepository
     {

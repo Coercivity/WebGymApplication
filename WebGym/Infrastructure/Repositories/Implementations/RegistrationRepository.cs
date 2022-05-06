@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Domain.Enums;
+using Domain.InterfacesToDb;
+using Infrastructure.efModels;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.Enums;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Infrastructure.efModels;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+
+
+namespace Infrastructure.Repositories.Implementations
 {
     public class RegistrationRepository : IRegistrationRepository
     {
@@ -26,7 +28,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
             var id = Guid.NewGuid();
 
-            _gymDbContext.Accounts.Add( new Account { 
+            await _gymDbContext.Accounts.AddAsync( new Account { 
                 Id = id,
                 LoginData = login,
                 PasswordData = BCrypt.Net.BCrypt.HashPassword(password),
@@ -34,12 +36,12 @@ namespace WebGym.Infrastructure.Repositories.Implementations
                 GroupId = (int)Role.Client
             });
 
-            _gymDbContext.StatisticsData.Add(new StatisticsData
+            await _gymDbContext.StatisticsData.AddAsync(new StatisticsData
             {
                 Id = id
             });
 
-            _gymDbContext.Clients.Add(new Client
+           await _gymDbContext.Clients.AddAsync(new Client
             {
                 Id = id,
                 StatisticsDataId = id,

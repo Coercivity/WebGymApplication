@@ -1,24 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using WebGym.Domain.ViewModels;
+using System;
 
 namespace WebGym.Controllers
 {
     public class AbonementController : Controller
     {
+        private readonly AbonementService _aboementService;
 
-
-        [Authorize]
-        public IActionResult Index(AbonementModel abonement)
+        public AbonementController(AbonementService aboementService)
         {
-            return View("BuyAbonement", abonement);
+            _aboementService = aboementService;
         }
 
         [Authorize]
-        public IActionResult BuyAbonement()
+        public IActionResult Index(Guid clientId)
         {
-            return View();
+            return View("BuyAbonement", clientId);
+        }
+
+        [Authorize]
+        public IActionResult BuyAbonement(Guid clientId, string tariff)
+        {
+            var status = _aboementService.BuyAbonementAsync(clientId, tariff);
+            return Redirect("/");
         }
 
 

@@ -1,9 +1,9 @@
-﻿using Infrastructure.ExtractedModels;
+﻿using Domain.DTOs;
+using Infrastructure.efModels;
+using Infrastructure.ExtractedModels;
 using System.Collections.Generic;
-using WebGym.Domain.DTOs;
-using WebGym.Infrastructure.efModels;
 
-namespace WebGym.Infrastructure
+namespace Infrastructure
 {
     internal static class Mapper
     {
@@ -55,7 +55,6 @@ namespace WebGym.Infrastructure
                 StartDate = abonement.StartDate,
                 FinishDate = abonement.FinishDate,
                 IsValid = abonement.IsValid,
-                Id = abonement.Id
             };
         }
 

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Domain.InterfacesToDb;
+using Domain.ViewModels;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Domain.ViewModels;
 
-namespace WebGym.Domain.Services
 
+namespace Domain.Services
 {
     public class ScheduleService
     {
@@ -29,7 +29,6 @@ namespace WebGym.Domain.Services
 
             return scheduleModel;
         }
-
 
     }
 }

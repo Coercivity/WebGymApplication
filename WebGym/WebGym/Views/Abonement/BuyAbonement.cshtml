@@ -1,7 +1,7 @@
-﻿@model AbonementModel
+﻿@model Guid
 
 <form asp-controller="Abonement" asp-action="BuyAbonement">
-    <input  value="@Model.ClientId" type="hidden" name="clientId" class="form-control" />
+    <input value="@Model" type="hidden" name="clientId" class="form-control" />
     <div id="fh5co-pricing" data-section="pricing" style="margin-top:-16px">
         <div class="container">
             <div class="row">
@@ -18,31 +18,29 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="price-box to-animate">
                         <h2 class="pricing-plan">Начинающий</h2>
-                        <div class="price"><sup class="currency">руб.</sup>7<small>/mo</small></div>
-                        <p>Basic customer support for small business</p>
+                        <div class="price"><sup class="currency"></sup>50<small>руб.</small></div>
+                        <p>Тариф для тестирования нашего сервиса</p>
                         <hr>
                         <ul class="pricing-info">
-                            <li>10 projects</li>
-                            <li>20 Pages</li>
-                            <li>20 Emails</li>
-                            <li>100 Images</li>
+                            <li>1 месяц действия</li>
+                            <li>30 посещений</li>
+
                         </ul>
-                        <input type="submit" value="Приобрести" class="btn btn-default btn-sm" />
+                        <input type="submit" name="tariff" value="classD" placeholder="Приобрести" class="btn btn-default btn-sm" />
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="price-box to-animate">
                         <h2 class="pricing-plan">Регулярный</h2>
-                        <div class="price"><sup class="currency">руб.</sup>19<small>/mo</small></div>
-                        <p>Basic customer support for small business</p>
+                        <div class="price"><sup class="currency"></sup>250<small>руб.</small></div>
+                        <p>Тариф с возможностью ведения статистики</p>
                         <hr>
                         <ul class="pricing-info">
-                            <li>15 projects</li>
-                            <li>40 Pages</li>
-                            <li>40 Emails</li>
-                            <li>200 Images</li>
+                            <li>6 месяцев действия</li>
+                            <li>180 посещений</li>
+
                         </ul>
-                        <input type="submit" value="Приобрести" class="btn btn-default btn-sm" />
+                        <input type="submit" name="tariff" value="classC" placeholder="Приобрести" class="btn btn-default btn-sm" />
                     </div>
                 </div>
                 <div class="clearfix visible-sm-block"></div>
@@ -50,31 +48,29 @@
                     <div class="price-box popular">
                         <div class="popular-text">Выгодно</div>
                         <h2 class="pricing-plan">Регулярный+</h2>
-                        <div class="price"><sup class="currency"></sup>79<small>руб.</small></div>
-                        <p>Basic customer support for small business</p>
+                        <div class="price"><sup class="currency"></sup>500<small>руб.</small></div>
+                        <p>Самый популярный и выгодный тариф</p>
                         <hr>
                         <ul class="pricing-info">
-                            <li>Unlimitted projects</li>
-                            <li>100 Pages</li>
-                            <li>100 Emails</li>
-                            <li>700 Images</li>
+                            <li>6 месяцев действия</li>
+                            <li>Безлимитные посещения</li>
+
                         </ul>
-                        <input type="submit" value="Приобрести" class="btn btn-default btn-sm" />
+                        <input type="submit" name="tariff" value="classB" placeholder="Приобрести" class="btn btn-default btn-sm" />
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="price-box to-animate">
                         <h2 class="pricing-plan">Все включено</h2>
-                        <div class="price"><sup class="currency">руб.</sup>125<small>/mo</small></div>
-                        <p>Годовой абонемент с безлимитным посещением</p>
+                        <div class="price"><sup class="currency"></sup>1000<small>руб.</small></div>
+                        <p>Абонемент для постоянных клиентов</p>
                         <hr>
                         <ul class="pricing-info">
-                            <li>Unlimitted projects</li>
-                            <li>Unlimitted Pages</li>
-                            <li>Unlimitted Emails</li>
-                            <li>Unlimitted Images</li>
+                            <li>2 года действия</li>
+                            <li>Безлимитные посещения</li>
+
                         </ul>
-                        <input type="submit" value="Приобрести" class="btn btn-default btn-sm" />
+                        <input type="submit" name="tariff" value="classA" placeholder="Приобрести" class="btn btn-default btn-sm" />
                     </div>
                 </div>
 

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.DTOs;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
 
-namespace WebGym.Domain.InterfacesToDb
+namespace Domain.InterfacesToDb
 {
     public interface IScheduleRepository
     {

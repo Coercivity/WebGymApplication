@@ -1,4 +1,3 @@
-using Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using WebGym.Domain.Services;
-
+using Domain.Services;
+using Infrastructure;
 
 namespace WebGym
 {
@@ -53,6 +52,7 @@ namespace WebGym
             services.AddTransient<RegistrationService>();
             services.AddTransient<AccountService>();
             services.AddTransient<ScheduleService>();
+            services.AddTransient<AbonementService>();
 
 
         }

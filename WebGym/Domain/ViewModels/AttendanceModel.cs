@@ -1,16 +1,16 @@
 ﻿using System;
 
 
-namespace WebGym.Domain.ViewModels
+namespace Domain.ViewModels
 {
     public class AttendanceModel
     {
-        public Guid Id { get; set; }
-        public int ClientId { get; set; }
-        public int CoachId { get; set; }
-        public int? TrainTime { get; set; } 
+        public Guid? Id { get; set; }
+        public Guid? StatisticsId { get; set; }
+        public Guid? CoachId { get; set; }
+        public DateTime? TrainTime { get; set; } 
         public int? Pulse { get; set; }
-        public float? Weight { get; set; }
+        public double? Weight { get; set; }
         public int? HeadPressure { get; set; }
         public int? HeartPressure { get; set; }
     }

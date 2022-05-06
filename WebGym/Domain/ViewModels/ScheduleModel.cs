@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Domain.DTOs;
+using System;
 using System.Collections.Generic;
-using WebGym.Domain.DTOs;
 
-namespace WebGym.Domain.ViewModels
+namespace Domain.ViewModels
 {
     public class ScheduleModel
     {

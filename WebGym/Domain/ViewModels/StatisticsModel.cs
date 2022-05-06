@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace WebGym.Domain.ViewModels
+namespace Domain.ViewModels
 {
     public class StatisticsModel
     {
