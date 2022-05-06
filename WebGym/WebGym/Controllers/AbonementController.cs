@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WebGym.Domain.ViewModels;
 
 namespace WebGym.Controllers
 {
     public class AbonementController : Controller
     {
-        public IActionResult Index()
+
+
+        [Authorize]
+        public IActionResult Index(AbonementModel abonement)
+        {
+            return View("BuyAbonement", abonement);
+        }
+
+        [Authorize]
+        public IActionResult BuyAbonement()
         {
             return View();
         }
+
+
+
     }
 }

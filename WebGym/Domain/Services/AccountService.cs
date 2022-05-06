@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.ViewModels;
 
@@ -26,9 +26,9 @@ namespace WebGym.Domain.Services
         {
             var client = await _accountRepository.GetClientByIdAsync(claimId);
             var account = await _accountRepository.GetAccountByIdAsync(claimId);
-            var statistics = await _statisticsRepository.GetStatisticsByIdAsync(claimId);
+            var statistics = await _statisticsRepository.GetStatisticsByClientIdAsync(claimId);
             var attendancies = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(claimId);
-           
+
 
             var accountStatistics = new StatisticsModel()
             {
@@ -37,13 +37,13 @@ namespace WebGym.Domain.Services
                 MedianPulse = statistics.MedianPulse,
                 Weight = statistics.WeightData,
                 VisitsAmount = statistics.VisitsAmount
-
+                //ClientAttendances = attendancies
                 
             };
             var accountModel = new ClientAccountModel()
             {
                 Id = client.Id,
-                FullName = client.FirstName + " " + client.Surname + " " + client.Patronymic,
+                FullName = client.Surname + " " + client.FirstName + " " + client.Patronymic,
                 FirstName = client.FirstName,
                 Surname = client.Surname,
                 Patronymic = client.Patronymic,
@@ -54,6 +54,94 @@ namespace WebGym.Domain.Services
 
             };
             return accountModel;
+        }
+
+        public async Task<CoachAccountModel> GetCoachAccountModel(Guid claimId)
+        {
+            var coach = await _accountRepository.GetCoachByIdAsync(claimId);
+            var account = await _accountRepository.GetAccountByIdAsync(claimId);
+            
+            var accountModel = new CoachAccountModel()
+            {
+                Id = coach.Id,
+                FullName = coach.FirstName + " " + coach.Surname + " " + coach.Patronymic,
+                FirstName = coach.FirstName,
+                Surname = coach.Surname,
+                Patronymic = coach.Patronymic,
+                MobileNumber = coach.PhoneNumber,
+                Email = account.Email,
+                Login = account.LoginData,
+                Experience = coach.Experience,
+                Rank = coach.Degree
+
+            };
+            return accountModel;
+        }
+
+        public async Task<bool> UpdateClientAccount(ClientAccountModel accountModel)
+        {
+            var accountDto = new AccountDto()
+            {
+                Id = accountModel.Id,
+                Email = accountModel.Email
+            };
+            var clientDto = new ClientDto()
+            {
+                Surname = accountModel.Surname,
+                FirstName = accountModel.FirstName,
+                Patronymic = accountModel.Patronymic,
+                PhoneNumber = accountModel.MobileNumber
+            };
+
+            var response = await _accountRepository.UpdateClientAccount(accountDto, clientDto);
+
+            return response;   
+        }
+
+        public async Task<bool> UpdateCoachAccount(CoachAccountModel coachModel)
+        {
+            var accountDto = new AccountDto()
+            {
+                Id = coachModel.Id,
+                Email = coachModel.Email
+            };
+            var coachDto = new CoachDto()
+            {
+                Surname = coachModel.Surname,
+                FirstName = coachModel.FirstName,
+                Patronymic = coachModel.Patronymic,
+                PhoneNumber = coachModel.MobileNumber,
+                Degree = coachModel.Rank,
+                Experience = coachModel.Experience
+            };
+
+            var response = await _accountRepository.UpdateCoachAccount(accountDto, coachDto);
+
+            return response;
+        }
+
+        public async Task<List<CoachAccountModel>> GetAllCoachAccountModel()
+        {
+            var coachesDto = await _accountRepository.GetAllCoachesAsync();
+            var coachAccountModels = new List<CoachAccountModel>();
+            foreach (var coachDto in coachesDto)
+            {
+
+                var coach = new CoachAccountModel()
+                {
+                    Id = coachDto.Id,
+                    FullName = coachDto.FirstName + " " + coachDto.Surname + " " + coachDto.Patronymic,
+                    FirstName = coachDto.FirstName,
+                    Surname = coachDto.Surname,
+                    Patronymic = coachDto.Patronymic,
+                    MobileNumber = coachDto.PhoneNumber,
+                    Experience = coachDto.Experience,
+                    Rank = coachDto.Degree
+
+                };
+                coachAccountModels.Add(coach);
+            }
+            return coachAccountModels;
         }
 
 

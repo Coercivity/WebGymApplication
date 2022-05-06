@@ -1,10 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.ExtractedModels;
+using System.Collections.Generic;
+using WebGym.Domain.DTOs;
 using WebGym.Infrastructure.efModels;
 
 namespace WebGym.Infrastructure
 {
-    public static class Mapper
+    internal static class Mapper
     {
+
+        public static ScheduleDto MapSchedule(List<ExtractedSchedule> schedulePositions)
+        {
+
+            var positionDtos = new Dictionary<string,List<PositionDto>>();
+            var dayPositionDtos = new List<PositionDto>();
+
+            var day = schedulePositions?[0].Day;
+
+            foreach(var position in schedulePositions)
+            {
+                if (day != position.Day)
+                {
+
+                    positionDtos.Add(day, dayPositionDtos);
+                    dayPositionDtos = new List<PositionDto>();
+                    day = position.Day;
+                }
+                dayPositionDtos.Add(new PositionDto()
+                {
+                    CoachId = position.CoachId,
+                    StartTime = position.StartTime.ToString("HH:mm"),
+                    Day = position.Day,
+                    TrainType = position.TrainType,
+                    FinishTime = position.FinishTime.ToString("HH:mm"),
+                    CoachName = position.CoachName,
+                    TrainTypeId = position.TrainTypeId,
+                    ImageName = position.ImageName
+
+                    
+
+                });
+            }
+            positionDtos.Add(schedulePositions?[^1].Day, dayPositionDtos);
+            return new ScheduleDto()
+            {
+                Positions = positionDtos
+                
+            };
+        }
         public static AbonementDto MapAbonement(Abonement abonement)
         {
             return new AbonementDto()
@@ -24,7 +66,8 @@ namespace WebGym.Infrastructure
                 Email = account.Email,
                 Id = account.Id,
                 LoginData = account.LoginData,
-                PasswordData = account.PasswordData
+                PasswordData = account.PasswordData,
+                GroupId = account.GroupId
             };
         }
 
@@ -38,7 +81,9 @@ namespace WebGym.Infrastructure
                 Pulse = attendance.Pulse,
                 WeightData = attendance.WeightData,
                 HeartPressure = attendance.HeartPressure,
-                HeadPressure = attendance.HeadPressure
+                HeadPressure = attendance.HeadPressure,
+                CaloriesSpent = attendance.CaloriesSpent
+               
             };
         }
 
@@ -50,10 +95,10 @@ namespace WebGym.Infrastructure
                 FirstName = client.FirstName,
                 Patronymic = client.Patronymic,
                 PhoneNumber = client.PhoneNumber,
-                Id = client.Id
+                Id = client.Id,
+                Sex = client.Sex
             };
         }
-
 
         public static CoachDto MapCoach(Coach coach)
         {
@@ -66,9 +111,9 @@ namespace WebGym.Infrastructure
                 Id = coach.Id,
                 PhoneNumber = coach.PhoneNumber,
                 Experience = coach.Experience
+
             };
         }
-
 
         public static ServiceDataDto MapServiceData(ServiceData serviceData)
         {
@@ -80,7 +125,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static ServiceDataTypeDto MapServiceDataType(ServiceDataType serviceDataType)
         {
             return new ServiceDataTypeDto()
@@ -90,7 +134,6 @@ namespace WebGym.Infrastructure
                 Price = serviceDataType.Price
             };
         }
-
 
         public static StatisticsDataDto MapStatisticsData(StatisticsData serviceDataType)
         {
@@ -107,7 +150,6 @@ namespace WebGym.Infrastructure
             };
         }
 
-
         public static List<AccountDto> MapAccountsDto(List<Account> accounts)
         {
             var accountsDto = new List<AccountDto>();
@@ -122,8 +164,6 @@ namespace WebGym.Infrastructure
             }
             return accountsDto;
         }
-
-
 
         public static List<CoachDto> MapCoachesDto(List<Coach> coaches)
         {
@@ -144,8 +184,6 @@ namespace WebGym.Infrastructure
             return coachesDto;
         }
 
-
-
         public static List<ClientDto> MapClientsDto(List<Client> clients)
         {
             var clientsDto = new List<ClientDto>();
@@ -162,7 +200,6 @@ namespace WebGym.Infrastructure
             }
             return clientsDto;
         }
-
 
         public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
         {

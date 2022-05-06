@@ -1,3 +1,4 @@
+using Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,11 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using WebGym.Domain.InterfacesToDb;
 using WebGym.Domain.Services;
-using WebGym.Infrastructure;
-using WebGym.Infrastructure.Repositories;
-using WebGym.Infrastructure.Repositories.Implementations;
+
 
 namespace WebGym
 {
@@ -30,6 +28,7 @@ namespace WebGym
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
                 AddCookie(op => {
                     op.LoginPath = "/login";
+                    op.AccessDeniedPath = "/denied";
                     //For claims checking purpose
                     op.Events = new CookieAuthenticationEvents()
                     {
@@ -47,18 +46,13 @@ namespace WebGym
                         }
                     };
                 });
-            services.AddDbContext<GymDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbRepositories(Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
-            services.AddTransient<IAccountRepository, AccountRepository>();
-            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
-            services.AddTransient<IStatisticsRepository, StatisticsRepository>();
-            services.AddTransient<IAbonementRepository, AbonementRepository>();
-            services.AddTransient<IAttendanceRepository, AttendanceRepository>();
             services.AddTransient<AuthorizationService>();
             services.AddTransient<RegistrationService>();
             services.AddTransient<AccountService>();
+            services.AddTransient<ScheduleService>();
 
 
         }

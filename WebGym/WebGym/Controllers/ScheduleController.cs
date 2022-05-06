@@ -1,16 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.Services;
 
 namespace WebGym.Controllers
 {
     public class ScheduleController : Controller
     {
-        public IActionResult Index()
+        private readonly ScheduleService _scheduleService;
+
+        public ScheduleController(ScheduleService scheduleService)
         {
-            return View();
+            _scheduleService = scheduleService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+
+            var id = Guid.Parse("CA1B624B-3CD1-4ACF-8B20-9FB375F23E6D");
+           var schedule = await _scheduleService.GetCurrentSchedule(id);
+            return View(schedule);
         }
     }
 }

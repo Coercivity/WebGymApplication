@@ -5,22 +5,14 @@
 	@await Html.PartialAsync("MetatagsPartial")
 	@await Html.PartialAsync("ScriptsPartial")
 	@await Html.PartialAsync("CssPartial")
-	<title>Gym flip-flops</title>
+	<title>Gym website</title>
 	</head>
 
     <body>
 
-
         @await Html.PartialAsync("HeaderPartial")
         @RenderBody()
         @await Html.PartialAsync("FooterPartial")
-
-
-
-
-
-
-
-
+		@RenderSection("Scripts", required: false)
     </body>
 </html>

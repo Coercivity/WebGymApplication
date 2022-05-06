@@ -2,9 +2,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGym.Domain.DTOs;
 using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories
+namespace WebGym.Infrastructure.Repositories.Implementations
 {
     public class StatisticsRepository : IStatisticsRepository
     {
@@ -15,7 +16,7 @@ namespace WebGym.Infrastructure.Repositories
             _gymDbContext = gymDbContext;
         }
 
-        public async Task<StatisticsDataDto> GetStatisticsByIdAsync(Guid id)
+        public async Task<StatisticsDataDto> GetStatisticsByClientIdAsync(Guid id)
         {
             var statistics = await _gymDbContext.StatisticsData.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
             return Mapper.MapStatisticsData(statistics);

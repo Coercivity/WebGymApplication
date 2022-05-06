@@ -10,6 +10,7 @@ namespace WebGym.Infrastructure.efModels
         public Coach()
         {
             Attendances = new HashSet<Attendance>();
+            Positions = new HashSet<Position>();
         }
 
         public Guid Id { get; set; }
@@ -23,5 +24,6 @@ namespace WebGym.Infrastructure.efModels
 
         public virtual Account Account { get; set; }
         public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Position> Positions { get; set; }
     }
 }

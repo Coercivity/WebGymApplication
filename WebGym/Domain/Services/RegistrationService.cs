@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using WebGym.Domain.Enums;
 using WebGym.Domain.InterfacesToDb;
 
 namespace WebGym.Domain.Services

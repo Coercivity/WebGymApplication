@@ -9,9 +9,6 @@ namespace WebGym.Infrastructure
 {
     public partial class GymDbContext : DbContext
     {
-        public GymDbContext()
-        {
-        }
 
         public GymDbContext(DbContextOptions<GymDbContext> options)
             : base(options)
@@ -23,17 +20,17 @@ namespace WebGym.Infrastructure
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Coach> Coaches { get; set; }
+        public virtual DbSet<DayNamings> DayNamings { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<RoleGroup> RoleGroups { get; set; }
+        public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<ServiceDataType> ServiceDataTypes { get; set; }
         public virtual DbSet<ServiceData> ServiceData { get; set; }
         public virtual DbSet<StatisticsData> StatisticsData { get; set; }
+        public virtual DbSet<TrainType> TrainTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GymDb;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -89,9 +86,9 @@ namespace WebGym.Infrastructure
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.FinishTime).HasColumnType("date");
+                entity.Property(e => e.FinishTime).HasColumnType("datetime");
 
-                entity.Property(e => e.StartTime).HasColumnType("date");
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Coach)
                     .WithMany(p => p.Attendances)
@@ -108,13 +105,15 @@ namespace WebGym.Infrastructure
             {
                 entity.ToTable("Client");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A7DF33481D")
+                entity.HasIndex(e => e.AccountId, "UQ__Client__349DA5A78A0AC398")
                     .IsUnique();
 
-                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C083E9602F1")
+                entity.HasIndex(e => e.StatisticsDataId, "UQ__Client__CA990C08B0708B6B")
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.BirthDate).HasColumnType("date");
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
@@ -123,6 +122,8 @@ namespace WebGym.Infrastructure
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(16)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Sex).HasMaxLength(10);
 
                 entity.Property(e => e.Surname).HasMaxLength(50);
 
@@ -141,7 +142,7 @@ namespace WebGym.Infrastructure
             {
                 entity.ToTable("Coach");
 
-                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7450D3160")
+                entity.HasIndex(e => e.AccountId, "UQ__Coach__349DA5A7A3903C61")
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -164,6 +165,44 @@ namespace WebGym.Infrastructure
                     .HasConstraintName("FK__Coach__AccountId__30F848ED");
             });
 
+            modelBuilder.Entity<DayNamings>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.DayData).HasMaxLength(12);
+            });
+
+            modelBuilder.Entity<Position>(entity =>
+            {
+                entity.ToTable("Position");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FinishTime).HasColumnType("datetime");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Coach)
+                    .WithMany(p => p.Positions)
+                    .HasForeignKey(d => d.CoachId)
+                    .HasConstraintName("FK__Position__CoachI__48CFD27E");
+
+                entity.HasOne(d => d.DayNamings)
+                    .WithMany(p => p.Positions)
+                    .HasForeignKey(d => d.DayNamingsId)
+                    .HasConstraintName("FK__Position__DayNam__46E78A0C");
+
+                entity.HasOne(d => d.Schedule)
+                    .WithMany(p => p.Positions)
+                    .HasForeignKey(d => d.ScheduleId)
+                    .HasConstraintName("FK__Position__Schedu__49C3F6B7");
+
+                entity.HasOne(d => d.TrainType)
+                    .WithMany(p => p.Positions)
+                    .HasForeignKey(d => d.TrainTypeId)
+                    .HasConstraintName("FK__Position__TrainT__47DBAE45");
+            });
+
             modelBuilder.Entity<RoleGroup>(entity =>
             {
                 entity.ToTable("RoleGroup");
@@ -173,6 +212,17 @@ namespace WebGym.Infrastructure
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(12);
+            });
+
+            modelBuilder.Entity<Schedule>(entity =>
+            {
+                entity.ToTable("Schedule");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Description).HasMaxLength(100);
             });
 
             modelBuilder.Entity<ServiceDataType>(entity =>
@@ -189,7 +239,7 @@ namespace WebGym.Infrastructure
             modelBuilder.Entity<ServiceData>(entity =>
             {
                 entity.HasKey(e => new { e.AbonementId, e.AttendanceId })
-                    .HasName("PK__ServiceD__D9476643F5394230");
+                    .HasName("PK__ServiceD__D947664382B8DCBE");
 
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.ServiceData)
@@ -216,6 +266,15 @@ namespace WebGym.Infrastructure
                 entity.Property(e => e.FinishDate).HasColumnType("date");
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<TrainType>(entity =>
+            {
+                entity.ToTable("TrainType");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

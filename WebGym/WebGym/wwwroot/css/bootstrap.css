@@ -1707,7 +1707,7 @@ a.bg-success:focus {
 }
 
 .bg-info {
-  background-color: #d9edf7;
+  background-color: #5355a4;
 }
 
 a.bg-info:hover,
@@ -3838,7 +3838,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
   border-color: #46b8da;
 }
 .btn-info .badge {
-  color: #5bc0de;
+  color: #5355a4;
   background-color: #fff;
 }
 
@@ -5399,18 +5399,18 @@ a.label:hover, a.label:focus {
 }
 
 .badge {
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 7px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  line-height: 1;
-  vertical-align: middle;
-  white-space: nowrap;
-  text-align: center;
-  background-color: #777777;
-  border-radius: 10px;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #337ab7;
+    border-radius: 10px;
 }
 .badge:empty {
   display: none;

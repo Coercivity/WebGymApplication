@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym
+namespace WebGym.Domain.DTOs
 {
     public class StatisticsDataDto
     {
-        
 
         public Guid Id { get; set; }
         public DateTime? StartDate { get; set; }
