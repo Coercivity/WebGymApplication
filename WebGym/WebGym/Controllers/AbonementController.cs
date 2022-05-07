@@ -24,7 +24,7 @@ namespace WebGym.Controllers
         public IActionResult BuyAbonement(Guid clientId, string tariff)
         {
             var status = _aboementService.BuyAbonementAsync(clientId, tariff);
-            return Redirect("/");
+            return Redirect("/Account");
         }
 
 

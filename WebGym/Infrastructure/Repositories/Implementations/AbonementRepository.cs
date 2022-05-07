@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories.Implementations
 
         public async Task<AbonementDto> GetValidAbonementByClientIdAsync(Guid id)
         {
-            var abonement = await _gymDbContext.Abonements.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+            var abonement = await _gymDbContext.Abonements.Where(x => x.ClientId.Equals(id)).FirstOrDefaultAsync();
             if (abonement is null)
                 return null;
             return Mapper.MapAbonement(abonement);
@@ -49,10 +49,11 @@ namespace Infrastructure.Repositories.Implementations
             try
             {
                 await _gymDbContext.Abonements.AddAsync(abonement);
+                await _gymDbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
-                await _gymDbContext.SaveChangesAsync();
+                
                 return false;
             }
             return true;

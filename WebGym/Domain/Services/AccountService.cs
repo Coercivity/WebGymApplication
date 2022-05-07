@@ -47,7 +47,8 @@ namespace Domain.Services
                     Id = attendance?.Id,
                     Pulse = attendance?.Pulse,
                     TrainTime = attendance?.StartTime,
-                    Weight = attendance?.WeightData
+                    Weight = attendance?.WeightData,
+                    TrainType = attendance?.TrainType
                 }); 
             }
             
@@ -63,13 +64,15 @@ namespace Domain.Services
 
             };
 
-            var abonementModel = new AbonementModel()
+            var abonementModel = new AbonementModel();
+
+            if(abonemet is not null)
             {
-                StartDate = abonemet?.StartDate,
-                FinishDate = abonemet?.FinishDate,
-                ClientId = abonemet?.ClientId,
-                IsValid = abonemet?.IsValid,
-                VisitsAmount = abonemet?.VisitsAmount
+                abonementModel.StartDate = abonemet.StartDate;
+                abonementModel.FinishDate = abonemet.FinishDate;
+                abonementModel.ClientId = abonemet?.ClientId;
+                abonementModel.IsValid = (bool)abonemet.IsValid;
+                abonementModel.VisitsAmount = abonemet?.VisitsAmount;
             };
 
 

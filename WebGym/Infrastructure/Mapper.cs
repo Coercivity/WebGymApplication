@@ -7,7 +7,21 @@ namespace Infrastructure
 {
     internal static class Mapper
     {
+        public static AttendanceDto MapAttendance(Attendance attendance)
+        {
+            return new AttendanceDto()
+            {
+                StartTime = attendance.StartTime,
+                FinishTime = attendance.FinishTime,
+                Id = attendance.Id,
+                Pulse = attendance.Pulse,
+                WeightData = attendance.WeightData,
+                HeartPressure = attendance.HeartPressure,
+                HeadPressure = attendance.HeadPressure,
+                CaloriesSpent = attendance.CaloriesSpent
 
+            };
+        }
         public static ScheduleDto MapSchedule(List<ExtractedSchedule> schedulePositions)
         {
 
@@ -28,10 +42,10 @@ namespace Infrastructure
                 dayPositionDtos.Add(new PositionDto()
                 {
                     CoachId = position.CoachId,
-                    StartTime = position.StartTime.ToString("HH:mm"),
+                    StartTime = position.StartTime,
                     Day = position.Day,
                     TrainType = position.TrainType,
-                    FinishTime = position.FinishTime.ToString("HH:mm"),
+                    FinishTime = position.FinishTime,
                     CoachName = position.CoachName,
                     TrainTypeId = position.TrainTypeId,
                     ImageName = position.ImageName
@@ -54,7 +68,7 @@ namespace Infrastructure
                 VisitsAmount = abonement.VisitsAmount,
                 StartDate = abonement.StartDate,
                 FinishDate = abonement.FinishDate,
-                IsValid = abonement.IsValid,
+                IsValid = abonement.IsValid
             };
         }
 
@@ -70,21 +84,7 @@ namespace Infrastructure
             };
         }
 
-        public static AttendanceDto MapAttendance(Attendance attendance)
-        {
-            return new AttendanceDto()
-            {
-                StartTime = attendance.StartTime,
-                FinishTime = attendance.FinishTime,
-                Id = attendance.Id,
-                Pulse = attendance.Pulse,
-                WeightData = attendance.WeightData,
-                HeartPressure = attendance.HeartPressure,
-                HeadPressure = attendance.HeadPressure,
-                CaloriesSpent = attendance.CaloriesSpent
-               
-            };
-        }
+
 
         public static ClientDto MapClient(Client client)
         {

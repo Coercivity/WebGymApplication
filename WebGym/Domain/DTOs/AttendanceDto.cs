@@ -13,6 +13,8 @@ namespace Domain.DTOs
         public DateTime? StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
         public int? Pulse { get; set; }
+
+        public string TrainType { get; set; }
         public int? HeadPressure { get; set; }
         public int? HeartPressure { get; set; }
         public double? WeightData { get; set; }
