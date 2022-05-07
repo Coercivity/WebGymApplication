@@ -10,5 +10,8 @@ namespace Domain.InterfacesToDb
         public Task<List<ClientDto>> GetAllClientsAsync();
         public Task<ClientDto> GetClientByIdAsync(Guid id);
         public Task<bool> UpdateClientAccountAsync(AccountDto accountDto, ClientDto clientDto);
+
+        public Task<List<ClientDto>> GetClientsByQueryAsync(string query);
+
     }
 }

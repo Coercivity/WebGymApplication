@@ -1146,6 +1146,7 @@ h1, h2, h3, h4, h5, h6 {
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+    box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
 }
 
 .card-body {
@@ -1290,4 +1291,18 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     background-color: #d9534f;
     border-radius: 10px;
+}
+
+.card-group > .card {
+    margin-bottom: 0.75rem;
+}
+
+@media (min-width: 576px) {
+  .card-group {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+
+
 }

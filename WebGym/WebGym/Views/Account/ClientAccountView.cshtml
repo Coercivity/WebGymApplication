@@ -66,16 +66,23 @@
 }
 
 <style>
-    .test1 {
-        display: inline-block;
+
+
+    .thumbnail {
+        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.5);
+        transition: 0.3s;
+        min-width: 40%;
+        border-radius: 5px;
     }
 
-        .test1 img {
-            display: block;
-        }
-        .test1 span {
-            display: block;
-        }
+    .thumbnail-description {
+        min-height: 40px;
+    }
+
+    .thumbnail:hover {
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
+    }
 
 </style>
 
@@ -89,7 +96,7 @@
 
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
-                    <div class="card">
+                    <div class="card thumbnail">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" 
@@ -103,8 +110,6 @@
                                     {
                                         <h4 style="font-size:24px">@Model.FullName</h4>
                                     }
-                                    <p class="text-secondary mb-1">test</p>
-                                    <p class="text-muted font-size-sm">test</p>
                                     <button class="btn btn-primary">История посещений</button>
                                 </div>
                             </div>
@@ -137,37 +142,37 @@
                                     <img src="~/images/butt.png" width="40" height="40" />
                                     Ягодицы
                                 </span>
-</li>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <span>
                                     <img src="~/images/chest.png" width="40" height="40" />
                                     Грудные мышцы
                                 </span>
-</li>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <span>
                                     <img src="~/images/quadricep.png" width="40" height="40" />
                                     Ноги
                                 </span>
-</li>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <span>
                                     <img src="~/images/shoulder.png" width="40" height="40" />
                                     Плечи
                                 </span>
-</li>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <span>
                                     <img src="~/images/triceps.png" width="40" height="40" />
                                     Трицепс
                                 </span>
-</li>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <span>
                                     <img src="~/images/swimming.png" width="40" height="40" />
                                     Плавание
                                 </span>
-</li>
+                            </li>
 
 
                         </ul>
@@ -251,8 +256,9 @@
                         </div>
                     </div>
 
-                    <div class="row gutters-sm">
-                        <div class="col-sm-12 mb-2">
+                    <div class="col-sm-12 mb-2">
+                        <div class="row gutters-sm card">
+
                             <div id="curve_chart"></div>
                             <div id="chart"></div>
                         </div>

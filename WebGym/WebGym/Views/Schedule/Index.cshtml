@@ -13,7 +13,6 @@
         margin-top: 10px;
     }
 
-
     .icon {
         width: 40px;
         height: 40px;
@@ -29,8 +28,6 @@
         margin-top: 10px;
     }
 
-
-
     .card {
         height: 150px;
         text-align: center;
@@ -40,9 +37,17 @@
         line-height: normal;
         margin-top: 10px;
         color: black;
+        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.7);
+        transition: 0.3s;
+    }
+
+
+    .thumbnail:hover {
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
     }
 </style>
-<body style="background-color: #e2e8f0;">
+<body style="background-color: white;">
     <h2 style="text-align:center;">Расписание клуба</h2>
     <div class="container-fluid ">
         <div class="row">
@@ -54,14 +59,12 @@
                     </div>
                     @foreach(var position in dayPosition.Value)
                     {
-                <div class="card">
-                    <div class="card-body">
+                <div class="card thumbnail">
+                    <div class="card-body ">
                         <div class="d-flex flex-row align-items-center">
-                            <div class="row">
+                            <div class="row ">
                                 <div class="ms-2 c-details">
-                                  
-                                        <span style="font-size:15px;" class="badge bg-success">@position.StartTime.ToString("HH:mm") : @position.FinishTime.ToString("HH:mm")</span>
-                                    
+                                     <span style="font-size:15px;" class="badge bg-success">@position.StartTime.ToString("HH:mm") : @position.FinishTime.ToString("HH:mm")</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -72,7 +75,7 @@
                                     <div><span></span></div>
                                     <div>@position.TrainType</div>
                             </div>
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-sm-1"><img src="~/images/@position.ImageName" /></div>
                             </div>
 

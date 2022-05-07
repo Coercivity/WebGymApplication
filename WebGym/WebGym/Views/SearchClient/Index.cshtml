@@ -1,4 +1,5 @@
-﻿@model List<CoachAccountModel>
+﻿@model List<ClientAccountModel>
+
 
 
 <style>
@@ -19,15 +20,14 @@
     }
 </style>
 
-
-
-<h2 style="text-align:center;">Наши тренера</h2>
+    
+<h2 style="text-align:center;">Поиск</h2>
 <div class="row">
     <div class="col-md-2">&nbsp;</div>
     <div class="col-md-8">
         <div class="row space-16">&nbsp;</div>
         <div class="row">
-            @foreach (var coach in Model)
+            @foreach (var client in Model)
             {
                 <div class="col-sm-3">
                     <div class="thumbnail">
@@ -39,26 +39,26 @@
                             <p><i class="glyphicon glyphicon-user light-red lighter bigger-120"></i>&nbsp;</p>
                             <div class="thumbnail-description smaller">
                                 @{
-                                    var fullName = coach.Surname + " " + coach.FirstName[0] + " " + coach.Patronymic[0] as string;
+                                    var fullName = client.Surname + " " + client.FirstName[0] + " " + client.Patronymic[0] as string;
                                 }
 
                                 @fullName
                             </div>
                             <div class="thumbnail-description smaller">
-                               Моб. телефон: @coach.MobileNumber
+                                Моб. телефон: @client.MobileNumber
                             </div>
-                            <div class="thumbnail-description smaller">
-                                Стаж: @coach.Experience
-                            </div>
-                            <div class="thumbnail-description smaller">
-                                Степень: @coach.Rank
-                            </div>
+                            <form class="form-inline my-2" asp-controller="Attendance" asp-action="Index">
+                                <input type="hidden" value=@client.Id name="coachId" />
+                                <input class="form-control mr-sm-2" type="hidden"  />
+                                <button class="btn btn-primary my-2 my-sm-0" type="submit">Отметить</button>
+                            </form>
                         </div>
-                       
+
                     </div>
                 </div>
             }
             <div class="col-md-2">&nbsp;</div>
         </div>
     </div>
-</div>  
+</div>
+

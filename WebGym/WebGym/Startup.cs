@@ -53,6 +53,7 @@ namespace WebGym
             services.AddTransient<AccountService>();
             services.AddTransient<ScheduleService>();
             services.AddTransient<AbonementService>();
+            services.AddTransient<AttendanceService>();
 
 
         }

@@ -13,6 +13,9 @@ namespace Domain.Services
         private readonly IClientRepository _clientRepository;
         private readonly ICoachRepository _coachRepository;
         private readonly IStatisticsRepository _statisticsRepository;
+
+
+
         private readonly IAttendanceRepository _attendanceRepository;
         private readonly IAbonementRepository _abonementRepository;
 
@@ -28,6 +31,26 @@ namespace Domain.Services
             _coachRepository = coachRepository;
         }
 
+
+        public async Task<List<ClientAccountModel>> getClientAcountModelByQueryAsync(string query)
+        {
+            var clientAccounts = await _clientRepository.GetClientsByQueryAsync(query);
+            var clientsAccountModel = new List<ClientAccountModel>();
+            foreach (var client in clientAccounts)
+            {
+                clientsAccountModel.Add(new ClientAccountModel()
+                {
+                    FirstName = client.FirstName,
+                    Surname = client.Surname,
+                    Patronymic = client.Patronymic,
+                    Id = client.Id,
+                    MobileNumber = client.PhoneNumber
+
+                });
+            }
+            return clientsAccountModel;
+        }
+  
         public async Task<ClientAccountModel> GetClientAccountModelAsync(Guid claimId)
         {
             var client = await _clientRepository.GetClientByIdAsync(claimId);
@@ -48,7 +71,8 @@ namespace Domain.Services
                     Pulse = attendance?.Pulse,
                     TrainTime = attendance?.StartTime,
                     Weight = attendance?.WeightData,
-                    TrainType = attendance?.TrainType
+                    TrainType = attendance?.TrainType,
+                    CaloriesSpent = attendance?.CaloriesSpent
                 }); 
             }
             

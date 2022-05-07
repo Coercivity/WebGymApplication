@@ -7,6 +7,30 @@ namespace Infrastructure
 {
     internal static class Mapper
     {
+
+        public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
+        {
+            var attendancesDto = new List<AttendanceDto>();
+            foreach (var attendance in attendances)
+            {
+                attendancesDto.Add(new AttendanceDto()
+                {
+                    StartTime = attendance.StartTime,
+                    FinishTime = attendance.FinishTime,
+                    HeartPressure = attendance.HeartPressure,
+                    Pulse = attendance.Pulse,
+                    Id = attendance.Id,
+                    WeightData = attendance.WeightData,
+                    HeadPressure = attendance.HeadPressure,
+                    CaloriesSpent = attendance.CaloriesSpent,
+                    CoachId = attendance.CoachId,
+                    StatisticsDataId = attendance.StatisticsDataId,
+                    //TrainTypeId = attendance.
+                });
+            }
+            return attendancesDto;
+        }
+
         public static AttendanceDto MapAttendance(Attendance attendance)
         {
             return new AttendanceDto()
@@ -18,7 +42,9 @@ namespace Infrastructure
                 WeightData = attendance.WeightData,
                 HeartPressure = attendance.HeartPressure,
                 HeadPressure = attendance.HeadPressure,
-                CaloriesSpent = attendance.CaloriesSpent
+                CaloriesSpent = attendance.CaloriesSpent,
+                StatisticsDataId = attendance.StatisticsDataId,
+                CoachId = attendance.CoachId
 
             };
         }
@@ -200,24 +226,7 @@ namespace Infrastructure
             return clientsDto;
         }
 
-        public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
-        {
-            var attendancesDto = new List<AttendanceDto>();
-            foreach (var attendance in attendances)
-            {
-                attendancesDto.Add(new AttendanceDto()
-                {
-                    StartTime = attendance.StartTime,
-                    FinishTime = attendance.FinishTime,
-                    HeartPressure = attendance.HeartPressure,
-                    Pulse = attendance.Pulse,
-                    Id = attendance.Id,
-                    WeightData = attendance.WeightData,
-                    HeadPressure = attendance.HeadPressure
-                });
-            }
-            return attendancesDto;
-        }
+
 
 
     }

@@ -10,5 +10,6 @@ namespace Domain.InterfacesToDb
     {
         public Task<List<AttendanceDto>> GetAllAttendanciesByStatisticsIdAsync(Guid id);
         public Task<AttendanceDto> GetLastAttendanceByStatisticsIdAsync(Guid id);
+        public Task<bool> AddClientAttendanceAsync(AttendanceDto attendanceDto);
     }
 }

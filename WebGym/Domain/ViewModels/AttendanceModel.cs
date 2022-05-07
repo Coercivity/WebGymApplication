@@ -9,11 +9,15 @@ namespace Domain.ViewModels
         public Guid? StatisticsId { get; set; }
         public Guid? CoachId { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Guid? TrainTypeId { get; set; }
+
         public DateTime? TrainTime { get; set; } 
+        public DateTime? StartTime { get; set; } 
+        public DateTime? FinishTime { get; set; } 
         public string TrainType { get; set; }
         public int? Pulse { get; set; }
         public double? Weight { get; set; }
+        public double? CaloriesSpent { get; set; }
         public int? HeadPressure { get; set; }
         public int? HeartPressure { get; set; }
     }

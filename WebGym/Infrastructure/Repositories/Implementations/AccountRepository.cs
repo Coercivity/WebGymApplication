@@ -21,6 +21,14 @@ namespace Infrastructure.Repositories.Implementations
             _gymDbContext = gymDbContext;
         }
 
+        public async Task<List<ClientDto>> GetClientsByQueryAsync(string query)
+        {
+            var clientAccounts = await _gymDbContext.Clients.Where(x => x.FirstName.Contains(query) 
+                                                                || x.Surname.Contains(query)).ToListAsync();
+
+            return Mapper.MapClientsDto(clientAccounts);
+        }
+
         public async Task<List<ClientDto>> GetAllClientsAsync()
         {
             var clients = await _gymDbContext.Clients.ToListAsync();

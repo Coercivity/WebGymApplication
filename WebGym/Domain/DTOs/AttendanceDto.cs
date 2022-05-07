@@ -10,6 +10,7 @@ namespace Domain.DTOs
         public Guid Id { get; set; }
         public Guid? CoachId { get; set; }
         public Guid? StatisticsDataId { get; set; }
+        public Guid? TrainTypeId { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
         public int? Pulse { get; set; }
