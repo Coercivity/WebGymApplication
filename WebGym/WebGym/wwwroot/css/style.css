@@ -1305,4 +1305,24 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
+
+    .thumbnail {
+        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.5);
+        transition: 0.3s;
+        min-width: 40%;
+        border-radius: 5px;
+    }
+
+    .thumbnail-description {
+        min-height: 40px;
+    }
+
+    .thumbnail:hover {
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
+    }
+
+
+
+
 }

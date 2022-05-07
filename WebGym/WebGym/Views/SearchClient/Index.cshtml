@@ -2,25 +2,6 @@
 
 
 
-<style>
-    .thumbnail {
-        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.5);
-        transition: 0.3s;
-        min-width: 40%;
-        border-radius: 5px;
-    }
-
-    .thumbnail-description {
-        min-height: 40px;
-    }
-
-    .thumbnail:hover {
-        cursor: pointer;
-        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
-    }
-</style>
-
-    
 <h2 style="text-align:center;">Поиск</h2>
 <div class="row">
     <div class="col-md-2">&nbsp;</div>
@@ -48,7 +29,7 @@
                                 Моб. телефон: @client.MobileNumber
                             </div>
                             <form class="form-inline my-2" asp-controller="Attendance" asp-action="Index">
-                                <input type="hidden" value=@client.Id name="coachId" />
+                                <input type="hidden" value=@client.Id name="clientId" />
                                 <input class="form-control mr-sm-2" type="hidden"  />
                                 <button class="btn btn-primary my-2 my-sm-0" type="submit">Отметить</button>
                             </form>

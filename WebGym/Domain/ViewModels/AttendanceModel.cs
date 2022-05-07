@@ -8,9 +8,7 @@ namespace Domain.ViewModels
         public Guid? Id { get; set; }
         public Guid? StatisticsId { get; set; }
         public Guid? CoachId { get; set; }
-
         public Guid? TrainTypeId { get; set; }
-
         public DateTime? TrainTime { get; set; } 
         public DateTime? StartTime { get; set; } 
         public DateTime? FinishTime { get; set; } 

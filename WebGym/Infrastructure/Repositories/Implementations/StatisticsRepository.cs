@@ -22,5 +22,11 @@ namespace Infrastructure.Repositories.Implementations
             var statistics = await _gymDbContext.StatisticsData.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
             return Mapper.MapStatisticsData(statistics);
         }
+
+        public async Task<bool> UploadAttendanceStatisticsAsync(Guid id, StatisticsDataDto statisticsDataDto)
+        {
+            var statistics = await _gymDbContext.StatisticsData.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            return false;
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace Domain.InterfacesToDb
     public interface IStatisticsRepository
     {
         public Task<StatisticsDataDto> GetStatisticsByClientIdAsync(Guid id);
+
+        public Task<bool> UploadAttendanceStatisticsAsync(Guid id, StatisticsDataDto statisticsDataDto);
     }
 }

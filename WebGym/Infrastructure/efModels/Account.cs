@@ -13,6 +13,7 @@ namespace Infrastructure.efModels
         public string Email { get; set; }
         public int GroupId { get; set; }
 
+
         public virtual RoleGroup Group { get; set; }
         public virtual Client Client { get; set; }
         public virtual Coach Coach { get; set; }
