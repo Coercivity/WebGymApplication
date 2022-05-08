@@ -9,13 +9,14 @@
                     <div class="thumbnail">
                         <div class="caption text-center">
                             <div class="position-relative">
-                                <img src="~/images/person4.jpg" style="width:72px;height:72px;" />
+                                <img src="~/images/profileImages/@Model.ImagePath" alt="Admin"
+                                     class="rounded-circle" style="width:72px;height:72px;" />
                             </div>
                             <div class="thumbnail-description smaller">
                                 @Model.FullName
                             </div>
 
-                            <form asp-controller="Attendance" asp-action="Update">
+                            <form enctype="multipart/form-data" asp-controller="Attendance" asp-action="Update">
                                 <input name="statisticsId" value="@Model.Id" type="hidden" />
                                 <input name="clientId" value="@Model.Id" type="hidden" />
                                 <div>

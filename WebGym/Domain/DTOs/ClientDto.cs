@@ -15,7 +15,12 @@ namespace Domain.DTOs
         public Guid? AccountId { get; set; }
         public Guid? StatisticsDataId { get; set; }
         public string Sex { get; set; }
+        public string ImageName { get; set; }
         public DateTime? BirthData { get; set; }
+
+
+
+
 
 
     }

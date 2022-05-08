@@ -106,7 +106,8 @@ namespace Infrastructure
                 Id = account.Id,
                 LoginData = account.LoginData,
                 PasswordData = account.PasswordData,
-                GroupId = account.GroupId
+                GroupId = account.GroupId,
+                ImagePath = account.ImagePath
             };
         }
 
@@ -121,7 +122,8 @@ namespace Infrastructure
                 Patronymic = client.Patronymic,
                 PhoneNumber = client.PhoneNumber,
                 Id = client.Id,
-                Sex = client.Sex
+                Sex = client.Sex,
+
             };
         }
 

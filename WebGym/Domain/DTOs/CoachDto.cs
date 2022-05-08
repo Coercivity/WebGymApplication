@@ -15,6 +15,8 @@ namespace Domain.DTOs
         public int? Experience { get; set; }
         public string Degree { get; set; }
         public Guid? AccountId { get; set; }
+        public string ImageName { get; set; }
+
 
 
     }

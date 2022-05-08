@@ -18,7 +18,7 @@ namespace WebGym.Controllers
 
         public async Task<IActionResult> Index(Guid coachId, string query)
         {
-            var clientAccounts = await _accountService.getClientAcountModelByQueryAsync(query);
+            var clientAccounts = await _accountService.getClientAcountModelsByQueryAsync(query);
             return View(clientAccounts);
         }
     }

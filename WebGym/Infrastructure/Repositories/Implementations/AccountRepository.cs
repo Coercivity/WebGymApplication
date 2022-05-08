@@ -23,10 +23,25 @@ namespace Infrastructure.Repositories.Implementations
 
         public async Task<List<ClientDto>> GetClientsByQueryAsync(string query)
         {
-            var clientAccounts = await _gymDbContext.Clients.Where(x => x.FirstName.Contains(query) 
-                                                                || x.Surname.Contains(query)).ToListAsync();
+            var clientAccounts = await (from c in _gymDbContext.Clients
+                                           join a in _gymDbContext.Accounts
+                                           on c.AccountId equals a.Id
+                                           where c.Surname.Contains(query) || c.FirstName.Contains(query) 
+                                           select new ClientDto
+                                           {
+                                               Id = c.Id,
+                                               StatisticsDataId = c.Id,
+                                               AccountId = a.Id,
+                                               Patronymic = c.Patronymic,
+                                               FirstName = c.FirstName,
+                                               Surname = c.Surname,
+                                               PhoneNumber = c.PhoneNumber,
+                                               BirthData = c.BirthDate,
+                                               ImageName = a.ImagePath
 
-            return Mapper.MapClientsDto(clientAccounts);
+                                           }).ToListAsync();
+
+            return clientAccounts;
         }
 
         public async Task<List<ClientDto>> GetAllClientsAsync()
@@ -44,8 +59,24 @@ namespace Infrastructure.Repositories.Implementations
         public async Task<List<CoachDto>> GetAllCoachesAsync()
         {
 
-            var coaches = await _gymDbContext.Coaches.ToListAsync();
-            return Mapper.MapCoachesDto(coaches);
+            var coachesAccounts = await (from c in _gymDbContext.Coaches
+                                        join a in _gymDbContext.Accounts
+                                        on c.AccountId equals a.Id
+                                        select new CoachDto
+                                        {
+                                            Id = c.Id,
+                                            AccountId = a.Id,
+                                            Patronymic = c.Patronymic,
+                                            FirstName = c.FirstName,
+                                            Surname = c.Surname,
+                                            PhoneNumber = c.PhoneNumber,
+                                            Degree = c.Degree,
+                                            Experience = c.Experience,
+                                            ImageName = a.ImagePath
+
+                                        }).ToListAsync();
+
+            return coachesAccounts;
         }
 
         public async Task<ClientDto> GetClientByIdAsync(Guid id)
@@ -68,7 +99,8 @@ namespace Infrastructure.Repositories.Implementations
 
         public async Task<bool> CheckIfAccountExists(string login, string email)
         {
-           var account = await _gymDbContext.Accounts.Where(x => x.Email.Equals(email) || x.LoginData.Equals(login)).FirstOrDefaultAsync();
+           var account = await _gymDbContext.Accounts.Where(x => x.Email.Equals(email) 
+                                                || x.LoginData.Equals(login)).FirstOrDefaultAsync();
            if (account is not null)
                 return true;
 
@@ -127,6 +159,21 @@ namespace Infrastructure.Repositories.Implementations
             return true;
         }
 
+        public async Task<bool> UploadImage(Guid accountId, string imageName)
+        {
+            var account = await _gymDbContext.Accounts.FirstOrDefaultAsync(x => x.Id.Equals(accountId));
+            account.ImagePath = imageName;
 
+            try
+            {
+                await _gymDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using Domain.Services;
 using Infrastructure;
+using WebGym.Handlers.Interfaces;
+using WebGym.Handlers;
 
 namespace WebGym
 {
@@ -54,6 +56,7 @@ namespace WebGym
             services.AddTransient<ScheduleService>();
             services.AddTransient<AbonementService>();
             services.AddTransient<AttendanceService>();
+            services.AddTransient<IImageUploadHandler, ImageHandler>();
 
 
         }

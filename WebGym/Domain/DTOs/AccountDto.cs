@@ -11,7 +11,9 @@ namespace Domain.DTOs
         public string LoginData { get; set; }
         public string PasswordData { get; set; }
         public string Email { get; set; }
+        public string ImagePath { get; set; }
         public int GroupId { get; set; }
+        
 
     }
 }

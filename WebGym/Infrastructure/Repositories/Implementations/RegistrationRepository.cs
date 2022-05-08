@@ -33,7 +33,8 @@ namespace Infrastructure.Repositories.Implementations
                 LoginData = login,
                 PasswordData = BCrypt.Net.BCrypt.HashPassword(password),
                 Email = email,
-                GroupId = (int)Role.Client
+                GroupId = (int)Role.Client,
+                ImagePath = "defaultProfileImage.png"
             });
 
             await _gymDbContext.StatisticsData.AddAsync(new StatisticsData

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 
 
 namespace Domain.ViewModels
@@ -13,5 +14,7 @@ namespace Domain.ViewModels
         public string MobileNumber { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
+        public string ImagePath { get; set; }
+
     }
 }

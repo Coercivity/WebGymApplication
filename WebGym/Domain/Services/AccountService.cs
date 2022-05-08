@@ -31,10 +31,17 @@ namespace Domain.Services
             _coachRepository = coachRepository;
         }
 
+        public async Task<bool> UploadAccountImageName(Guid accountId, string imageName)
+        {
+            var status = await _accountRepository.UploadImage(accountId, imageName);
 
-        public async Task<List<ClientAccountModel>> getClientAcountModelByQueryAsync(string query)
+            return status;
+        }
+
+        public async Task<List<ClientAccountModel>> getClientAcountModelsByQueryAsync(string query)
         {
             var clientAccounts = await _clientRepository.GetClientsByQueryAsync(query);
+
             var clientsAccountModel = new List<ClientAccountModel>();
             foreach (var client in clientAccounts)
             {
@@ -44,7 +51,8 @@ namespace Domain.Services
                     Surname = client.Surname,
                     Patronymic = client.Patronymic,
                     Id = client.Id,
-                    MobileNumber = client.PhoneNumber
+                    MobileNumber = client.PhoneNumber,
+                    ImagePath = client.ImageName,
 
                 });
             }
@@ -111,7 +119,8 @@ namespace Domain.Services
                 Email = account.Email,
                 Login = account.LoginData,
                 Abonement = abonementModel,
-                AccountStatistics = statisticsModel
+                AccountStatistics = statisticsModel,
+                ImagePath = account.ImagePath
 
             };
             return accountModel;
@@ -151,7 +160,8 @@ namespace Domain.Services
                 Email = account.Email,
                 Login = account.LoginData,
                 Experience = coach.Experience,
-                Rank = coach.Degree
+                Rank = coach.Degree,
+                ImagePath = account.ImagePath
 
             };
             return accountModel;
@@ -193,7 +203,8 @@ namespace Domain.Services
                     Patronymic = coachDto.Patronymic,
                     MobileNumber = coachDto.PhoneNumber,
                     Experience = coachDto.Experience,
-                    Rank = coachDto.Degree
+                    Rank = coachDto.Degree,
+                    ImagePath = coachDto.ImageName
 
                 };
                 coachAccountModels.Add(coach);
