@@ -18,6 +18,8 @@ namespace Domain.Services
             _attendanceRepository = attendanceRepository;
         }
 
+
+
         public async Task<bool> AddClientAttendanceAsync(AttendanceModel attendanceModel)
         {
             var attendanceDto = new AttendanceDto()

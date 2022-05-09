@@ -28,7 +28,6 @@ namespace Infrastructure.efModels
         public virtual Coach Coach { get; set; }
         public virtual StatisticsData StatisticsData { get; set; }
         public virtual ICollection<ServiceData> ServiceData { get; set; }
-
         public virtual TrainType TrainType { get; set; }
     }
 }

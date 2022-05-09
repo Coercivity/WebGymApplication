@@ -1,4 +1,8 @@
 ﻿
+using Domain.DTOs;
+using System;
+using System.Collections.Generic;
+
 namespace Domain.ViewModels
 {
     public class ClientAccountModel : AbstractAccountModel
@@ -6,7 +10,8 @@ namespace Domain.ViewModels
         public StatisticsModel AccountStatistics { get; set; }
         public bool IsAbonementValid { get; set; }
         
-        
+        public List<TrainTypeDto> TrainTypes { get; set; }
+        public Dictionary<Guid, int> TrainTypesDictionary { get; set; }
 
         public AbonementModel Abonement { get; set; }
 

@@ -1,5 +1,18 @@
 ﻿@model ClientAccountModel
 
+
+
+<style>
+    .trainTypesIcons {
+        
+        border: none;
+        width:10px;
+    }
+
+    
+</style>
+
+
 <div class="row" style="margin-top:-10px;">
     <div class="col-md-8 col-md-offset-2">
         <div class="row space-16">&nbsp;</div>
@@ -16,7 +29,7 @@
                                 @Model.FullName
                             </div>
 
-                            <form enctype="multipart/form-data" asp-controller="Attendance" asp-action="Update">
+                            <form id="SubmitId"  asp-controller="Attendance" asp-action="Update">
                                 <input name="statisticsId" value="@Model.Id" type="hidden" />
                                 <input name="clientId" value="@Model.Id" type="hidden" />
                                 <div>
@@ -25,7 +38,7 @@
                                             <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px;" class="badge bg-info">Головное давление</span>
                                             <input style="font-size: 14px;" class="form-control text-center" name="headPressure" type="number" value="120" />
                                         </div>
-                                        
+
                                         <div class="row">
                                             <span style="font-size: 18px; margin-top: 10px; margin-bottom:3px;" class="badge bg-info">Сердечное давление</span>
                                             <input style="font-size: 14px;" class="form-control text-center" name="heartPressure" type="number" value="80" />
@@ -43,8 +56,23 @@
                                             <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px; " class="badge bg-info">Потраченные калории</span>
                                             <input style="font-size: 14px;" class="form-control text-center" name="caloriesSpent" type="number" step=100 value="1000" />
                                         </div>
+                                        <div class="custom" style="margin-top:10px;">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px;" class="badge bg-info">Тип тренировки</span>
+                                            <br />
+                                            <div class="row">
+                                                @foreach (var trainType in Model.TrainTypes)
+                                                {
+                                                    <div class="col-sm-3">
+                                                        <img src="~/images/@trainType.ImageName" />
+                                                        <input name="" class="trainTypesIcons"
+                                                               value="@trainType.Id" />
+                                                    </div>
+
+                                                }
+                                            </div>
+                                        </div>
                                         <div style="margin-top:10px;">
-                                            <input class="btn btn-success" type="submit" value="Внести" />
+                                            <input class="btn btn-success" id="submit-click" type="submit"  value="Внести" />
                                         </div>
                                     </div>
                                 </div>
@@ -59,3 +87,22 @@
     </div>
 </div>
 
+
+
+<script>
+        let images = document.getElementsByClassName("trainTypesIcons")
+        for (let image of images) {
+            image.name = "";
+            image.onclick = function () {
+                image.name = "trainTypeId";
+                console.log(image)
+                return false;
+            }
+            
+        }
+    
+    
+
+
+
+</script>

@@ -7,7 +7,20 @@ namespace Infrastructure
 {
     internal static class Mapper
     {
-
+        
+        public static List<TrainTypeDto> MapTrainTypes(List<TrainType> trainTypes)
+        {
+            var trainTypesDto = new List<TrainTypeDto>();
+            foreach(var train in trainTypes)
+            {
+                trainTypesDto.Add(new TrainTypeDto() { 
+                    Description = train.Description,
+                    Id = train.Id,
+                    ImageName = train.ImagePath
+                });
+            };
+            return trainTypesDto;
+        }
         public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
         {
             var attendancesDto = new List<AttendanceDto>();
@@ -25,7 +38,7 @@ namespace Infrastructure
                     CaloriesSpent = attendance.CaloriesSpent,
                     CoachId = attendance.CoachId,
                     StatisticsDataId = attendance.StatisticsDataId,
-                    //TrainTypeId = attendance.
+                    TrainTypeId = attendance.TrainTypeId
                 });
             }
             return attendancesDto;

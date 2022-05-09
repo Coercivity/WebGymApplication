@@ -31,7 +31,8 @@ namespace Infrastructure.Repositories.Implementations
                 CaloriesSpent = attendanceDto.CaloriesSpent,
                 Pulse = attendanceDto.Pulse,
                 HeartPressure = attendanceDto.HeartPressure,
-                HeadPressure = attendanceDto.HeadPressure
+                HeadPressure = attendanceDto.HeadPressure,
+                TrainTypeId = attendanceDto.TrainTypeId
 
             };
 
@@ -59,6 +60,12 @@ namespace Infrastructure.Repositories.Implementations
         public Task<AttendanceDto> GetLastAttendanceByStatisticsIdAsync(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<TrainTypeDto>> GetTrainTypes()
+        {
+            var trainTypes = await _gymDbContext.TrainTypes.ToListAsync();
+            return Mapper.MapTrainTypes(trainTypes);
         }
     }
 }

@@ -28,10 +28,11 @@ namespace WebGym.Controllers
 
         [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Update(int headPressure, int heartPressure, int caloriesSpent, 
-                                                double weight, int pulse, Guid clientId, Guid statisticsId)
+                                                double weight, int pulse, Guid clientId, Guid statisticsId, 
+                                                Guid trainTypeId)
         {
             /*
-             *  public Guid? CoachId { get; set; }
+             *  
                 public Guid? TrainTypeId { get; set; }
                 public DateTime? TrainTime { get; set; }
                 public string TrainType { get; set; }*/
@@ -47,11 +48,12 @@ namespace WebGym.Controllers
                 HeadPressure = headPressure,
                 HeartPressure = heartPressure,
                 Weight = weight,
+                TrainTypeId = trainTypeId
                 
             };
 
             var status = await _attendanceService.AddClientAttendanceAsync(attendanceModel);
-            return Redirect("/");
+            return Redirect("/Account");
         }
     }
 }

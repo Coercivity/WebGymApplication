@@ -31,6 +31,7 @@ namespace Domain.Services
             _coachRepository = coachRepository;
         }
 
+
         public async Task<bool> UploadAccountImageName(Guid accountId, string imageName)
         {
             var status = await _accountRepository.UploadImage(accountId, imageName);
@@ -66,6 +67,8 @@ namespace Domain.Services
             var statistics = await _statisticsRepository.GetStatisticsByClientIdAsync(claimId);
             var attendancies = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(claimId);
             var abonemet = await _abonementRepository.GetValidAbonementByClientIdAsync(claimId);
+            var trainTypes = await _attendanceRepository.GetTrainTypes();
+
 
             var attendanciesModel = new List<AttendanceModel>();
             foreach (var attendance in attendancies)
@@ -80,6 +83,7 @@ namespace Domain.Services
                     TrainTime = attendance?.StartTime,
                     Weight = attendance?.WeightData,
                     TrainType = attendance?.TrainType,
+                    TrainTypeId = attendance?.TrainTypeId,
                     CaloriesSpent = attendance?.CaloriesSpent
                 }); 
             }
@@ -108,6 +112,22 @@ namespace Domain.Services
             };
 
 
+            var trainTypesDictionary = new Dictionary<Guid, int>();
+            foreach(var trainType in trainTypes)
+            {
+                trainTypesDictionary.Add(trainType.Id, 0);
+            }
+
+            foreach(var attendance in attendancies)
+            {
+                if(attendance.TrainTypeId is not null)
+                {
+                    var id = (Guid)attendance.TrainTypeId;
+                    if (trainTypesDictionary.ContainsKey(id))
+                        trainTypesDictionary[id]++;
+                }
+            }
+
             var accountModel = new ClientAccountModel()
             {
                 Id = client.Id,
@@ -120,7 +140,9 @@ namespace Domain.Services
                 Login = account.LoginData,
                 Abonement = abonementModel,
                 AccountStatistics = statisticsModel,
-                ImagePath = account.ImagePath
+                ImagePath = account.ImagePath,
+                TrainTypes = trainTypes,
+                TrainTypesDictionary = trainTypesDictionary
 
             };
             return accountModel;
