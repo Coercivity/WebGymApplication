@@ -118,6 +118,7 @@ namespace Infrastructure.Repositories.Implementations
             client.Surname = clientDto.Surname;
             client.Patronymic = clientDto.Patronymic;
             client.PhoneNumber = clientDto.PhoneNumber;
+            client.BirthDate = clientDto.BirthData;
 
             try
             {

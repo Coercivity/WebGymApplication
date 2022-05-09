@@ -16,6 +16,7 @@ namespace Domain.DTOs
         public int? MedianHeartPressure { get; set; }
         public double? WeightData { get; set; }
         public int? VisitsAmount { get; set; }
+        public double? MedianCaloriesSpent { get; set; }
 
     }
 }

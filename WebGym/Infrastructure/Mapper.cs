@@ -136,6 +136,7 @@ namespace Infrastructure
                 PhoneNumber = client.PhoneNumber,
                 Id = client.Id,
                 Sex = client.Sex,
+                BirthData = client.BirthDate
 
             };
         }
@@ -185,6 +186,7 @@ namespace Infrastructure
                 MedianHeadPressure = serviceDataType.MedianHeadPressure,
                 MedianHeartPressure = serviceDataType.MedianHeartPressure,
                 VisitsAmount = serviceDataType.VisitsAmount,
+                MedianCaloriesSpent = serviceDataType.MedianCaloriesSpent,
                 Id = serviceDataType.Id,
                 WeightData = serviceDataType.WeightData
             };

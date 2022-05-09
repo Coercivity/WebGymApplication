@@ -8,6 +8,8 @@ namespace Domain.InterfacesToDb
     {
         public Task<StatisticsDataDto> GetStatisticsByClientIdAsync(Guid id);
 
+
         public Task<bool> UploadAttendanceStatisticsAsync(Guid id, StatisticsDataDto statisticsDataDto);
+        public Task<bool> UpdateStatisticsAsync(StatisticsDataDto statisticsDataDto);
     }
 }

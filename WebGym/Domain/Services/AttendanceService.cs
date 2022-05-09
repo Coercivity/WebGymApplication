@@ -12,16 +12,57 @@ namespace Domain.Services
     public class AttendanceService
     {
         private readonly IAttendanceRepository _attendanceRepository;
+        private readonly IStatisticsRepository _statisticsRepository;
 
-        public AttendanceService(IAttendanceRepository attendanceRepository)
+        public AttendanceService(IAttendanceRepository attendanceRepository, IStatisticsRepository statisticsRepository)
         {
             _attendanceRepository = attendanceRepository;
+            _statisticsRepository = statisticsRepository;
         }
 
+        public async Task<bool> UpdateClientStatistics(AttendanceModel attendanceModel)
+        {
+            var statistics = await _statisticsRepository.GetStatisticsByClientIdAsync((Guid)attendanceModel.StatisticsId);
+            if(statistics.VisitsAmount == 0 || statistics.VisitsAmount is null)
+            {
+                statistics.MedianHeadPressure = attendanceModel.HeadPressure;
+                statistics.MedianHeartPressure = attendanceModel.HeartPressure;
+                statistics.MedianPulse = attendanceModel.Pulse;
+                statistics.WeightData = attendanceModel.Weight;
+                statistics.MedianCaloriesSpent = attendanceModel.CaloriesSpent;
+                statistics.VisitsAmount = 0;
+            }
+            else
+            {
+                statistics.MedianHeadPressure = (statistics.MedianHeadPressure + attendanceModel.HeadPressure) / 2;
+                statistics.MedianHeartPressure = (statistics.MedianHeartPressure + attendanceModel.HeartPressure) / 2;
+                statistics.MedianPulse = (statistics.MedianPulse + attendanceModel.Pulse) / 2;
+                statistics.MedianCaloriesSpent += attendanceModel.CaloriesSpent;
+                statistics.WeightData = attendanceModel.Weight;
+            }
+            statistics.VisitsAmount++;
 
+            var statisticsDto = new StatisticsDataDto()
+            {
+                Id = statistics.Id,
+                MedianHeadPressure = statistics.MedianHeadPressure,
+                MedianHeartPressure = statistics.MedianHeartPressure,
+                VisitsAmount = statistics.VisitsAmount,
+                MedianPulse = statistics.MedianPulse,
+                WeightData = statistics.WeightData,
+                MedianCaloriesSpent = statistics.MedianCaloriesSpent
+                
+            };
+
+
+           var status = await _statisticsRepository.UpdateStatisticsAsync(statistics);
+
+           return status;
+        }
 
         public async Task<bool> AddClientAttendanceAsync(AttendanceModel attendanceModel)
         {
+
             var attendanceDto = new AttendanceDto()
             {
                 Id = Guid.NewGuid(),
@@ -37,7 +78,11 @@ namespace Domain.Services
                 TrainTypeId = attendanceModel.TrainTypeId
                 
             };
+
             var status = await _attendanceRepository.AddClientAttendanceAsync(attendanceDto);
+
+            var updateStatus = await UpdateClientStatistics(attendanceModel);
+            
 
             return status;
         }

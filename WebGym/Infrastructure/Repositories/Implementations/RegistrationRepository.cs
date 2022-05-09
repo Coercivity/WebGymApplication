@@ -39,7 +39,15 @@ namespace Infrastructure.Repositories.Implementations
 
             await _gymDbContext.StatisticsData.AddAsync(new StatisticsData
             {
-                Id = id
+                Id = id,
+                MedianHeadPressure = 0,
+                MedianHeartPressure = 0,
+                WeightData = 0,
+                VisitsAmount = 0,
+                MedianPulse = 0,
+                MedianCaloriesSpent = 0
+                
+
             });
 
            await _gymDbContext.Clients.AddAsync(new Client

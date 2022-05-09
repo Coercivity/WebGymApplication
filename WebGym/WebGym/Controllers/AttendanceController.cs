@@ -31,11 +31,7 @@ namespace WebGym.Controllers
                                                 double weight, int pulse, Guid clientId, Guid statisticsId, 
                                                 Guid trainTypeId)
         {
-            /*
-             *  
-                public Guid? TrainTypeId { get; set; }
-                public DateTime? TrainTime { get; set; }
-                public string TrainType { get; set; }*/
+
 
             var claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var attendanceModel = new AttendanceModel()

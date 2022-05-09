@@ -70,9 +70,25 @@ namespace Domain.Services
             var trainTypes = await _attendanceRepository.GetTrainTypes();
 
 
+
+
+            var trainTypesDictionary = new Dictionary<Guid, int>();
+            foreach (var trainType in trainTypes)
+            {
+                trainTypesDictionary.Add(trainType.Id, 0);
+            }
+
             var attendanciesModel = new List<AttendanceModel>();
             foreach (var attendance in attendancies)
             {
+
+                if (attendance.TrainTypeId is not null)
+                {
+                    var id = (Guid)attendance.TrainTypeId;
+                    if (trainTypesDictionary.ContainsKey(id))
+                        trainTypesDictionary[id]++;
+                }
+
                 attendanciesModel.Add(new AttendanceModel() { 
                     StatisticsId = attendance?.StatisticsDataId,
                     CoachId = attendance?.CoachId,
@@ -96,6 +112,7 @@ namespace Domain.Services
                 MedianPulse = statistics.MedianPulse,
                 Weight = statistics.WeightData,
                 VisitsAmount = statistics.VisitsAmount,
+                CaloriesSpent = statistics.MedianCaloriesSpent,
                 ClientAttendances = attendanciesModel
 
             };
@@ -112,26 +129,11 @@ namespace Domain.Services
             };
 
 
-            var trainTypesDictionary = new Dictionary<Guid, int>();
-            foreach(var trainType in trainTypes)
-            {
-                trainTypesDictionary.Add(trainType.Id, 0);
-            }
 
-            foreach(var attendance in attendancies)
-            {
-                if(attendance.TrainTypeId is not null)
-                {
-                    var id = (Guid)attendance.TrainTypeId;
-                    if (trainTypesDictionary.ContainsKey(id))
-                        trainTypesDictionary[id]++;
-                }
-            }
 
             var accountModel = new ClientAccountModel()
             {
                 Id = client.Id,
-                FullName = client.Surname + " " + client.FirstName + " " + client.Patronymic,
                 FirstName = client.FirstName,
                 Surname = client.Surname,
                 Patronymic = client.Patronymic,
@@ -142,7 +144,8 @@ namespace Domain.Services
                 AccountStatistics = statisticsModel,
                 ImagePath = account.ImagePath,
                 TrainTypes = trainTypes,
-                TrainTypesDictionary = trainTypesDictionary
+                TrainTypesDictionary = trainTypesDictionary,
+                BirthDate = client.BirthData
 
             };
             return accountModel;
@@ -159,7 +162,8 @@ namespace Domain.Services
                 Surname = accountModel.Surname,
                 FirstName = accountModel.FirstName,
                 Patronymic = accountModel.Patronymic,
-                PhoneNumber = accountModel.MobileNumber
+                PhoneNumber = accountModel.MobileNumber,
+                BirthData = accountModel.BirthDate
             };
 
             var response = await _clientRepository.UpdateClientAccountAsync(accountDto, clientDto);
@@ -174,7 +178,6 @@ namespace Domain.Services
             var accountModel = new CoachAccountModel()
             {
                 Id = coach.Id,
-                FullName = coach.FirstName + " " + coach.Surname + " " + coach.Patronymic,
                 FirstName = coach.FirstName,
                 Surname = coach.Surname,
                 Patronymic = coach.Patronymic,
@@ -184,6 +187,8 @@ namespace Domain.Services
                 Experience = coach.Experience,
                 Rank = coach.Degree,
                 ImagePath = account.ImagePath
+                
+
 
             };
             return accountModel;
@@ -219,7 +224,6 @@ namespace Domain.Services
                 var coach = new CoachAccountModel()
                 {
                     Id = coachDto.Id,
-                    FullName = coachDto.FirstName + " " + coachDto.Surname + " " + coachDto.Patronymic,
                     FirstName = coachDto.FirstName,
                     Surname = coachDto.Surname,
                     Patronymic = coachDto.Patronymic,

@@ -23,6 +23,29 @@ namespace Infrastructure.Repositories.Implementations
             return Mapper.MapStatisticsData(statistics);
         }
 
+        public async Task<bool> UpdateStatisticsAsync(StatisticsDataDto statisticsDataDto)
+        {
+            var statistics = await _gymDbContext.StatisticsData.FirstOrDefaultAsync(x => x.Id.Equals(statisticsDataDto.Id));
+            try
+            {
+
+                statistics.MedianCaloriesSpent = statisticsDataDto.MedianCaloriesSpent;
+                statistics.MedianHeadPressure = statisticsDataDto.MedianHeadPressure;
+                statistics.MedianHeartPressure = statisticsDataDto.MedianHeartPressure;
+                statistics.VisitsAmount = statisticsDataDto.VisitsAmount;
+                statistics.WeightData = statisticsDataDto.WeightData;
+                statistics.MedianPulse = statisticsDataDto.MedianPulse;
+
+                await _gymDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
+
         public async Task<bool> UploadAttendanceStatisticsAsync(Guid id, StatisticsDataDto statisticsDataDto)
         {
             var statistics = await _gymDbContext.StatisticsData.FirstOrDefaultAsync(x => x.Id.Equals(id));
