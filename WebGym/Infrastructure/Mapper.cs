@@ -66,7 +66,6 @@ namespace Infrastructure
 
             var positionDtos = new Dictionary<string,List<PositionDto>>();
             var dayPositionDtos = new List<PositionDto>();
-
             var day = schedulePositions?[0].Day;
 
             foreach(var position in schedulePositions)

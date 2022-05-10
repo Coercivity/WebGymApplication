@@ -11,7 +11,6 @@ namespace Domain.DTOs
         public DateTime FinishTime { get; set; }
         public Guid TrainTypeId { get; set; }
         public string ImageName { get; set; }
-
         public string TrainType { get; set; }
         public string Day { get; set; }
         public string CoachName { get; set; }

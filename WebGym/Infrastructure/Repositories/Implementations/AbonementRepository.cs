@@ -27,9 +27,27 @@ namespace Infrastructure.Repositories.Implementations
 
         public async Task<AbonementDto> GetValidAbonementByClientIdAsync(Guid id)
         {
-            var abonement = await _gymDbContext.Abonements.Where(x => x.ClientId.Equals(id)).FirstOrDefaultAsync();
+            var abonement = await _gymDbContext.Abonements.Where(x => x.ClientId.Equals(id) && x.IsValid.Equals(true)).FirstOrDefaultAsync();
             if (abonement is null)
                 return null;
+
+            var res = DateTime.Compare(abonement.FinishDate, DateTime.UtcNow);
+            if (res < 0)
+            {
+                abonement.IsValid = false;
+                try
+                {
+                    await _gymDbContext.SaveChangesAsync();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            if (!(bool)abonement.IsValid)
+                return null;
+
             return Mapper.MapAbonement(abonement);
         }
 

@@ -33,13 +33,12 @@
                     <div class="thumbnail">
                         <div class="caption text-center">
                             <div class="position-relative">
-                                <img src="~/images/profileImages/@coach.ImagePath" style="width:72px;height:72px;" />
+                                <img src="~/images/profileImages/@coach.ImagePath"  alt="Avatar"  style="width:144px;height:144px; border-radius: 50%;" />
                             </div>
 
-                            <p><i class="glyphicon glyphicon-user light-red lighter bigger-120"></i>&nbsp;</p>
                             <div class="thumbnail-description smaller">
                                 @{
-                                    var fullName = coach.Surname + " " + coach.FirstName[0] + " " + coach.Patronymic[0] as string;
+                                    var fullName = coach.Surname + ". " + coach.FirstName[0] + ". " + coach.Patronymic[0] as string;
                                 }
 
                                 @fullName

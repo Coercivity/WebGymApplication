@@ -1,4 +1,5 @@
 ﻿using Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace WebGym.Controllers
             _accountService = accountService;
         }
 
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Index(Guid coachId, string query)
         {
             var clientAccounts = await _accountService.getClientAcountModelsByQueryAsync(query);

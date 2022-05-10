@@ -22,11 +22,11 @@
                     <div class="thumbnail">
                         <div class="caption text-center">
                             <div class="position-relative">
-                                <img src="~/images/profileImages/@Model.ImagePath" alt="Admin"
-                                     class="rounded-circle" style="width:72px;height:72px;" />
+                                <img src="~/images/profileImages/@Model.ImagePath" alt="Avatar" style="width:144px;height:144px;border-radius: 50%;"
+                                     class="rounded-circle" />
                             </div>
                             <div class="thumbnail-description smaller">
-                                <h4 style="font-size:24px">@Model.Surname @Model.FirstName[0] @Model.Patronymic[0]</h4>
+                                <h4 style="font-size:24px">@Model.Surname @Model.FirstName?[0]. @Model.Patronymic?[0].</h4>
                             </div>
 
                             <form id="SubmitId"  asp-controller="Attendance" asp-action="Update">
@@ -100,9 +100,4 @@
             }
             
         }
-    
-    
-
-
-
 </script>

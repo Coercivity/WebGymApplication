@@ -56,8 +56,8 @@ namespace WebGym
             services.AddTransient<ScheduleService>();
             services.AddTransient<AbonementService>();
             services.AddTransient<AttendanceService>();
+            services.AddTransient<ChartHandler>();
             services.AddTransient<IImageUploadHandler, ImageHandler>();
-
 
         }
 
@@ -77,7 +77,6 @@ namespace WebGym
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
-            
 
 
             app.UseEndpoints(endpoints =>

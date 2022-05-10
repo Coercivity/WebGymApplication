@@ -34,7 +34,7 @@ namespace WebGym.Controllers
             else if (code == RegistrationStatus.Error)
                 TempData["registartionError"] = "Ошибка регистрации, попробуйте еще раз";
 
-            return View("Register");
+            return View("index");
         }
     }
 }

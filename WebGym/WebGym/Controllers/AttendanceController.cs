@@ -19,6 +19,15 @@ namespace WebGym.Controllers
             _accountService = accountService;
         }
 
+
+        
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> ShowAttendaices(Guid clientId)
+        {
+            var clientAccount = await _attendanceService.GetAllClientsAttendaciesAsync(clientId);
+            return View("Attendancies",clientAccount);
+        }
+
         [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Index(Guid clientId)
         {
@@ -48,7 +57,13 @@ namespace WebGym.Controllers
                 
             };
 
-            var status = await _attendanceService.AddClientAttendanceAsync(attendanceModel);
+            var success = await _attendanceService.AddClientAttendanceAsync(attendanceModel);
+            if(success)
+            {
+                ViewData["Response"] = "Успешная отметка";
+                return Redirect("/Account");
+            }
+
             return Redirect("/Account");
         }
     }

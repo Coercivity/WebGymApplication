@@ -1,14 +1,19 @@
 ﻿using Domain.Enums;
 using Domain.Services;
 using Domain.ViewModels;
+using Google.DataTable.Net.Wrapper;
+using Google.DataTable.Net.Wrapper.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
+using WebGym.Handlers;
 using WebGym.Handlers.Interfaces;
 
 namespace WebGym.Controllers
@@ -17,13 +22,19 @@ namespace WebGym.Controllers
     {
         
         private readonly AccountService _accountService;
+        private readonly AttendanceService _attendanceService;
+        private readonly ChartHandler _chartHandler;
         private readonly IImageUploadHandler _imageUploadHandler;
         private Guid _claimId;
 
-        public AccountController(AccountService accountService, IImageUploadHandler imageUploadHandler)
+        public AccountController(AccountService accountService, IImageUploadHandler imageUploadHandler,
+            ChartHandler chartHandler, AttendanceService attendanceService)
         {
             _accountService = accountService;
             _imageUploadHandler = imageUploadHandler;
+            _chartHandler = chartHandler;
+            _attendanceService = attendanceService;
+
         }
 
         [Authorize]
@@ -106,6 +117,31 @@ namespace WebGym.Controllers
         }
 
 
+
+        [HttpGet]
+        public async Task<ActionResult> PieChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var accountModel = await _accountService.GetClientAccountModelAsync(_claimId);
+
+            var chart = _chartHandler.GetPieChart(accountModel);
+
+            return Content(chart);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            return Content(chart);
+        }
 
     }
 }

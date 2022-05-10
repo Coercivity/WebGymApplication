@@ -19,6 +19,25 @@ namespace Domain.Services
             _attendanceRepository = attendanceRepository;
             _statisticsRepository = statisticsRepository;
         }
+        
+        public async Task<List<AttendanceModel>> GetAllClientsAttendaciesAsync(Guid cliendId)
+        {
+            var attendaciesDto = await _attendanceRepository.GetAllAttendanciesByStatisticsIdAsync(cliendId);
+
+            var attendacies = new List<AttendanceModel>();
+
+            foreach (var attendanceDto in attendaciesDto)
+            {
+                attendacies.Add(new AttendanceModel() { 
+                    HeadPressure = attendanceDto.HeadPressure,
+                    HeartPressure = attendanceDto.HeartPressure,
+                    Pulse = attendanceDto.Pulse,
+                    Weight = attendanceDto.WeightData
+                });
+            }
+
+           return attendacies;
+        }
 
         public async Task<bool> UpdateClientStatistics(AttendanceModel attendanceModel)
         {

@@ -14,13 +14,13 @@ namespace WebGym.Controllers
             _aboementService = aboementService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Client")]
         public IActionResult Index(Guid clientId)
         {
             return View("BuyAbonement", clientId);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Client")]
         public IActionResult BuyAbonement(Guid clientId, string tariff)
         {
             var status = _aboementService.BuyAbonementAsync(clientId, tariff);
