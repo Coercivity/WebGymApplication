@@ -8,7 +8,7 @@ using WebGym.Handlers.Interfaces;
 
 namespace WebGym.Handlers
 {
-    public class ChartHandler : IPieChartHandler, ILineChartHandler
+    public class ChartHandler : IPieChartHandler
     {
 
 
@@ -37,7 +37,7 @@ namespace WebGym.Handlers
             return json;
         }
 
-        public string GetLineChart(List<AttendanceModel> attendanceModels)
+        public List<LineChartRow> GetLineChart(List<AttendanceModel> attendanceModels)
         {
             var chart = new List<LineChartRow>();
             int i = 1;
@@ -54,16 +54,7 @@ namespace WebGym.Handlers
                 });
             }
 
-            var json = chart.ToGoogleDataTable()
-           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
-           .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
-           .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
-           .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
-           .NewColumn(new Column(ColumnType.Number, "Вес"), x => x.Weight)
-           .Build()
-           .GetJson();
-
-            return json;
+            return chart;
         }
     }
 }

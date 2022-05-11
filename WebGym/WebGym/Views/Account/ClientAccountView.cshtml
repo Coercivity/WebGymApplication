@@ -1,63 +1,5 @@
 ﻿@model ClientAccountModel
 
-@section Scripts
-{
-    @if (Model.AccountStatistics.ClientAttendances.Count > 4)
-    {
-        <script type="text/javascript">
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var jsonData = $.ajax({
-                    url: "/Account/PieChartData/",
-                    dataType: "json",
-                    async: false
-                }).responseText;
-                var data = new google.visualization.DataTable(jsonData);
-                var options = {
-
-                    title: 'Диаграмма упражнений',
-                    'height': 300,
-                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
-
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('chart'));
-                chart.draw(data, options);
-            }
-        </script>
-
-
-        <script type="text/javascript">
-
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var jsonData = $.ajax({
-                    url: "/Account/LineChartData/",
-                    dataType: "json",
-                    async: false
-                }).responseText;
-                var data = new google.visualization.DataTable(jsonData);
-                var options = {
-                    title: 'Показатели здоровья',
-                    curveType: 'function',
-                    legend: { position: 'bottom' },
-
-                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
-                    'height': 300
-
-
-                };
-
-                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-                chart.draw(data, options);
-            }
-        </script>
-    }
-}
 
 
 
@@ -114,7 +56,7 @@
                                     <p class="text-secondary mb-1">
                                         Среднее давление:
                                         @if (@Model.AccountStatistics.MedianHeadPressure >= 110 && @Model.AccountStatistics.MedianHeadPressure <= 130
-                             && @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
+&& @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
                                         {
                                             <span style="background-color: #4BB543; font-size:15px;" class="badge bg-success">
                                                 @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
@@ -133,9 +75,10 @@
                                     </p>
                                     <p class="text-secondary mb-1">
                                         Потрачено
-                                             <span>@Model.AccountStatistics.CaloriesSpent </span>
-                                        Ккал</p>
-                                    </div>
+                                        <span>@Model.AccountStatistics.CaloriesSpent </span>
+                                        Ккал
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,14 +196,32 @@
                     </div>
                     @if (Model.AccountStatistics.ClientAttendances.Count > 4)
                     {
-                    <div class="col-sm-12 col-md-12 mb-2">
-                        <div class="row card thumbnail">
-                            <div id="curve_chart"></div>
+                        <div class="col-sm-12 col-md-12 mb-2">
+                            <div class="row card thumbnail">
+                                <div id="chart"></div>
+                                <div class="row" style="align-content:center;">
+    
+                                    <div class="col-sm-1" style="align-content:center;">
+                                        <button class="btn btn-info butstyle" id="pulse">Пульс</button>
+                                    </div>
+                                    <div class="col-sm-1"   style="align-content:center;">
+                                        <button class="btn btn-info butstyle" id="weight">Вес</button>
+                                    </div>
+                                    <div class="col-sm-3"  style="align-content:center;">
+                                        <button class="btn btn-info butstyle" id="headPresure">Головное давление</button>
+                                    </div>
+                                    <div class="col-sm-3"  style="align-content:center;">
+                                        <button class="btn btn-info butstyle" id="heartPresure">Сердечное давление</button>
+                                    </div>
+                                    <div class="col-sm-3 "  style="align-content:center;">
+                                        <button class="btn btn-info butstyle" id="all">Показатели здоровья</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row card thumbnail">
+                                <div id="pie_chart"></div>
+                            </div>
                         </div>
-                        <div class="row card thumbnail">
-                            <div id="chart"></div>
-                        </div>
-                    </div>
                     }
                 </div>
             </div>
@@ -268,3 +229,179 @@
     </div>
 </body>
 
+<style>
+    .butstyle {
+        font-size: 11px;
+        height: 26px;
+        width:auto;
+        align-content: center;
+        padding: 1px 5px;
+    }
+
+</style>
+
+@section Scripts
+{
+    @if (Model.AccountStatistics.ClientAttendances.Count > 4)
+    {
+
+        <script type="text/javascript">
+
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawLinePulseChart);
+            google.charts.setOnLoadCallback(drawPieChart);
+            google.charts.setOnLoadCallback(drawLineHeadPressureChart);
+            google.charts.setOnLoadCallback(drawLineHeartPressureChart);
+            google.charts.setOnLoadCallback(drawLineWeightChart);
+            google.charts.setOnLoadCallback(drawLineAllChart);
+
+            var pieChartData;
+            var pieChartOptions;
+            var pieChart;
+            function drawPieChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/PieChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                pieChartData = new google.visualization.DataTable(jsonData);
+                pieChartOptions = {
+
+                    title: 'Диаграмма упражнений',
+                    'height': 300,
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                };
+                pieChart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+                pieChart.draw(pieChartData, pieChartOptions);
+            }
+
+
+            var linePulseChartData;
+            var linePulseChartOptions;
+            var linePulseChart;
+            function drawLinePulseChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LinePulseChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                linePulseChartData = new google.visualization.DataTable(jsonData);
+                linePulseChartOptions = {
+                    title: 'Динамика пульса',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+            }
+
+
+            var lineHeadPressureChartData;
+            var lineHeadPressureChartOptions;
+            var lineHeadPressureChart;
+            function drawLineHeadPressureChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineHeadPressureChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineHeadPressureChartData = new google.visualization.DataTable(jsonData);
+                lineHeadPressureChartOptions = {
+                    title: 'Динамика головного давления',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+            var lineHeartPressureChartData;
+            var lineHeartPressureChartOptions;
+            var lineHeartPressureChart;
+            function drawLineHeartPressureChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineHeartPressureChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineHeartPressureChartData = new google.visualization.DataTable(jsonData);
+                lineHeartPressureChartOptions = {
+                    title: 'Динамика сердечного давления',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+
+            var lineWeightChartData;
+            var lineWeightChartOptions;
+            var lineWeightChart;
+            function drawLineWeightChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineWeightChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineWeightChartData = new google.visualization.DataTable(jsonData);
+                lineWeightChartOptions = {
+                    title: 'Динамика веса',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+
+            var lineAllChartData;
+            var lineAllChartOptions;
+            var lineAllChart;
+            function drawLineAllChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineAllChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineAllChartData = new google.visualization.DataTable(jsonData);
+                lineAllChartOptions = {
+                    title: 'Показатели здоровья',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+
+            document.getElementById('headPresure').onclick = function () {
+                lineHeadPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineHeadPressureChart.draw(lineHeadPressureChartData, lineHeadPressureChartOptions);
+            };
+            document.getElementById('pulse').onclick = function () {
+                linePulseChart = new google.visualization.LineChart(document.getElementById('chart'));
+                linePulseChart.draw(linePulseChartData, linePulseChartOptions);
+            };
+            document.getElementById('heartPresure').onclick = function () {
+                lineHeartPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineHeartPressureChart.draw(lineHeartPressureChartData, lineHeartPressureChartOptions);
+            };
+            document.getElementById('weight').onclick = function () {
+                lineWeightChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineWeightChart.draw(lineWeightChartData, lineWeightChartOptions);
+            };
+            document.getElementById('all').onclick = function () {
+                lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+            };
+
+
+        </script>
+    }
+}

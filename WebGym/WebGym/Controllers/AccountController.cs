@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebGym.Handlers;
+using WebGym.Handlers.Charts;
 using WebGym.Handlers.Interfaces;
 
 namespace WebGym.Controllers
@@ -34,6 +35,7 @@ namespace WebGym.Controllers
             _imageUploadHandler = imageUploadHandler;
             _chartHandler = chartHandler;
             _attendanceService = attendanceService;
+
 
         }
 
@@ -132,7 +134,7 @@ namespace WebGym.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> LineChartData()
+        public async Task<ActionResult> LineAllChartData()
         {
             _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             //to refactor
@@ -140,8 +142,94 @@ namespace WebGym.Controllers
 
             var chart = _chartHandler.GetLineChart(attendancies);
 
-            return Content(chart);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
+           .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
+           .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
+           .NewColumn(new Column(ColumnType.Number, "Вес"), x => x.Weight)
+           .Build()
+           .GetJson();
+            return Content(json);
         }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LinePulseChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
+           .Build()
+           .GetJson();
+
+            
+            return Content(json);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineHeadPressureChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
+           .Build()
+           .GetJson();
+            return Content(json);
+        }
+
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineHeartPressureChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
+           .Build()
+           .GetJson();
+
+            return Content(json);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineWeightChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Вес"), x => x.Weight)
+           .Build()
+           .GetJson();
+            return Content(json);
+        }
+
+
 
     }
 }
