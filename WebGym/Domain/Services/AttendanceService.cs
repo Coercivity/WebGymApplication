@@ -95,6 +95,8 @@ namespace Domain.Services
                 StatisticsDataId = attendanceModel.StatisticsId,
                 Pulse = attendanceModel.Pulse,
                 TrainTypeId = attendanceModel.TrainTypeId
+
+                
                 
             };
 

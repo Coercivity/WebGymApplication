@@ -44,7 +44,7 @@ namespace WebGym.Controllers
 
             var claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var attendanceModel = new AttendanceModel()
-            { 
+            {
                 CoachId = claimId,
                 Id = Guid.NewGuid(),
                 CaloriesSpent = caloriesSpent,
@@ -53,7 +53,8 @@ namespace WebGym.Controllers
                 HeadPressure = headPressure,
                 HeartPressure = heartPressure,
                 Weight = weight,
-                TrainTypeId = trainTypeId
+                TrainTypeId = trainTypeId,
+                StartTime = DateTime.UtcNow
                 
             };
 

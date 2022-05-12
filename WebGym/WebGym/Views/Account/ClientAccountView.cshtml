@@ -9,7 +9,7 @@
         <div class="main-body">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
-                    <div class="card thumbnail">
+                    <div class="card thumbnail" >
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="~/images/profileImages/@Model.ImagePath" alt="Avatar" style="border-radius: 50%;"
@@ -28,9 +28,7 @@
                                         <input class="btn btn-primary" type="submit" value="История посещений">
 
                                     </form>
-
-
-                                    <p class="text-secondary mb-1">Всего посещений: @Model.AccountStatistics.VisitsAmount</p>
+                                    <p class="text-secondary mb-1" style="margin-top:13px;">Всего посещений: @Model.AccountStatistics.VisitsAmount</p>
                                     <p class="text-secondary mb-1">
                                         Средний пульс:
                                         @if (@Model.AccountStatistics.MedianPulse == 0)
@@ -50,13 +48,11 @@
                                                 @Model.AccountStatistics.MedianPulse
                                             </span>
                                         }
-
-
                                     </p>
                                     <p class="text-secondary mb-1">
                                         Среднее давление:
                                         @if (@Model.AccountStatistics.MedianHeadPressure >= 110 && @Model.AccountStatistics.MedianHeadPressure <= 130
-&& @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
+                                    && @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
                                         {
                                             <span style="background-color: #4BB543; font-size:15px;" class="badge bg-success">
                                                 @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
@@ -74,24 +70,23 @@
                                         }
                                     </p>
                                     <p class="text-secondary mb-1">
-                                        Потрачено
+                                        Всего потрачено Ккал:
                                         <span>@Model.AccountStatistics.CaloriesSpent </span>
-                                        Ккал
+
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card thumbnail">
-                        <ul class="list-group list-group-flush">
+                    <div class="card thumbnail" >
+                        <ul class="list-group list-group-flush" style="margin:0px; !important">
                             @foreach (var trainType in Model.TrainTypes)
                             {
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                     <span>
                                         <img src="~/images/@trainType.ImageName" width="40" height="40" />
-                                        <span class="">@trainType.Description</span>
-                                        <span>@Model.TrainTypesDictionary[trainType.Id]</span>
+                                        <span class="col-sm-offset-7">@trainType.Description : @Model.TrainTypesDictionary[trainType.Id]</span>
                                     </span>
 
                                 </li>
@@ -100,11 +95,11 @@
                     </div>
                 </div>
                 <div class="col-md-8 ">
-                    <div class="card mb-3 thumbnail">
+                    <div class="card thumbnail">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0" style="font-size:16px">Логин</h6>
+                                    <h6  style="font-size:16px">Логин</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     @Model.Login
@@ -113,7 +108,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 style="font-size:16px" class="mb-0">Email</h6>
+                                    <h6 style="font-size:16px" >Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     @Model.Email
@@ -122,7 +117,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0 " style="font-size:16px">Телефон</h6>
+                                    <h6  style="font-size:16px">Телефон</h6>
                                 </div>
                                 @if (@Model.MobileNumber is null)
                                 {
@@ -140,7 +135,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0 " style="font-size:16px">Дата рождения</h6>
+                                    <h6  style="font-size:16px">Дата рождения</h6>
                                 </div>
                                 @if (@Model.BirthDate is null)
                                 {
@@ -159,10 +154,9 @@
                                 }
                             </div>
                             <hr>
-
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0 " style="font-size:16px">Абонемент</h6>
+                                    <h6  style="font-size:16px">Абонемент</h6>
                                 </div>
                                 @if (!Model.Abonement.IsValid)
                                 {
@@ -199,12 +193,12 @@
                         <div class="col-sm-12 col-md-12 mb-2">
                             <div class="row card thumbnail">
                                 <div id="chart"></div>
-                                <div class="row" style="align-content:center;">
+                                <div class="row" style="align-content:center; margin-top:40px;">
     
                                     <div class="col-sm-1" style="align-content:center;">
                                         <button class="btn btn-info butstyle" id="pulse">Пульс</button>
                                     </div>
-                                    <div class="col-sm-1"   style="align-content:center;">
+                                    <div class="col-sm-1"   style="align-content:inherit;">
                                         <button class="btn btn-info butstyle" id="weight">Вес</button>
                                     </div>
                                     <div class="col-sm-3"  style="align-content:center;">
@@ -237,7 +231,6 @@
         align-content: center;
         padding: 1px 5px;
     }
-
 </style>
 
 @section Scripts
@@ -376,7 +369,8 @@
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
                 };
-
+                lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineAllChart.draw(lineAllChartData, lineAllChartOptions);
             }
 
 
