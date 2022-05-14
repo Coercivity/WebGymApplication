@@ -6,6 +6,7 @@ namespace Domain.DTOs
 {
     public class PositionDto
     {
+        public Guid Id { get; set; }
         public Guid? CoachId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }

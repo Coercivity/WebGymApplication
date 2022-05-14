@@ -1,31 +1,45 @@
-﻿	<header  id="fh5co-header">
-			<div class="container">
-			    <nav class="navbar navbar-default">
-		        <div class="navbar-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" 
-					aria-expanded="false" aria-controls="navbar"><i></i></a>
-		          	<a class="navbar-brand" asp-controller="Home" asp-action="index">Фитнес</a> 
-		        </div>
-		        <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="/" data-nav-section="home"><span>Главная</span></a></li>
-                        <li><a href="/" data-nav-section="about"><span>О нас</span></a></li>
-                        <li><a href="/" data-nav-section="services"><span>Услуги</span></a></li>
-                        <li><a href="/" data-nav-section="testimonials"><span>Отзывы</span></a></li>
-                        <li><a href="/" data-nav-section="press"><span>Новости</span></a></li>
-                        <li><a class="nav-link" asp-controller="Team" asp-action="Index"><span>Наша команда</span></a></li>
-                        <li><a class="nav-link" asp-controller="Schedule" asp-action="Index"><span>Расписание</span></a></li>
-                        <li><a class="nav-link" asp-controller="Account" asp-action="Index"><span>Личный кабинет</span></a></li>
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li><a class="nav-link" asp-controller="Authorization" asp-action="Login"><span>Войти</span></a></li>
-                        }
-                        else
-                        {
-                            <li><a class="nav-link" asp-controller="Authorization" asp-action="Logout"><span>Выйти</span></a></li>
-                        }
-                    </ul>
-		        </div>
-			    </nav>
-		  </div>
-	</header>
+﻿@{ string role = "";}
+
+ @if (User.Identity.IsAuthenticated)
+ { 
+    role = User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+ }
+
+
+<header id="fh5co-header">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar"
+                   aria-expanded="false" aria-controls="navbar"><i></i></a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="index">Фитнес</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="/" data-nav-section="home"><span>Главная</span></a></li>
+                    <li><a href="/" data-nav-section="about"><span>О нас</span></a></li>
+                    <li><a href="/" data-nav-section="services"><span>Услуги</span></a></li>
+                    <li><a href="/" data-nav-section="testimonials"><span>Отзывы</span></a></li>
+                    <li><a href="/" data-nav-section="press"><span>Новости</span></a></li>
+                    <li><a class="nav-link" asp-controller="Team" asp-action="Index"><span>Наша команда</span></a></li>
+                    <li><a class="nav-link" asp-controller="Schedule" asp-action="Index"><span>Расписание</span></a></li>
+
+                    @if (role != Role.Admin.ToString())
+                    {
+                         <li><a class="nav-link" asp-controller="Account" asp-action="Index"><span>Личный кабинет</span></a></li>
+                    }
+                    
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+
+                        <li><a class="nav-link" asp-controller="Authorization" asp-action="Login"><span>Войти</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link" asp-controller="Authorization" asp-action="Logout"><span>Выйти</span></a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

@@ -86,9 +86,10 @@ namespace Infrastructure
                     FinishTime = position.FinishTime,
                     CoachName = position.CoachName,
                     TrainTypeId = position.TrainTypeId,
-                    ImageName = position.ImageName
+                    ImageName = position.ImageName,
+                    Id = position.PositionId
 
-                    
+
 
                 });
             }

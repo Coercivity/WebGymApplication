@@ -38,13 +38,13 @@
                                         }
                                         else if (@Model.AccountStatistics.MedianPulse <= 120)
                                         {
-                                            <span style="background-color: #4BB543; font-size:15px;" class="badge bg-success">
+                                            <span style="background-color: #4BB543; font-size:17px;" class="badge bg-success">
                                                 @Model.AccountStatistics.MedianPulse
                                             </span>
                                         }
                                         else
                                         {
-                                            <span style="background-color: red; font-size: 15px;" class="badge bg-danger">
+                                            <span style="background-color: red; font-size: 17px;" class="badge bg-danger">
                                                 @Model.AccountStatistics.MedianPulse
                                             </span>
                                         }
@@ -54,7 +54,7 @@
                                         @if (@Model.AccountStatistics.MedianHeadPressure >= 110 && @Model.AccountStatistics.MedianHeadPressure <= 130
                                     && @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
                                         {
-                                            <span style="background-color: #4BB543; font-size:15px;" class="badge bg-success">
+                                            <span style="background-color: #4BB543; font-size:17px;" class="badge bg-success">
                                                 @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
                                             </span>
                                         }
@@ -64,15 +64,15 @@
                                         }
                                         else
                                         {
-                                            <span style="background-color: red; font-size: 15px;" class="badge bg-danger">
+                                            <span style="background-color: red; font-size: 17px;" class="badge bg-danger">
                                                 @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
                                             </span>
                                         }
                                     </p>
                                     <p class="text-secondary mb-1">
                                         Всего потрачено Ккал:
-                                        <span>@Model.AccountStatistics.CaloriesSpent </span>
-
+                                        <span>@Model.AccountStatistics.CaloriesSpent</span>
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -99,69 +99,69 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6  style="font-size:16px">Логин</h6>
+                                    <h6  style="font-size:18px">Логин</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    @Model.Login
+                                    <h6 style="font-size:18px;margin-top:6px;">@Model.Login</h6>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 style="font-size:16px" >Email</h6>
+                                    <h6 style="font-size:18px" >Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    @Model.Email
+                                    <h6 style="font-size:18px;margin-top:6px;">@Model.Email</h6>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6  style="font-size:16px">Телефон</h6>
+                                    <h6  style="font-size:18px">Телефон</h6>
                                 </div>
                                 @if (@Model.MobileNumber is null)
                                 {
                                     <div class="col-sm-9 text-secondary">
-                                        ---
+                                       <h6 style="font-size:18px;margin-top:6px;"> ---</h6>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="col-sm-9 text-secondary">
-                                        @Model.MobileNumber
+                                        <h6 style="font-size:18px;margin-top:6px;">@Model.MobileNumber</h6>
                                     </div>
                                 }
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6  style="font-size:16px">Дата рождения</h6>
+                                    <h6  style="font-size:18px">Дата рождения</h6>
                                 </div>
                                 @if (@Model.BirthDate is null)
                                 {
-                                    <div class="col-sm-9 text-secondary">
+                                    <div class="col-sm-9">
                                         ---
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="col-sm-9 text-secondary">
-                                        @{
+                            <div class="col-sm-9">
+                                @{
                                             var birthDate = (DateTime)Model.BirthDate;
-                                        }
-                                        @birthDate.ToString("MM/dd/yyyy")
-                                    </div>
+                                }
+                                <h6 style="font-size:18px;margin-top:6px;"> @birthDate.ToString("MM/dd/yyyy")</h6>
+                            </div>
                                 }
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6  style="font-size:16px">Абонемент</h6>
+                                    <h6  style="font-size:18px">Абонемент</h6>
                                 </div>
                                 @if (!Model.Abonement.IsValid)
                                 {
-                                    <div class="col-sm-9 text-secondary">
-                                        <div class="text-danger">
+                                    <div class="col-sm-9">
+                                        <div class="text-danger" style="margin-top:6px;">
                                             <span class="badge-inValid">Недействителен</span>
                                             <form asp-controller="Abonement" asp-action="Index">
                                                 <input type="hidden"
@@ -174,7 +174,7 @@
                                 }
                                 else
                                 {
-                                    <div class="col-sm-9 text-secondary">
+                                    <div class="col-sm-9" style="margin-top:6px;">
                                         <span class="badge-valid">Действителен до @Model.Abonement.FinishDate.ToString("MM/dd/yyyy")</span>
                                     </div>
                                 }
@@ -182,7 +182,7 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-12" style="text-align:center; margin-top:6px">
+                                <div class="col-sm-12" style="text-align:center;">
                                     <a class="btn btn-info" asp-controller="Account" asp-action="EditClientCredentials">Редактировать</a>
                                 </div>
                             </div>
@@ -239,7 +239,6 @@
     {
 
         <script type="text/javascript">
-
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(drawLinePulseChart);
             google.charts.setOnLoadCallback(drawPieChart);
@@ -283,6 +282,7 @@
                     title: 'Динамика пульса',
                     curveType: 'function',
                     legend: { position: 'bottom' },
+                    colors: ['#e0440e'],
 
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
@@ -304,6 +304,7 @@
                     title: 'Динамика головного давления',
                     curveType: 'function',
                     legend: { position: 'bottom' },
+                    colors: ['#e0440e'],
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
                 };
@@ -323,6 +324,7 @@
                 lineHeartPressureChartOptions = {
                     title: 'Динамика сердечного давления',
                     curveType: 'function',
+                    colors: ['#e0440e'],
                     legend: { position: 'bottom' },
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
@@ -344,6 +346,7 @@
                 lineWeightChartOptions = {
                     title: 'Динамика веса',
                     curveType: 'function',
+                    colors: ['#e0440e'],
                     legend: { position: 'bottom' },
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
@@ -375,8 +378,10 @@
 
 
             document.getElementById('headPresure').onclick = function () {
+
                 lineHeadPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
                 lineHeadPressureChart.draw(lineHeadPressureChartData, lineHeadPressureChartOptions);
+
             };
             document.getElementById('pulse').onclick = function () {
                 linePulseChart = new google.visualization.LineChart(document.getElementById('chart'));

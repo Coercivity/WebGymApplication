@@ -51,8 +51,12 @@ namespace Infrastructure.Repositories.Implementations
             return Mapper.MapSchedule(schedulePositions);
         }
 
-
-
+        public async Task RemovePositionAsync(Guid positionId)
+        {
+            var position = await _gymDbContext.Positions.FirstAsync(x => x.Id.Equals(positionId));
+             _gymDbContext.Positions.Remove(position);
+            await _gymDbContext.SaveChangesAsync();
+        }
     }
 }
 

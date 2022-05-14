@@ -33,9 +33,13 @@ namespace Domain.Services
             {
                 _claims.Add(new Claim(ClaimTypes.Role, Role.Coach.ToString()));
             }
-            else
+            else if(account.GroupId == (int)Role.Client)
             {
                 _claims.Add(new Claim(ClaimTypes.Role, Role.Client.ToString()));
+            }
+            else if (account.GroupId == (int)Role.Admin)
+            {
+                _claims.Add(new Claim(ClaimTypes.Role, Role.Admin.ToString()));
             }
 
 
