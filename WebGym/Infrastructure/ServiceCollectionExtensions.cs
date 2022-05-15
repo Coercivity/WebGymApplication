@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.InterfacesToDb;
+using Infrastructure.Repositories.Implementations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Infrastructure;
-using WebGym.Infrastructure.Repositories;
-using WebGym.Infrastructure.Repositories.Implementations;
+
 
 namespace Infrastructure
 {
@@ -17,6 +16,8 @@ namespace Infrastructure
 
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<ICoachRepository, AccountRepository>();
+            services.AddTransient<IClientRepository, AccountRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IStatisticsRepository, StatisticsRepository>();
             services.AddTransient<IAbonementRepository, AbonementRepository>();

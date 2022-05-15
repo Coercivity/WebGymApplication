@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Enums;
+using Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WebGym.Domain.Enums;
-using WebGym.Domain.Services;
+
 
 namespace WebGym.Controllers
 {
@@ -21,7 +22,7 @@ namespace WebGym.Controllers
 
         public async Task<IActionResult> TryRegister(string login, string password, string email)
         {
-            var code = await _registrationService.Registrate(login, password, email);
+            var code = await _registrationService.RegisterAccountAsync(login, password, email);
             if (code == RegistrationStatus.Successful)
             {
                 TempData["registartionSuccess"] = "Успешная регистрация";
@@ -33,7 +34,7 @@ namespace WebGym.Controllers
             else if (code == RegistrationStatus.Error)
                 TempData["registartionError"] = "Ошибка регистрации, попробуйте еще раз";
 
-            return View("Register");
+            return View("index");
         }
     }
 }

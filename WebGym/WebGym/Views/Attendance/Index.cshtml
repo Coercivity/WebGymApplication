@@ -1,0 +1,103 @@
+﻿@model ClientAccountModel
+
+
+
+<style>
+    .trainTypesIcons {
+        
+        border: none;
+        width:10px;
+    }
+
+    
+</style>
+
+
+<div class="row" style="margin-top:-10px;">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row space-16">&nbsp;</div>
+        <div class="row">
+           
+                <div class="col-sm-5 col-sm-offset-4">
+                    <div class="thumbnail">
+                        <div class="caption text-center">
+                            <div class="position-relative">
+                                <img src="~/images/profileImages/@Model.ImagePath" alt="Avatar" style="width:144px;height:144px;border-radius: 50%;"
+                                     class="rounded-circle" />
+                            </div>
+                            <div class="thumbnail-description smaller">
+                                <h4 style="font-size:24px">@Model.Surname @Model.FirstName?[0]. @Model.Patronymic?[0].</h4>
+                            </div>
+
+                            <form id="SubmitId"  asp-controller="Attendance" asp-action="Update">
+                                <input name="statisticsId" value="@Model.Id" type="hidden" />
+                                <input name="clientId" value="@Model.Id" type="hidden" />
+                                <div>
+                                    <div class="card-body ">
+                                        <div class="row">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px;" class="badge bg-info">Головное давление</span>
+                                            <input style="font-size: 14px;" class="form-control text-center" name="headPressure" type="number" value="120" />
+                                        </div>
+
+                                        <div class="row">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom:3px;" class="badge bg-info">Сердечное давление</span>
+                                            <input style="font-size: 14px;" class="form-control text-center" name="heartPressure" type="number" value="80" />
+                                        </div>
+
+                                        <div class="row">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px; " class="badge bg-info">Вес после тренировки</span>
+                                            <input style="font-size: 14px;" class="form-control text-center" name="weight" type="number" step="0.1" value="60" />
+                                        </div>
+                                        <div class="row">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px; " class="badge bg-info">Средний пульс</span>
+                                            <input style="font-size: 14px;" class="form-control text-center" name="pulse" type="number" value="90" step="1" />
+                                        </div>
+                                        <div class="row">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px; " class="badge bg-info">Потраченные калории</span>
+                                            <input style="font-size: 14px;" class="form-control text-center" name="caloriesSpent" type="number" step=100 value="1000" />
+                                        </div>
+                                        <div class="custom" style="margin-top:10px;">
+                                            <span style="font-size: 18px; margin-top: 10px; margin-bottom: 3px;" class="badge bg-info">Тип тренировки</span>
+                                            <br />
+                                            <div class="row">
+                                                @foreach (var trainType in Model.TrainTypes)
+                                                {
+                                                    <div class="col-sm-2 col-lg-2 col-xs-2">
+                                                        <img src="~/images/@trainType.ImageName" width="50" height="50"/>
+                                                        <input type="checkbox" name="" class="trainTypesIcons"
+                                                               value="@trainType.Id" />
+                                                    </div>
+
+                                                }
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:10px;">
+                                            <input class="btn btn-success" id="submit-click" type="submit"  value="Внести" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+        let images = document.getElementsByClassName("trainTypesIcons")
+
+        for (let image of images) {
+            image.name = "";
+            image.onclick = function () {
+                image.name = "trainTypeId";
+                
+            }
+            
+        }
+</script>

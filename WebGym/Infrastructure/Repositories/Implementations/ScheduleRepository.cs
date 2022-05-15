@@ -1,13 +1,14 @@
-﻿using Infrastructure.ExtractedModels;
+﻿using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Infrastructure.ExtractedModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+
+namespace Infrastructure.Repositories.Implementations
 {
     public class ScheduleRepository : IScheduleRepository
     {
@@ -50,8 +51,12 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             return Mapper.MapSchedule(schedulePositions);
         }
 
-
-
+        public async Task RemovePositionAsync(Guid positionId)
+        {
+            var position = await _gymDbContext.Positions.FirstAsync(x => x.Id.Equals(positionId));
+             _gymDbContext.Positions.Remove(position);
+            await _gymDbContext.SaveChangesAsync();
+        }
     }
 }
 

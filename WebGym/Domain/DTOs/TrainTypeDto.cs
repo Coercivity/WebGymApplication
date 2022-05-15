@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Domain.DTOs
+namespace Domain.DTOs
 {
     public class TrainTypeDto
     {
@@ -11,7 +11,7 @@ namespace WebGym.Domain.DTOs
         public Guid Id { get; set; }
         public string Description { get; set; }
 
-        public string ImagePath { get; set; }
+        public string ImageName { get; set; }
 
     }
 }

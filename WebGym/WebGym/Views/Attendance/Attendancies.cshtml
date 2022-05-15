@@ -1,0 +1,12 @@
+﻿@model List<AttendanceModel>
+
+
+<div class="container-fluid">
+    @foreach (var attendance in Model)
+    {
+         <div class="col-sm-2 col-xs-2 col-lg-2">
+             @attendance.StartTime
+         </div>
+    }
+
+</div>

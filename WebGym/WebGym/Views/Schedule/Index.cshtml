@@ -1,19 +1,18 @@
 ﻿@model ScheduleModel
 
+
 <style>
     .schedule-date {
         height: 36px;
         text-align: center;
         box-sizing: border-box;
-        border: 2px solid #337ab7;
+        border: 1px solid #6173f4;
         background-color: white;
-        border-radius: 3px;
+        border-radius: 5px;
         line-height: normal;
-        margin-top: 4px;
-        color: #337ab7;
-        
+        color: #6173f4;
+        margin-top: 10px;
     }
-
 
     .icon {
         width: 40px;
@@ -30,58 +29,89 @@
         margin-top: 10px;
     }
 
-
-
     .card {
-        height: 150px;
+        height: auto;
         text-align: center;
         box-sizing: border-box;
-        border: 3px solid #337ab7;
-        border-radius: 3px;
+        border: 1px solid #6173f4;
+        border-radius: 5px;
         line-height: normal;
         margin-top: 10px;
         color: black;
+        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.7);
+        transition: 0.3s;
     }
+
+
+    .thumbnail:hover {
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
+    }
+    .btn-info {
+        background-color: #6173f4;
+    }
+
 </style>
+
+@{ string role = "";}
+
+@if (User.Identity.IsAuthenticated)
+{
+    role = User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+}
+
+
+
+
+
+
+
 <body style="background-color: #e2e8f0;">
     <h2 style="text-align:center;">Расписание клуба</h2>
     <div class="container-fluid ">
         <div class="row">
-            @foreach(var dayPosition in Model.Positions)
+            @foreach (var dayPosition in Model.Positions)
             {
-                <div class="col-sm-2 col-lg-2 col-xs-12 col-md-2"  >
+                <div class="col-sm-2 col-lg-2 col-xs-12 col-md-2">
                     <div class="schedule-date">
-                        <strong style="margin-top:15px;">@dayPosition.Key</strong>
+                        <strong style="margin-top:15px; font-size:20px;">@dayPosition.Key</strong>
                     </div>
-                    @foreach(var position in dayPosition.Value)
+                    @foreach (var position in dayPosition.Value)
                     {
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="row">
-                                <div class="ms-2 c-details">
-                                  
-                                        <span style="font-size:15px;" class="badge bg-success">@position.StartTime : @position.FinishTime</span>
-                                    
+                        <div class="card thumbnail">
+                            <div class="card-body ">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="row ">
+                                        <div class="ms-2 c-details">
+                                            <span style="font-size:15px;" class="badge bg-success">@position.StartTime.ToString("HH:mm") : @position.FinishTime.ToString("HH:mm")</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span style="font-size:15px;" class="badge bg-info">@position.CoachName</span>
+                                    </div>
+                                    <div class="row">
+
+                                        <div><span></span></div>
+                                        <div>Занятие: @position.TrainType</div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-sm-1"><img src="~/images/@position.ImageName" width="50" height="50" /></div>
+                                        
+                                        @if (role == Role.Admin.ToString())
+                                        {
+                                            <div style="margin-top: 6px;"  class="col-sm-offset-4 col-sm-2 col-lg-offset-6 col-lg-2 col-md-offset-4 col-md-2 col-xs-offset-4 col-xs-4">
+                                                <form asp-controller="Schedule" asp-action="RemovePosition">
+                                                    <input type="hidden" name="positionId" value="@position.Id" />
+                                                    <input class="btn btn-info btn-sm" type="submit" value="X" />
+                                                </form>
+                                            </div>
+                                        }
+
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="row">
-                                <span style="font-size:15px;" class="badge bg-info" >@position.CoachName</span>
-                            </div>
-                            <div class="row">
-                                
-                                    <div><span></span></div>
-                                    <div>@position.TrainType</div>
-                                
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-1"><img src="~/images/@position.ImageName" /></div>
-                            </div>
-
                         </div>
-                    </div>
-                </div>
                     }
                 </div>
             }

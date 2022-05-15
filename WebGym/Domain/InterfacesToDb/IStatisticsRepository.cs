@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Domain.DTOs;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
 
-namespace WebGym.Domain.InterfacesToDb
+namespace Domain.InterfacesToDb
 {
     public interface IStatisticsRepository
     {
         public Task<StatisticsDataDto> GetStatisticsByClientIdAsync(Guid id);
+
+
+        public Task<bool> UploadAttendanceStatisticsAsync(Guid id, StatisticsDataDto statisticsDataDto);
+        public Task<bool> UpdateStatisticsAsync(StatisticsDataDto statisticsDataDto);
     }
 }

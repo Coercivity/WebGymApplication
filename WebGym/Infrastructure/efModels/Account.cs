@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Infrastructure.efModels
+namespace Infrastructure.efModels
 {
     public partial class Account
     {
@@ -12,6 +12,8 @@ namespace WebGym.Infrastructure.efModels
         public string PasswordData { get; set; }
         public string Email { get; set; }
         public int GroupId { get; set; }
+        public string ImagePath { get; set; }
+
 
         public virtual RoleGroup Group { get; set; }
         public virtual Client Client { get; set; }

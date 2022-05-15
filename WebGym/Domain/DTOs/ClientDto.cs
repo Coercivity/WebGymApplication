@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Domain.DTOs
+namespace Domain.DTOs
 {
     public class ClientDto
     {
@@ -15,7 +15,12 @@ namespace WebGym.Domain.DTOs
         public Guid? AccountId { get; set; }
         public Guid? StatisticsDataId { get; set; }
         public string Sex { get; set; }
+        public string ImageName { get; set; }
         public DateTime? BirthData { get; set; }
+
+
+
+
 
 
     }

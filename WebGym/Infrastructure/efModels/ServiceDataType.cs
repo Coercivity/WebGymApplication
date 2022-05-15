@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Infrastructure.efModels
+namespace Infrastructure.efModels
 {
     public partial class ServiceDataType
     {

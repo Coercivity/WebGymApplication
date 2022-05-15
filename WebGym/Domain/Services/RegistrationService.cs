@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using WebGym.Domain.Enums;
-using WebGym.Domain.InterfacesToDb;
+﻿using Domain.Enums;
+using Domain.InterfacesToDb;
+using System.Threading.Tasks;
 
-namespace WebGym.Domain.Services
+namespace Domain.Services
 {
     public class RegistrationService
     {
@@ -13,11 +13,11 @@ namespace WebGym.Domain.Services
             _registrationRepository = registrationRepository;
         }
 
-        public async Task<RegistrationStatus> Registrate(string login, string password, string email)
+        public async Task<RegistrationStatus> RegisterAccountAsync(string login, string password, string email)
         {
-            var code = await _registrationRepository.TryRegisterClientAsync(login, password, email);
+            var status = await _registrationRepository.TryRegisterClientAsync(login, password, email);
 
-            return code;
+            return status;
         }
     }
 }

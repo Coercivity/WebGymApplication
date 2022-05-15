@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Domain.DTOs
+namespace Domain.DTOs
 {
     public class StatisticsDataDto
     {
@@ -16,6 +16,7 @@ namespace WebGym.Domain.DTOs
         public int? MedianHeartPressure { get; set; }
         public double? WeightData { get; set; }
         public int? VisitsAmount { get; set; }
+        public double? MedianCaloriesSpent { get; set; }
 
     }
 }

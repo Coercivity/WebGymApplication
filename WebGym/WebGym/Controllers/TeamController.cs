@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Domain.Services;
 
 namespace WebGym.Controllers
 {
@@ -19,7 +15,7 @@ namespace WebGym.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var coaches = await _accountService.GetAllCoachAccountModel();
+            var coaches = await _accountService.GetAllCoachAccountModelAsync();
             return View(coaches);
         }
     }

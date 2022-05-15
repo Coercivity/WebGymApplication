@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Infrastructure.efModels
+namespace Infrastructure.efModels
 {
     public partial class Attendance
     {
@@ -17,6 +17,8 @@ namespace WebGym.Infrastructure.efModels
         public Guid? StatisticsDataId { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
+
+        public Guid? TrainTypeId { get; set; }
         public int? Pulse { get; set; }
         public int? HeadPressure { get; set; }
         public int? HeartPressure { get; set; }
@@ -26,5 +28,6 @@ namespace WebGym.Infrastructure.efModels
         public virtual Coach Coach { get; set; }
         public virtual StatisticsData StatisticsData { get; set; }
         public virtual ICollection<ServiceData> ServiceData { get; set; }
+        public virtual TrainType TrainType { get; set; }
     }
 }

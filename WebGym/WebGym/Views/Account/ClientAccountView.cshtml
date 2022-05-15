@@ -1,211 +1,423 @@
 ﻿@model ClientAccountModel
 
-@section Scripts
-{
-    
-    <script type="text/javascript">
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', { 'packages': ['corechart'] });
-
-        // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
-
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-        function drawChart() {
-
-            // Create the data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
-            data.addRows([
-                ['Mushrooms', 3],
-                ['Onions', 1],
-                ['Olives', 1],
-                ['Zucchini', 1],
-                ['Pepperoni', 2]
-            ]);
-
-            // Set chart options
-            var options = {
-                'title': 'How Much Pizza I Ate Last Night'
-
-            };
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('chart'));
-            chart.draw(data, options);
-        }
-    </script>
-
-
-
-<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-
-          var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-}
-
 
 
 
 <body style="color: #1a202c; text-align: left; background-color: #e2e8f0;">
-<h2 class="success text-center">Личный кабинет клиента</h2>
+    <h2 class="success text-center">Личный кабинет клиента</h2>
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card thumbnail" >
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="~/images/profileImages/@Model.ImagePath" alt="Avatar" style="border-radius: 50%;"
+                                     class="rounded-circle" width="150" height="150" />
+                                <div class="mt-3">
+                                    @if (Model.Surname is null)
+                                    {
+                                        <h4 style="font-size:24px">---</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 style="font-size:24px">@Model.Surname @Model.FirstName @Model.Patronymic</h4>
+                                    }
+                                    <form asp-controller="Attendance" asp-action="ShowAttendaices">
+                                        <input name="clientId" type="hidden" value="@Model.Id" />
+                                        <input class="btn btn-primary" type="submit" value="История посещений">
 
-<div class="container">
-    <div class="main-body">
+                                    </form>
+                                    <p class="text-secondary mb-1" style="margin-top:13px;">Всего посещений: @Model.AccountStatistics.VisitsAmount</p>
+                                    <p class="text-secondary mb-1">
+                                        Средний пульс:
+                                        @if (@Model.AccountStatistics.MedianPulse == 0)
+                                        {
 
+                                            <span>@Model.AccountStatistics.MedianPulse</span>
+                                        }
+                                        else if (@Model.AccountStatistics.MedianPulse <= 120)
+                                        {
+                                            <span style="background-color: #4BB543; font-size:17px;" class="badge bg-success">
+                                                @Model.AccountStatistics.MedianPulse
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background-color: red; font-size: 17px;" class="badge bg-danger">
+                                                @Model.AccountStatistics.MedianPulse
+                                            </span>
+                                        }
+                                    </p>
+                                    <p class="text-secondary mb-1">
+                                        Среднее давление:
+                                        @if (@Model.AccountStatistics.MedianHeadPressure >= 110 && @Model.AccountStatistics.MedianHeadPressure <= 130
+                                    && @Model.AccountStatistics.MedianHeartPressure >= 72 && @Model.AccountStatistics.MedianHeartPressure <= 88)
+                                        {
+                                            <span style="background-color: #4BB543; font-size:17px;" class="badge bg-success">
+                                                @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
+                                            </span>
+                                        }
+                                        else if (@Model.AccountStatistics.MedianHeadPressure == 0)
+                                        {
+                                            <span>@Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background-color: red; font-size: 17px;" class="badge bg-danger">
+                                                @Model.AccountStatistics.MedianHeadPressure : @Model.AccountStatistics.MedianHeartPressure
+                                            </span>
+                                        }
+                                    </p>
+                                    <p class="text-secondary mb-1">
+                                        Всего потрачено Ккал:
+                                        <span>@Model.AccountStatistics.CaloriesSpent</span>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card thumbnail" >
+                        <ul class="list-group list-group-flush" style="margin:0px; !important">
+                            @foreach (var trainType in Model.TrainTypes)
+                            {
 
-        <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                            <div class="mt-3">
-                                @if (Model.FullName.Length < 5)
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <span>
+                                        <img src="~/images/@trainType.ImageName" width="40" height="40" />
+                                        <span class="col-sm-offset-7">@trainType.Description : @Model.TrainTypesDictionary[trainType.Id]</span>
+                                    </span>
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8 ">
+                    <div class="card thumbnail">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6  style="font-size:18px">Логин</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <h6 style="font-size:18px;margin-top:6px;">@Model.Login</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 style="font-size:18px" >Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <h6 style="font-size:18px;margin-top:6px;">@Model.Email</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6  style="font-size:18px">Телефон</h6>
+                                </div>
+                                @if (@Model.MobileNumber is null)
                                 {
-                                    <h4 style="font-size:24px">---</h4>
+                                    <div class="col-sm-9 text-secondary">
+                                       <h6 style="font-size:18px;margin-top:6px;"> ---</h6>
+                                    </div>
                                 }
                                 else
                                 {
-                                    <h4 style="font-size:24px">@Model.FullName</h4>
+                                    <div class="col-sm-9 text-secondary">
+                                        <h6 style="font-size:18px;margin-top:6px;">@Model.MobileNumber</h6>
+                                    </div>
                                 }
-                                <p class="text-secondary mb-1">test</p>
-                                <p class="text-muted font-size-sm">test</p>
-                                <button class="btn btn-primary">История посещений</button>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6  style="font-size:18px">Дата рождения</h6>
+                                </div>
+                                @if (@Model.BirthDate is null)
+                                {
+                                    <div class="col-sm-9">
+                                        ---
+                                    </div>
+                                }
+                                else
+                                {
+                            <div class="col-sm-9">
+                                @{
+                                            var birthDate = (DateTime)Model.BirthDate;
+                                }
+                                <h6 style="font-size:18px;margin-top:6px;"> @birthDate.ToString("MM/dd/yyyy")</h6>
+                            </div>
+                                }
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6  style="font-size:18px">Абонемент</h6>
+                                </div>
+                                @if (!Model.Abonement.IsValid)
+                                {
+                                    <div class="col-sm-9">
+                                        <div class="text-danger" style="margin-top:6px;">
+                                            <span class="badge-inValid">Недействителен</span>
+                                            <form asp-controller="Abonement" asp-action="Index">
+                                                <input type="hidden"
+                                                       value="@Model.Id" name="clientId" />
+                                                <input class="btn btn-success btn-sm" type="submit" value="Приобрести" />
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-9" style="margin-top:6px;">
+                                        <span class="badge-valid">Действителен до @Model.Abonement.FinishDate.ToString("MM/dd/yyyy")</span>
+                                    </div>
+                                }
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align:center;">
+                                    <a class="btn btn-info" asp-controller="Account" asp-action="EditClientCredentials">Редактировать</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card mt-3">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path class="st0" d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488
-                                 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 
-                                 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 
-                                      0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77
-                                      2.756 2.975 5.48 2.708 7.376 2.708z" /></svg>Вконтакте</h6>
-                            <span class="text-secondary">1</span>
-                        </li>
+                    @if (Model.AccountStatistics.ClientAttendances.Count > 4)
+                    {
+                        <div class="col-sm-12 col-md-12 mb-2">
+                            <div class="row card thumbnail">
+                                <div id="chart"></div>
+                                <div class="row" sstyle="margin-top:5px;">
+                                    <div class="col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
+                                        <input type="image" alt="left" src="~/images/left-arrow.png" id="back" height="30" />
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1">
+                                        <input type="image" alt="right" src="~/images/right-arrow.png" id="towards" height="30"/>
+                                    </div>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
-                            <span class="text-secondary">3</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
-                            <span class="text-secondary">4</span>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0" style="font-size:16px">Логин</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Login
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 style="font-size:16px" class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Email
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0 " style="font-size:16px">Телефон</h6>
-                            </div>
-                            @if (@Model.MobileNumber is null)
-                            {
-                                <div class="col-sm-9 text-secondary">
-                                    ---
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-sm-9 text-secondary">
-                                    @Model.MobileNumber
-                                </div>
-                            }
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0 " style="font-size:16px">Абонемент</h6>
-                            </div>
-                            @if (!Model.IsAbonementValid)
-                            {
-                                <div class="col-sm-9 text-secondary">
-                                    <div class="text-danger">Недействителен
-                                        <form asp-controller="Abonement" asp-action="Index">
-                                            <input type="hidden" 
-                                                   value="@Model.Abonement" name="abonement" />
-                                            <input class="btn btn-success btn-sm" type="submit" value="Приобрести" />
-                                        </form>
-
-                                     </div>
 
                                 </div>
-                            }
-                            else
-                            {
-                                <div class="col-sm-9 text-secondary">
-                                   <a class="btn btn-success btn-sm" asp-controller="Abonement" asp-action="ExtendAbonement">Продлить</a>
-                                </div>
-                            }
-
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12" style="text-align:center; margin-top:6px">
-                                <a class="btn btn-info" asp-controller="Account" asp-action="EditClientCredentials">Редактировать</a>
+                            </div>
+                            <div class="row card thumbnail">
+                                <div id="pie_chart"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row gutters-sm">
-                    <div class="col-sm-12 mb-2">
-                         <div id="curve_chart"></div>
-                         <div id="chart"></div>
-                    </div>
-
+                    }
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 
+<style>
+    .butstyle {
+        font-size: 11px;
+        height: 26px;
+        width:auto;
+        align-content: center;
+        padding: 1px 5px;
+    }
+</style>
+
+@section Scripts
+{
+    @if (Model.AccountStatistics.ClientAttendances.Count > 4)
+    {
+
+        <script type="text/javascript">
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawLinePulseChart);
+            google.charts.setOnLoadCallback(drawPieChart);
+            google.charts.setOnLoadCallback(drawLineHeadPressureChart);
+            google.charts.setOnLoadCallback(drawLineHeartPressureChart);
+            google.charts.setOnLoadCallback(drawLineWeightChart);
+            google.charts.setOnLoadCallback(drawLineAllChart);
+
+            var pieChartData;
+            var pieChartOptions;
+            var pieChart;
+            function drawPieChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/PieChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                pieChartData = new google.visualization.DataTable(jsonData);
+                pieChartOptions = {
+
+                    title: 'Диаграмма упражнений',
+                    'height': 300,
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                };
+                pieChart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+                pieChart.draw(pieChartData, pieChartOptions);
+            }
+
+
+            var linePulseChartData;
+            var linePulseChartOptions;
+            var linePulseChart;
+            function drawLinePulseChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LinePulseChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                linePulseChartData = new google.visualization.DataTable(jsonData);
+                linePulseChartOptions = {
+                    title: 'Динамика пульса',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    colors: ['#e0440e'],
+
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+            }
+
+
+            var lineHeadPressureChartData;
+            var lineHeadPressureChartOptions;
+            var lineHeadPressureChart;
+            function drawLineHeadPressureChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineHeadPressureChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineHeadPressureChartData = new google.visualization.DataTable(jsonData);
+                lineHeadPressureChartOptions = {
+                    title: 'Динамика головного давления',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+            var lineHeartPressureChartData;
+            var lineHeartPressureChartOptions;
+            var lineHeartPressureChart;
+            function drawLineHeartPressureChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineHeartPressureChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineHeartPressureChartData = new google.visualization.DataTable(jsonData);
+                lineHeartPressureChartOptions = {
+                    title: 'Динамика сердечного давления',
+                    curveType: 'function',
+                    colors: ['#e1ad01'],
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+
+            var lineWeightChartData;
+            var lineWeightChartOptions;
+            var lineWeightChart;
+            function drawLineWeightChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineWeightChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineWeightChartData = new google.visualization.DataTable(jsonData);
+                lineWeightChartOptions = {
+                    title: 'Динамика веса',
+                    curveType: 'function',
+                    colors: ['#00FF00'],
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+
+            }
+
+
+            var lineAllChartData;
+            var lineAllChartOptions;
+            var lineAllChart;
+            function drawLineAllChart() {
+                var jsonData = $.ajax({
+                    url: "/Account/LineAllChartData/",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                lineAllChartData = new google.visualization.DataTable(jsonData);
+                lineAllChartOptions = {
+                    title: 'Показатели здоровья',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
+                    'height': 300
+                };
+                lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
+                lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+            }
+
+            
+            var sliders = [
+
+                function () {
+                    lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+                },
+
+                function() {
+
+                    lineHeadPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineHeadPressureChart.draw(lineHeadPressureChartData, lineHeadPressureChartOptions);
+                },
+
+                function () {
+                    linePulseChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    linePulseChart.draw(linePulseChartData, linePulseChartOptions);
+                },
+
+                function() {
+                    lineHeartPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineHeartPressureChart.draw(lineHeartPressureChartData, lineHeartPressureChartOptions);
+                },
+
+
+                function() {
+                    lineWeightChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineWeightChart.draw(lineWeightChartData, lineWeightChartOptions);
+                }
+
+            ]
+            var i = 0;
+            document.getElementById('towards').onclick = function () {
+                if (sliders.length <= i + 1)
+                    i = 0;
+                else
+                    i = i + 1;
+                console.log(i);
+                sliders[i]();
+
+            };
+            document.getElementById('back').onclick = function () {
+                if (i - 1 < 0)
+                    i = sliders.length - 1;
+                else
+                    i = i - 1;
+                console.log(i);
+                sliders[i]();
+            };
+
+
+        </script>
+    }
+}

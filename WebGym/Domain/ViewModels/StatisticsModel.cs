@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace WebGym.Domain.ViewModels
+namespace Domain.ViewModels
 {
     public class StatisticsModel
     {
@@ -10,6 +10,7 @@ namespace WebGym.Domain.ViewModels
         public double? Weight { get; set; }
         public int? MedianHeadPressure { get; set; } 
         public int? MedianHeartPressure { get; set; }
+        public double? CaloriesSpent { get; set; }
         public List<AttendanceModel> ClientAttendances { get; set; }
     }
 }

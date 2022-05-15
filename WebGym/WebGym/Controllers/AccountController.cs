@@ -1,38 +1,59 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Enums;
+using Domain.Services;
+using Domain.ViewModels;
+using Google.DataTable.Net.Wrapper;
+using Google.DataTable.Net.Wrapper.Extension;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
-using WebGym.Domain.Enums;
-using WebGym.Domain.Services;
-using WebGym.Domain.ViewModels;
+using WebGym.Handlers;
+using WebGym.Handlers.Charts;
+using WebGym.Handlers.Interfaces;
 
 namespace WebGym.Controllers
 {
     public class AccountController : Controller
     {
+        
         private readonly AccountService _accountService;
+        private readonly AttendanceService _attendanceService;
+        private readonly ChartHandler _chartHandler;
+        private readonly IImageUploadHandler _imageUploadHandler;
+        private Guid _claimId;
 
-        public AccountController(AccountService accountService)
+        public AccountController(AccountService accountService, IImageUploadHandler imageUploadHandler,
+            ChartHandler chartHandler, AttendanceService attendanceService)
         {
             _accountService = accountService;
+            _imageUploadHandler = imageUploadHandler;
+            _chartHandler = chartHandler;
+            _attendanceService = attendanceService;
+
+
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var userRole = User.FindFirst(ClaimTypes.Role).Value;
 
             if (userRole == Role.Coach.ToString())
             {
-                var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
+                var accountModel = await _accountService.GetCoachAccountModelAsync(_claimId);
 
                 return View("CoachAccountView", accountModel);
             }
             else
             {
-                var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+                var accountModel = await _accountService.GetClientAccountModelAsync(_claimId);
 
                 return View("ClientAccountView", accountModel);
             }
@@ -44,17 +65,22 @@ namespace WebGym.Controllers
         public async Task<IActionResult> EditCoachCredentials()
         {
 
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var accountModel = await _accountService.GetCoachAccountModel(Guid.Parse(claimId));
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var accountModel = await _accountService.GetCoachAccountModelAsync(_claimId);
             return View("EditCoachCredentials", accountModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> EditCoachCredentials(CoachAccountModel coachAccountModel)
+        public async Task<IActionResult> EditCoachCredentials(CoachAccountModel coachAccountModel, IFormFile imageFile)
         {
-
-            var isUpdated = await _accountService.UpdateCoachAccount(coachAccountModel);
+            if (imageFile is not null)
+            {
+                _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var imagePath = await _imageUploadHandler.UploadImageAndReturnItsName(imageFile);
+                var status = await _accountService.UploadAccountImageName(_claimId, imagePath);
+            }
+            var isUpdated = await _accountService.UpdateCoachAccountAsync(coachAccountModel);
             if (isUpdated)
             {
                 return Redirect("/Account");
@@ -67,22 +93,141 @@ namespace WebGym.Controllers
         [Authorize(Roles = "Client")]
         public async Task<IActionResult> EditClientCredentials()
         {
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var accountModel = await _accountService.GetClientAccountModel(Guid.Parse(claimId));
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var accountModel = await _accountService.GetClientAccountModelAsync(_claimId);
             return View("EditClientCredentials", accountModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "Client")]
-        public async Task<IActionResult> EditClientCredentials(ClientAccountModel clientAccountModel)
+        public async Task<IActionResult> EditClientCredentials(ClientAccountModel clientAccountModel, IFormFile imageFile)
         {
-            var isUpdated = await _accountService.UpdateClientAccount(clientAccountModel);
+
+            if (imageFile is not null)
+            {
+                _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var imagePath = await _imageUploadHandler.UploadImageAndReturnItsName(imageFile);
+                var status = await _accountService.UploadAccountImageName(_claimId, imagePath);
+            }
+
+            var isUpdated = await _accountService.UpdateClientAccountAsync(clientAccountModel);
             if(isUpdated)
             {
                 return Redirect("/Account");
             }
             return View(clientAccountModel);
         }
+
+
+
+        [HttpGet]
+        public async Task<ActionResult> PieChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var accountModel = await _accountService.GetClientAccountModelAsync(_claimId);
+
+            var chart = _chartHandler.GetPieChart(accountModel);
+
+            return Content(chart);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineAllChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
+           .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
+           .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
+           .Build()
+           .GetJson();
+            return Content(json);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LinePulseChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
+           .Build()
+           .GetJson();
+
+            
+            return Content(json);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineHeadPressureChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
+           .Build()
+           .GetJson();
+            return Content(json);
+        }
+
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineHeartPressureChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
+           .Build()
+           .GetJson();
+
+            return Content(json);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LineWeightChartData()
+        {
+            _claimId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //to refactor
+            var attendancies = await _attendanceService.GetAllClientsAttendaciesAsync(_claimId);
+
+            var chart = _chartHandler.GetLineChart(attendancies);
+
+            var json = chart.ToGoogleDataTable()
+           .NewColumn(new Column(ColumnType.Number, "Посещения"), x => x.Visits)
+           .NewColumn(new Column(ColumnType.Number, "Вес"), x => x.Weight)
+           .Build()
+           .GetJson();
+            return Content(json);
+        }
+
 
 
     }

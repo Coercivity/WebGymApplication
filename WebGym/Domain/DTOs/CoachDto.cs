@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace WebGym.Domain.DTOs
+namespace Domain.DTOs
 {
     public class CoachDto
     {
@@ -15,6 +15,8 @@ namespace WebGym.Domain.DTOs
         public int? Experience { get; set; }
         public string Degree { get; set; }
         public Guid? AccountId { get; set; }
+        public string ImageName { get; set; }
+
 
 
     }

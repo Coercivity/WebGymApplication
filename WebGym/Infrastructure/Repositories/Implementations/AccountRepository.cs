@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.DTOs;
+using Domain.InterfacesToDb;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebGym.Domain.DTOs;
-using WebGym.Domain.InterfacesToDb;
 
-namespace WebGym.Infrastructure.Repositories.Implementations
+
+namespace Infrastructure.Repositories.Implementations
 {
 
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository, ICoachRepository, IClientRepository
     {
 
         private readonly GymDbContext _gymDbContext;
@@ -17,6 +19,29 @@ namespace WebGym.Infrastructure.Repositories.Implementations
         public AccountRepository(GymDbContext gymDbContext)
         {
             _gymDbContext = gymDbContext;
+        }
+
+        public async Task<List<ClientDto>> GetClientsByQueryAsync(string query)
+        {
+            var clientAccounts = await (from c in _gymDbContext.Clients
+                                           join a in _gymDbContext.Accounts
+                                           on c.AccountId equals a.Id
+                                           where c.Surname.Contains(query) || c.FirstName.Contains(query) 
+                                           select new ClientDto
+                                           {
+                                               Id = c.Id,
+                                               StatisticsDataId = c.Id,
+                                               AccountId = a.Id,
+                                               Patronymic = c.Patronymic,
+                                               FirstName = c.FirstName,
+                                               Surname = c.Surname,
+                                               PhoneNumber = c.PhoneNumber,
+                                               BirthData = c.BirthDate,
+                                               ImageName = a.ImagePath
+
+                                           }).ToListAsync();
+
+            return clientAccounts;
         }
 
         public async Task<List<ClientDto>> GetAllClientsAsync()
@@ -34,8 +59,24 @@ namespace WebGym.Infrastructure.Repositories.Implementations
         public async Task<List<CoachDto>> GetAllCoachesAsync()
         {
 
-            var coaches = await _gymDbContext.Coaches.ToListAsync();
-            return Mapper.MapCoachesDto(coaches);
+            var coachesAccounts = await (from c in _gymDbContext.Coaches
+                                        join a in _gymDbContext.Accounts
+                                        on c.AccountId equals a.Id
+                                        select new CoachDto
+                                        {
+                                            Id = c.Id,
+                                            AccountId = a.Id,
+                                            Patronymic = c.Patronymic,
+                                            FirstName = c.FirstName,
+                                            Surname = c.Surname,
+                                            PhoneNumber = c.PhoneNumber,
+                                            Degree = c.Degree,
+                                            Experience = c.Experience,
+                                            ImageName = a.ImagePath
+
+                                        }).ToListAsync();
+
+            return coachesAccounts;
         }
 
         public async Task<ClientDto> GetClientByIdAsync(Guid id)
@@ -58,14 +99,15 @@ namespace WebGym.Infrastructure.Repositories.Implementations
 
         public async Task<bool> CheckIfAccountExists(string login, string email)
         {
-           var account = await _gymDbContext.Accounts.Where(x => x.Email.Equals(email) || x.LoginData.Equals(login)).FirstOrDefaultAsync();
+           var account = await _gymDbContext.Accounts.Where(x => x.Email.Equals(email) 
+                                                || x.LoginData.Equals(login)).FirstOrDefaultAsync();
            if (account is not null)
                 return true;
 
             return false;
         }
 
-        public async Task<bool> UpdateClientAccount(AccountDto accountDto, ClientDto clientDto)
+        public async Task<bool> UpdateClientAccountAsync(AccountDto accountDto, ClientDto clientDto)
         {
 
             var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
@@ -76,6 +118,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             client.Surname = clientDto.Surname;
             client.Patronymic = clientDto.Patronymic;
             client.PhoneNumber = clientDto.PhoneNumber;
+            client.BirthDate = clientDto.BirthData;
 
             try
             {
@@ -90,7 +133,7 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             return true;
         }
 
-        public async Task<bool> UpdateCoachAccount(AccountDto accountDto, CoachDto coachDto)
+        public async Task<bool> UpdateCoachAccountAsync(AccountDto accountDto, CoachDto coachDto)
         {
 
             var account = await _gymDbContext.Accounts.Where(x => x.Id.Equals(accountDto.Id)).FirstOrDefaultAsync();
@@ -117,6 +160,21 @@ namespace WebGym.Infrastructure.Repositories.Implementations
             return true;
         }
 
+        public async Task<bool> UploadImage(Guid accountId, string imageName)
+        {
+            var account = await _gymDbContext.Accounts.FirstOrDefaultAsync(x => x.Id.Equals(accountId));
+            account.ImagePath = imageName;
 
+            try
+            {
+                await _gymDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
     }
 }

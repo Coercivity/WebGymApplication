@@ -1,19 +1,71 @@
-﻿using Infrastructure.ExtractedModels;
+﻿using Domain.DTOs;
+using Infrastructure.efModels;
+using Infrastructure.ExtractedModels;
 using System.Collections.Generic;
-using WebGym.Domain.DTOs;
-using WebGym.Infrastructure.efModels;
 
-namespace WebGym.Infrastructure
+namespace Infrastructure
 {
     internal static class Mapper
     {
+        
+        public static List<TrainTypeDto> MapTrainTypes(List<TrainType> trainTypes)
+        {
+            var trainTypesDto = new List<TrainTypeDto>();
+            foreach(var train in trainTypes)
+            {
+                trainTypesDto.Add(new TrainTypeDto() { 
+                    Description = train.Description,
+                    Id = train.Id,
+                    ImageName = train.ImagePath
+                });
+            };
+            return trainTypesDto;
+        }
+        public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
+        {
+            var attendancesDto = new List<AttendanceDto>();
+            foreach (var attendance in attendances)
+            {
+                attendancesDto.Add(new AttendanceDto()
+                {
+                    StartTime = attendance.StartTime,
+                    FinishTime = attendance.FinishTime,
+                    HeartPressure = attendance.HeartPressure,
+                    Pulse = attendance.Pulse,
+                    Id = attendance.Id,
+                    WeightData = attendance.WeightData,
+                    HeadPressure = attendance.HeadPressure,
+                    CaloriesSpent = attendance.CaloriesSpent,
+                    CoachId = attendance.CoachId,
+                    StatisticsDataId = attendance.StatisticsDataId,
+                    TrainTypeId = attendance.TrainTypeId
+                });
+            }
+            return attendancesDto;
+        }
 
+        public static AttendanceDto MapAttendance(Attendance attendance)
+        {
+            return new AttendanceDto()
+            {
+                StartTime = attendance.StartTime,
+                FinishTime = attendance.FinishTime,
+                Id = attendance.Id,
+                Pulse = attendance.Pulse,
+                WeightData = attendance.WeightData,
+                HeartPressure = attendance.HeartPressure,
+                HeadPressure = attendance.HeadPressure,
+                CaloriesSpent = attendance.CaloriesSpent,
+                StatisticsDataId = attendance.StatisticsDataId,
+                CoachId = attendance.CoachId
+
+            };
+        }
         public static ScheduleDto MapSchedule(List<ExtractedSchedule> schedulePositions)
         {
 
             var positionDtos = new Dictionary<string,List<PositionDto>>();
             var dayPositionDtos = new List<PositionDto>();
-
             var day = schedulePositions?[0].Day;
 
             foreach(var position in schedulePositions)
@@ -28,15 +80,16 @@ namespace WebGym.Infrastructure
                 dayPositionDtos.Add(new PositionDto()
                 {
                     CoachId = position.CoachId,
-                    StartTime = position.StartTime.ToString("HH:mm"),
+                    StartTime = position.StartTime,
                     Day = position.Day,
                     TrainType = position.TrainType,
-                    FinishTime = position.FinishTime.ToString("HH:mm"),
+                    FinishTime = position.FinishTime,
                     CoachName = position.CoachName,
                     TrainTypeId = position.TrainTypeId,
-                    ImageName = position.ImageName
+                    ImageName = position.ImageName,
+                    Id = position.PositionId
 
-                    
+
 
                 });
             }
@@ -54,8 +107,7 @@ namespace WebGym.Infrastructure
                 VisitsAmount = abonement.VisitsAmount,
                 StartDate = abonement.StartDate,
                 FinishDate = abonement.FinishDate,
-                IsValid = abonement.IsValid,
-                Id = abonement.Id
+                IsValid = abonement.IsValid
             };
         }
 
@@ -67,25 +119,12 @@ namespace WebGym.Infrastructure
                 Id = account.Id,
                 LoginData = account.LoginData,
                 PasswordData = account.PasswordData,
-                GroupId = account.GroupId
+                GroupId = account.GroupId,
+                ImagePath = account.ImagePath
             };
         }
 
-        public static AttendanceDto MapAttendance(Attendance attendance)
-        {
-            return new AttendanceDto()
-            {
-                StartTime = attendance.StartTime,
-                FinishTime = attendance.FinishTime,
-                Id = attendance.Id,
-                Pulse = attendance.Pulse,
-                WeightData = attendance.WeightData,
-                HeartPressure = attendance.HeartPressure,
-                HeadPressure = attendance.HeadPressure,
-                CaloriesSpent = attendance.CaloriesSpent
-               
-            };
-        }
+
 
         public static ClientDto MapClient(Client client)
         {
@@ -96,7 +135,9 @@ namespace WebGym.Infrastructure
                 Patronymic = client.Patronymic,
                 PhoneNumber = client.PhoneNumber,
                 Id = client.Id,
-                Sex = client.Sex
+                Sex = client.Sex,
+                BirthData = client.BirthDate
+
             };
         }
 
@@ -145,6 +186,7 @@ namespace WebGym.Infrastructure
                 MedianHeadPressure = serviceDataType.MedianHeadPressure,
                 MedianHeartPressure = serviceDataType.MedianHeartPressure,
                 VisitsAmount = serviceDataType.VisitsAmount,
+                MedianCaloriesSpent = serviceDataType.MedianCaloriesSpent,
                 Id = serviceDataType.Id,
                 WeightData = serviceDataType.WeightData
             };
@@ -201,24 +243,7 @@ namespace WebGym.Infrastructure
             return clientsDto;
         }
 
-        public static List<AttendanceDto> MapAttendancesDto(List<Attendance> attendances)
-        {
-            var attendancesDto = new List<AttendanceDto>();
-            foreach (var attendance in attendances)
-            {
-                attendancesDto.Add(new AttendanceDto()
-                {
-                    StartTime = attendance.StartTime,
-                    FinishTime = attendance.FinishTime,
-                    HeartPressure = attendance.HeartPressure,
-                    Pulse = attendance.Pulse,
-                    Id = attendance.Id,
-                    WeightData = attendance.WeightData,
-                    HeadPressure = attendance.HeadPressure
-                });
-            }
-            return attendancesDto;
-        }
+
 
 
     }

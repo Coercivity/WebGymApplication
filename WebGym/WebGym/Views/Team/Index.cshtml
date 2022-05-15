@@ -1,44 +1,63 @@
 ﻿@model List<CoachAccountModel>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
-<h2>Index</h2>
+<style>
+    .thumbnail {
+        box-shadow: 0 4px 8px 0 rgba(97, 115, 244, 0.5);
+        transition: 0.3s;
+        min-width: 40%;
+        border-radius: 5px;
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    .thumbnail-description {
+        min-height: 40px;
+    }
 
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patronymic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MobileNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Experience)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
+    .thumbnail:hover {
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(97, 115, 244, 1);
+    }
+</style>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+<h2 style="text-align:center;">Наши тренера</h2>
+<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="row space-16">&nbsp;</div>
+        <div class="row">
+            @foreach (var coach in Model)
+            {
+                <div class="col-sm-3">
+                    <div class="thumbnail">
+                        <div class="caption text-center">
+                            <div class="position-relative">
+                                <img src="~/images/profileImages/@coach.ImagePath"  alt="Avatar"  style="width:144px;height:144px; border-radius: 50%;" />
+                            </div>
+
+                            <div class="thumbnail-description smaller">
+                                @{
+                                    var fullName = coach.Surname + ". " + coach.FirstName[0] + ". " + coach.Patronymic[0] as string;
+                                }
+
+                                @fullName
+                            </div>
+                            <div class="thumbnail-description smaller">
+                               Моб. телефон: @coach.MobileNumber
+                            </div>
+                            <div class="thumbnail-description smaller">
+                                Стаж: @coach.Experience
+                            </div>
+                            <div class="thumbnail-description smaller">
+                                Степень: @coach.Rank
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            }
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>  

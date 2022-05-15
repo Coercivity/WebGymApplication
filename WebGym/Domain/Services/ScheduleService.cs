@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Domain.InterfacesToDb;
+using Domain.ViewModels;
+using System;
 using System.Threading.Tasks;
-using WebGym.Domain.InterfacesToDb;
-using WebGym.Domain.ViewModels;
 
-namespace WebGym.Domain.Services
 
+namespace Domain.Services
 {
     public class ScheduleService
     {
@@ -16,7 +16,7 @@ namespace WebGym.Domain.Services
         }
 
 
-        public async Task<ScheduleModel> GetCurrentSchedule(Guid id)
+        public async Task<ScheduleModel> GetCurrentScheduleAsync(Guid id)
         {
            var schedule = await _scheduleRepository.GetSchedule(id);
            
@@ -30,6 +30,9 @@ namespace WebGym.Domain.Services
             return scheduleModel;
         }
 
-
+        public async Task RemoveSchedulePositionAsync(Guid positionId)
+        {
+            await _scheduleRepository.RemovePositionAsync(positionId);
+        }
     }
 }

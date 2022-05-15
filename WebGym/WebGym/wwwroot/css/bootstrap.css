@@ -5412,8 +5412,9 @@ a.label:hover, a.label:focus {
     background-color: #337ab7;
     border-radius: 10px;
 }
+
 .badge:empty {
-  display: none;
+    display: none;
 }
 .btn .badge {
   position: relative;
