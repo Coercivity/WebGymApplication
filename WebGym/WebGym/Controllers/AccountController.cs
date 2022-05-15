@@ -148,7 +148,6 @@ namespace WebGym.Controllers
            .NewColumn(new Column(ColumnType.Number, "Головное давление"), x => x.HeadPressure)
            .NewColumn(new Column(ColumnType.Number, "Пульс"), x => x.Pulse)
            .NewColumn(new Column(ColumnType.Number, "Сердечное давление"), x => x.HeartPressure)
-           .NewColumn(new Column(ColumnType.Number, "Вес"), x => x.Weight)
            .Build()
            .GetJson();
             return Content(json);

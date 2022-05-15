@@ -193,23 +193,15 @@
                         <div class="col-sm-12 col-md-12 mb-2">
                             <div class="row card thumbnail">
                                 <div id="chart"></div>
-                                <div class="row" style="align-content:center; margin-top:40px;">
-    
-                                    <div class="col-sm-1" style="align-content:center;">
-                                        <button class="btn btn-info butstyle" id="pulse">Пульс</button>
+                                <div class="row" sstyle="margin-top:5px;">
+                                    <div class="col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
+                                        <input type="image" alt="left" src="~/images/left-arrow.png" id="back" height="30" />
                                     </div>
-                                    <div class="col-sm-1"   style="align-content:inherit;">
-                                        <button class="btn btn-info butstyle" id="weight">Вес</button>
+                                    <div class="col-sm-1 col-xs-1">
+                                        <input type="image" alt="right" src="~/images/right-arrow.png" id="towards" height="30"/>
                                     </div>
-                                    <div class="col-sm-3"  style="align-content:center;">
-                                        <button class="btn btn-info butstyle" id="headPresure">Головное давление</button>
-                                    </div>
-                                    <div class="col-sm-3"  style="align-content:center;">
-                                        <button class="btn btn-info butstyle" id="heartPresure">Сердечное давление</button>
-                                    </div>
-                                    <div class="col-sm-3 "  style="align-content:center;">
-                                        <button class="btn btn-info butstyle" id="all">Показатели здоровья</button>
-                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="row card thumbnail">
@@ -304,7 +296,6 @@
                     title: 'Динамика головного давления',
                     curveType: 'function',
                     legend: { position: 'bottom' },
-                    colors: ['#e0440e'],
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
                 };
@@ -324,7 +315,7 @@
                 lineHeartPressureChartOptions = {
                     title: 'Динамика сердечного давления',
                     curveType: 'function',
-                    colors: ['#e0440e'],
+                    colors: ['#e1ad01'],
                     legend: { position: 'bottom' },
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
@@ -346,7 +337,7 @@
                 lineWeightChartOptions = {
                     title: 'Динамика веса',
                     curveType: 'function',
-                    colors: ['#e0440e'],
+                    colors: ['#00FF00'],
                     legend: { position: 'bottom' },
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
@@ -376,28 +367,54 @@
                 lineAllChart.draw(lineAllChartData, lineAllChartOptions);
             }
 
+            
+            var sliders = [
 
-            document.getElementById('headPresure').onclick = function () {
+                function () {
+                    lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+                },
 
-                lineHeadPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
-                lineHeadPressureChart.draw(lineHeadPressureChartData, lineHeadPressureChartOptions);
+                function() {
+
+                    lineHeadPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineHeadPressureChart.draw(lineHeadPressureChartData, lineHeadPressureChartOptions);
+                },
+
+                function () {
+                    linePulseChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    linePulseChart.draw(linePulseChartData, linePulseChartOptions);
+                },
+
+                function() {
+                    lineHeartPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineHeartPressureChart.draw(lineHeartPressureChartData, lineHeartPressureChartOptions);
+                },
+
+
+                function() {
+                    lineWeightChart = new google.visualization.LineChart(document.getElementById('chart'));
+                    lineWeightChart.draw(lineWeightChartData, lineWeightChartOptions);
+                }
+
+            ]
+            var i = 0;
+            document.getElementById('towards').onclick = function () {
+                if (sliders.length <= i + 1)
+                    i = 0;
+                else
+                    i = i + 1;
+                console.log(i);
+                sliders[i]();
 
             };
-            document.getElementById('pulse').onclick = function () {
-                linePulseChart = new google.visualization.LineChart(document.getElementById('chart'));
-                linePulseChart.draw(linePulseChartData, linePulseChartOptions);
-            };
-            document.getElementById('heartPresure').onclick = function () {
-                lineHeartPressureChart = new google.visualization.LineChart(document.getElementById('chart'));
-                lineHeartPressureChart.draw(lineHeartPressureChartData, lineHeartPressureChartOptions);
-            };
-            document.getElementById('weight').onclick = function () {
-                lineWeightChart = new google.visualization.LineChart(document.getElementById('chart'));
-                lineWeightChart.draw(lineWeightChartData, lineWeightChartOptions);
-            };
-            document.getElementById('all').onclick = function () {
-                lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
-                lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+            document.getElementById('back').onclick = function () {
+                if (i - 1 < 0)
+                    i = sliders.length - 1;
+                else
+                    i = i - 1;
+                console.log(i);
+                sliders[i]();
             };
 
 

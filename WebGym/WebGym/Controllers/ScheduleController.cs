@@ -17,7 +17,7 @@ namespace WebGym.Controllers
 
         public async Task<IActionResult> Index()
         {
-
+            //need to implement schedule selection feature
             var id = Guid.Parse("CA1B624B-3CD1-4ACF-8B20-9FB375F23E6D");
             var schedule = await _scheduleService.GetCurrentScheduleAsync(id);
             return View(schedule);

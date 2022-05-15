@@ -68,6 +68,10 @@ namespace WebGym
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
 
             app.UseRouting();

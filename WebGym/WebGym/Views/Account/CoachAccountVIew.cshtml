@@ -30,7 +30,7 @@
 
                                     <form class="form-inline my-2" action="@Url.Action("Index", "SearchClient")" method="get">
                                         <input type="hidden" value=@Model.Id name="coachId" />
-                                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Фамилия, имя" />
+                                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Фамилия, имя" required="true" />
                                         <button class="btn btn-primary my-2 my-sm-0" type="submit">Искать</button>
                                     </form>
                                 </div>

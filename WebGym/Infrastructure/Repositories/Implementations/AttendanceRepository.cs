@@ -53,7 +53,7 @@ namespace Infrastructure.Repositories.Implementations
         public async Task<List<AttendanceDto>> GetAllAttendanciesByStatisticsIdAsync(Guid id)
         {
             
-            var attendances = await _gymDbContext.Attendances.Where(x => x.StatisticsDataId.Equals(id)).ToListAsync();
+            var attendances = await _gymDbContext.Attendances.Where(x => x.StatisticsDataId.Equals(id)).OrderBy(x => x.StartTime).ToListAsync();
             return Mapper.MapAttendancesDto(attendances);
         }
 

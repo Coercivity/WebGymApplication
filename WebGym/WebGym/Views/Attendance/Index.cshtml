@@ -62,7 +62,7 @@
                                             <div class="row">
                                                 @foreach (var trainType in Model.TrainTypes)
                                                 {
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2 col-lg-2 col-xs-2">
                                                         <img src="~/images/@trainType.ImageName" width="50" height="50"/>
                                                         <input type="checkbox" name="" class="trainTypesIcons"
                                                                value="@trainType.Id" />
@@ -91,12 +91,12 @@
 
 <script>
         let images = document.getElementsByClassName("trainTypesIcons")
+
         for (let image of images) {
             image.name = "";
             image.onclick = function () {
                 image.name = "trainTypeId";
-                console.log(image)
-                return false;
+                
             }
             
         }
