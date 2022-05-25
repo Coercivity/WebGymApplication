@@ -24,11 +24,24 @@ else
 
                                 <div class="thumbnail-description smaller">
 
-                                   @client.Surname  @client.FirstName?[0]  @client.Patronymic?[0]
+                                    @client.Surname  @client.FirstName?[0]  @client.Patronymic?[0]
                                 </div>
                                 <div class="thumbnail-description smaller">
                                     Моб. телефон: @client.MobileNumber
                                 </div>
+                                @if (@client.IsValid)
+                                {
+                                    <div class="thumbnail-description smaller">
+                                        Абонемент действителен
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="thumbnail-description smaller">
+                                        Абонемент недействителен
+                                    </div>
+                                }
+
                                 <form class="form-inline my-2" asp-controller="Attendance" asp-action="Index">
                                     <input type="hidden" value=@client.Id name="clientId" />
                                     <input class="form-control mr-sm-2" type="hidden" />
