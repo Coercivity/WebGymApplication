@@ -32,13 +32,13 @@ else
                                 @if (@client.IsValid)
                                 {
                                     <div class="thumbnail-description smaller">
-                                        Абонемент действителен
+                                        <span class="badge-valid">Абонемент действителен</span>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="thumbnail-description smaller">
-                                        Абонемент недействителен
+                                        <span class="badge-inValid">Абонемент недействителен</span>
                                     </div>
                                 }
 
@@ -58,3 +58,5 @@ else
     </div>
 
 }
+
+
