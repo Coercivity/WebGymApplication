@@ -1,18 +1,24 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
- <html class="no-js"> 
-	<head>
-	@await Html.PartialAsync("MetatagsPartial")
-	@await Html.PartialAsync("ScriptsPartial")
-	@await Html.PartialAsync("CssPartial")
-	<title>Gym website</title>
-	</head>
+<html class="no-js">
+<head>
+    @await Html.PartialAsync("MetatagsPartial")
+    @await Html.PartialAsync("ScriptsPartial")
+    @await Html.PartialAsync("CssPartial")
+    <title>Gym website</title>
+</head>
 
-    <body>
+<body>
 
-        @await Html.PartialAsync("HeaderPartial")
-        @RenderBody()
-        @await Html.PartialAsync("FooterPartial")
-		@RenderSection("Scripts", required: false)
-    </body>
+    @await Html.PartialAsync("HeaderPartial")
+    @RenderBody()
+    @await Html.PartialAsync("FooterPartial")
+    @RenderSection("Scripts", required: false)
+</body>
 </html>
+
+
+
+
+    

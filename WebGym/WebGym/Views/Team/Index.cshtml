@@ -38,7 +38,7 @@
 
                             <div class="thumbnail-description smaller">
                                 @{
-                                    var fullName = coach.Surname + ". " + coach.FirstName[0] + ". " + coach.Patronymic[0] as string;
+                                    var fullName = coach?.Surname + ". " + coach.FirstName?[0] + ". " + coach.Patronymic?[0] as string;
                                 }
 
                                 @fullName

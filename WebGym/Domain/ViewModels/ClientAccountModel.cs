@@ -13,5 +13,7 @@ namespace Domain.ViewModels
         public AbonementModel Abonement { get; set; }
         public DateTime? BirthDate { get; set; }
 
+        public bool IsValid { get; set; }
+
     }
 }

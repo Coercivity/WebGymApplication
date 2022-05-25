@@ -30,22 +30,7 @@ namespace WebGym
                 AddCookie(op => {
                     op.LoginPath = "/login";
                     op.AccessDeniedPath = "/denied";
-                    //For claims checking purpose
-                    op.Events = new CookieAuthenticationEvents()
-                    {
-                        OnSigningIn = async context =>
-                        {
-                            await Task.CompletedTask;
-                        },
-                        OnSignedIn = async context =>
-                        {
-                            await Task.CompletedTask;
-                        }, 
-                        OnValidatePrincipal = async context =>
-                        {
-                            await Task.CompletedTask;
-                        }
-                    };
+
                 });
 
             services.AddDbRepositories(Configuration.GetConnectionString("DefaultConnection"));

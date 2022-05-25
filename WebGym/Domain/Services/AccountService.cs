@@ -43,9 +43,15 @@ namespace Domain.Services
         {
             var clientAccounts = await _clientRepository.GetClientsByQueryAsync(query);
 
+            
+
             var clientsAccountModel = new List<ClientAccountModel>();
             foreach (var client in clientAccounts)
             {
+                var abonement = await _abonementRepository.GetValidAbonementByClientIdAsync(client.Id);
+                var abonemetIsValid = false;
+                if (abonement is not null)
+                    abonemetIsValid = true;
                 clientsAccountModel.Add(new ClientAccountModel()
                 {
                     FirstName = client.FirstName,
@@ -54,6 +60,7 @@ namespace Domain.Services
                     Id = client.Id,
                     MobileNumber = client.PhoneNumber,
                     ImagePath = client.ImageName,
+                    IsValid = abonemetIsValid
 
                 });
             }

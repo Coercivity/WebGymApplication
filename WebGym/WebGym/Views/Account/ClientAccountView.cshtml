@@ -194,7 +194,7 @@
                             <div class="row card thumbnail">
                                 <div id="chart"></div>
                                 <div class="row" sstyle="margin-top:5px;">
-                                    <div class="col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
+                                    <div class="col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-5">
                                         <input type="image" alt="left" src="~/images/left-arrow.png" id="back" height="30" />
                                     </div>
                                     <div class="col-sm-1 col-xs-1">
@@ -363,8 +363,39 @@
                     'chartArea': { 'top': '28', 'width': '80%', 'height': '80%' },
                     'height': 300
                 };
+                var testJson = $.ajax({
+                    url: "/Account/LineAllChartData/",
+                    dataType: "json",
+                    async: false
+                })
+                
+                var newJson = new Object();
+                var asd = { "rows": [{}]}
+
+                var cols = ["Посещения", "Головное давление"];
+                for (var i = 0; i < testJson.responseJSON["rows"].length; i++) {
+
+                    newJson[i] = { "c" : []}
+                    for (var j = 0; j < testJson.responseJSON["cols"].length; j++) {
+                        
+                        if (cols.includes(testJson.responseJSON["cols"][j].label)) {
+                            newJson[i]["c"].push({ "v": testJson.responseJSON["rows"][i]["c"][j]["v"] })
+                            
+                        }
+
+                    }
+
+                }
+                asd["rows"].push(newJson)
+                console.log(asd)
+
+                console.log(testJson)
+
                 lineAllChart = new google.visualization.LineChart(document.getElementById('chart'));
                 lineAllChart.draw(lineAllChartData, lineAllChartOptions);
+
+                
+
             }
 
             
